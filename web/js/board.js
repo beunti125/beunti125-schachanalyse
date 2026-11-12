@@ -7,6 +7,7 @@ export class Board {
   constructor(el, opts = {}) {
     this.el = el; this.opts = opts; this.orientation = 'w'; this.fen = new Chess().fen();
     this.last = null; this.badge = null; this.arrows = []; this.marks = {}; this.sel = null; this.movable = null;
+    this.uArrows = []; this.uMarks = {}; this.rdown = null;
     el.classList.add('board');
     el.innerHTML = `<div class="sq-layer"></div><div class="pc-layer"></div><svg class="arrow-layer" viewBox="0 0 8 8"></svg><div class="badge-layer"></div>`;
     [this.sqL, this.pcL, this.arL, this.bdL] = el.children;
@@ -38,6 +39,7 @@ export class Board {
   setOrientation(o) { if (o !== this.orientation) { this.orientation = o; this._drawSquares(); this._drawPieces(); this._drawArrows(); this._drawBadge(); } }
   flip() { this.setOrientation(this.orientation === 'w' ? 'b' : 'w'); }
   setPosition(fen, { last = null, animate = false, badge = null } = {}) {
+    if (fen !== this.fen) { this.uArrows = []; this.uMarks = {}; }
     this.fen = fen; this.last = last; this.badge = badge; this.sel = null;
     this._drawPieces(animate && last ? last : null); this._paintMarks(); this._drawBadge();
   }
@@ -64,10 +66,11 @@ export class Board {
   }
   _paintMarks() {
     for (const d of this.sqL.children) {
-      const sq = d.dataset.sq; d.classList.remove('last', 'sel', 'hint', 'good', 'bad', 'check', 'brill', 'plan');
+      const sq = d.dataset.sq; d.classList.remove('last', 'sel', 'hint', 'good', 'bad', 'check', 'brill', 'plan', 'um-o', 'um-r', 'um-b');
       d.querySelector('.dot')?.remove();
       if (this.last && (sq === this.last.from || sq === this.last.to)) d.classList.add('last');
       if (this.marks[sq]) d.classList.add(this.marks[sq]);
+      if (this.uMarks[sq]) d.classList.add(this.uMarks[sq]);
       if (this.sel === sq) d.classList.add('sel');
     }
     if (this.sel) {
@@ -83,7 +86,7 @@ export class Board {
   }
   _drawArrows() {
     let h = '';
-    for (const a of this.arrows) {
+    for (const a of [...this.arrows, ...this.uArrows]) {
       const [x0, y0] = this._xy(a.from), [x1, y1] = this._xy(a.to);
       const adx = Math.abs(x1 - x0), ady = Math.abs(y1 - y0);
       if ((adx === 1 && ady === 2) || (adx === 2 && ady === 1)) {
@@ -127,8 +130,25 @@ export class Board {
     await this.opts.onMove?.(from, to, promo);
     return true;
   }
+  // Rechtsklick: Pfeile zeichnen (ziehen) und Felder markieren (klicken)
+  _uColor(e) { return e.shiftKey ? 'r' : e.altKey ? 'b' : 'o'; }
+  _rightDown(e) { const sq = this._sqAt(e); if (sq) this.rdown = { sq, c: this._uColor(e) }; e.preventDefault(); }
+  _rightUp(e) {
+    const r = this.rdown; this.rdown = null; if (!r) return;
+    const to = this._sqAt(e); if (!to) return;
+    const col = { o: 'rgba(240,150,40,.85)', r: 'rgba(226,57,43,.85)', b: 'rgba(70,140,220,.85)' }[r.c];
+    if (to === r.sq) { if (this.uMarks[to] === 'um-' + r.c) delete this.uMarks[to]; else this.uMarks[to] = 'um-' + r.c; this._paintMarks(); }
+    else {
+      const i = this.uArrows.findIndex(a => a.from === r.sq && a.to === to);
+      if (i >= 0 && this.uArrows[i].color === col) this.uArrows.splice(i, 1); else { if (i >= 0) this.uArrows.splice(i, 1); this.uArrows.push({ from: r.sq, to, color: col }); }
+      this._drawArrows();
+    }
+  }
+  clearUser() { if (!this.uArrows.length && !Object.keys(this.uMarks).length) return; this.uArrows = []; this.uMarks = {}; this._drawArrows(); this._paintMarks(); }
   _down(e) {
+    if (e.button === 2) return this._rightDown(e);
     if (e.button !== 0) return;
+    this.clearUser();
     const sq = this._sqAt(e); if (!sq) return;
     if (this.sel && this.sel !== sq) { this._try(this.sel, sq).then(ok => { if (!ok && this._canMove(sq)) { this.sel = sq; this._paintMarks(); } else if (!ok) { this.sel = null; this._paintMarks(); } }); if (!this._canMove(sq)) return; }
     if (!this._canMove(sq)) { this.sel = null; this._paintMarks(); return; }
@@ -147,6 +167,7 @@ export class Board {
     d.pc.style.transform = `translate(${e.clientX - d.b.left - s / 2}px,${e.clientY - d.b.top - s / 2}px)`;
   }
   _up(e) {
+    if (e.button === 2 && this.rdown) return this._rightUp(e);
     const d = this.drag; if (!d) return; this.drag = null;
     if (!d.moved) return;
     const to = this._sqAt(e);

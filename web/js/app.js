@@ -228,7 +228,8 @@ const FIG_CENTER = {"wK": {"dx": 0.1, "dy": -0.7, "s": 0.997}, "wQ": {"dx": 0.0,
 function setCoachPiece(color, piece) {
   const img = $('.avatar img'), av = $('.avatar'), k = (color || 'w') + (piece || 'n').toUpperCase(), f = FIG_CENTER[k];
   img.src = `pieces/${k}.svg`;
-  if (f) $('.av-in').style.transform = `translate(${f.dx}%, ${f.dy}%) scale(${f.s})`;
+  // helle Figuren wirken auf dunklem Grund größer → etwas kleiner darstellen
+  if (f) $('.av-in').style.transform = `translate(${f.dx}%, ${f.dy}%) scale(${(f.s * (k[0] === 'w' ? .88 : 1)).toFixed(3)})`;
   av.classList.toggle('blk', color === 'b');
 }
 function movableColor(fen) { const c = new Chess(fen); return c.isGameOver() ? null : c.turn(); }

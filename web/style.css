@@ -358,3 +358,7 @@ body.focus #v-review.analysing .board-col{width:min(calc(100vh - 80px),calc(100v
 .bubble::before{top:20px;transform:none}
 .av-in{display:block;width:42px;height:42px}
 .av-in img{width:100%;height:100%}
+/* Eigene Markierungen (Rechtsklick) */
+.sq.um-o::after{content:"";position:absolute;inset:0;background:rgba(240,150,40,.6)}
+.sq.um-r::after{content:"";position:absolute;inset:0;background:rgba(226,57,43,.6)}
+.sq.um-b::after{content:"";position:absolute;inset:0;background:rgba(70,140,220,.6)}
