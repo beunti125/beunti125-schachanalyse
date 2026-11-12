@@ -386,3 +386,11 @@ body.focus #v-review.analysing .board-col{width:min(calc(100vh - 80px),calc(100v
 .prof-add input{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:7px;padding:8px 10px;outline:none}
 .prof-add input:focus{border-color:var(--acc)}
 .prof-add .btn{padding:6px 14px;font-size:18px}
+/* Alle Erklärungsschritte sichtbar, aktueller hervorgehoben */
+.st-line{font-size:13.5px;line-height:1.45;padding:4px 8px;margin:2px -8px;border-left:3px solid transparent;border-radius:0 6px 6px 0;cursor:pointer;color:#57544c}
+.st-line.on{color:#1f1d19;border-left-color:var(--acc);background:#e9e6dc}
+.st-line:first-child{color:#26241f}
+.prof-label{font-size:11.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.4px;padding:8px 8px 4px}
+.prof-set{display:block;width:calc(100% - 8px);margin:6px 4px 2px;background:#2f3d29;border:1px solid #3f5a35;color:#a8dc7d;border-radius:7px;padding:7px;cursor:pointer;font-weight:600;font-size:12.5px}
+.prof-set:hover{background:#3f5a35;color:#fff}
+.prof-name .tag{margin-left:6px;font-size:10.5px}

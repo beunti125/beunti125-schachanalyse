@@ -126,8 +126,11 @@ function finish(game, P, res, quality) {
     else if (loss < 20) cls = 'mistake';
     else cls = 'blunder';
 
-    // Großartig: einziger guter Zug (zweitbester deutlich schlechter)
-    if (cls === 'best' && before.lines[1]) {
+    // Offensichtlich: Zurückschlagen oder eine gleich-/höherwertige Figur schlagen
+    const prevM = i > 0 ? P.moves[i - 1] : null;
+    const obvious = !!(prevM && prevM.captured && m.to === prevM.to) || !!(m.captured && VAL[m.captured] >= VAL[m.piece]);
+    // Großartig: einziger guter Zug (zweitbester deutlich schlechter) – aber nicht bei offensichtlichen Zügen
+    if (cls === 'best' && before.lines[1] && !obvious) {
       const wp1 = c === 'w' ? winPct(before.lines[0]) : 100 - winPct(before.lines[0]);
       const wp2 = c === 'w' ? winPct(before.lines[1]) : 100 - winPct(before.lines[1]);
       if (wp1 - wp2 >= 15 && wpA >= 40 && wpB < 95) cls = 'great';
@@ -136,7 +139,7 @@ function finish(game, P, res, quality) {
     if ((cls === 'best' || cls === 'great' || cls === 'excellent') && wpB < 95 && wpA >= 45 && after.lines[0]) {
       const b0 = bal(new Chess(P.fens[i]), c);
       const seq = balAlong(P.fens[i + 1], after.lines[0].pv, c, 4);
-      if (seq.length >= 2 && seq[0] <= b0 - 2 && seq[1] <= b0 - 2 && m.piece !== 'p') cls = 'brilliant';
+      if (!obvious && seq.length >= 2 && seq[0] <= b0 - 2 && seq[1] <= b0 - 2 && m.piece !== 'p') cls = 'brilliant';
     }
     // Verpasst: Gegner hat zuvor gepatzt, und du nutzt es nicht
     if ((cls === 'mistake' || cls === 'blunder' || cls === 'inaccuracy') && i > 0 && ['mistake', 'blunder', 'miss'].includes(out[i - 1].cls) && loss >= 10 && wpB >= 55 && !(cls === 'blunder' && wpA < 30)) cls = 'miss';
@@ -168,7 +171,7 @@ function finish(game, P, res, quality) {
     const mat = material(new Chess(P.fens[i]));
     const phase = i < 20 && mat.nonPawn > 50 ? 'opening' : mat.nonPawn <= 26 ? 'endgame' : 'middlegame';
     const pressure = m.clock != null && P.base ? (m.clock < Math.min(30, P.base * 0.1)) : false;
-    out.push({ cls, loss: +loss.toFixed(1), acc: +acc.toFixed(1), wpB: +wpB.toFixed(1), wpA: +wpA.toFixed(1), best, err, phase, pressure });
+    out.push({ cls, loss: +loss.toFixed(1), acc: +acc.toFixed(1), wpB: +wpB.toFixed(1), wpA: +wpA.toFixed(1), best, err, phase, pressure, obvious });
   }
 
   const accOf = c => {

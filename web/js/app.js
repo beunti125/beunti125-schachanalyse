@@ -42,11 +42,10 @@ const openingOf = g => ((g.eco || '').split('/openings/')[1] || '').replace(/-/g
 
 // ---------- Laden ----------
 async function loadUser(user, fromCache) {
-  st.user = user.trim(); S.ls.set('user', st.user); $('#user').value = '';
+  st.user = user.trim(); $('#user').value = '';
   if (!st.user) return;
-  saveCfg({ user: st.user });
-  linkProfile(st.user); renderProfile();
-  st.analysesShown = null;
+  if (!st.me) setMine(st.user);
+  renderProfile();
   const cachedStats = S.ls.get('stats:' + st.user.toLowerCase(), null);
   if (cachedStats) renderRatings(cachedStats);
   st.games = await S.cachedGames(st.user);
@@ -179,11 +178,12 @@ function go(ply) {
   if (ply > 0 && st.mode !== 'mov') setMode('mov');
   const i = ply - 1, mv = i >= 0 ? P.moves[i] : null, cls = i >= 0 ? an.moves[i] : null;
   board.setPosition(P.fens[ply], { last: mv ? { from: mv.from, to: mv.to } : null, animate: true, badge: mv && cls.cls !== 'forced' ? { sq: mv.to, cls: cls.cls } : null });
-  st.ex = cls ? explain(g, an, P, i, { my: me(g), hist: st.hist }) : null; st.step = 0;
+  st.ex = cls ? explain(g, an, P, i, { my: me(g), hist: st.hist, elo: (me(g) === 'w' ? g.white : g.black).rating }) : null; st.step = 0;
   st.hint = 0; updHint();
-  const os = cls ? openingStep(P.fens, ply, me(g), an.lines[ply]?.[0]?.pv) : null;
+  const os = cls && !['mistake', 'miss', 'blunder'].includes(cls.cls) ? openingStep(P.fens, ply, me(g), an.lines[ply]?.[0]?.pv) : null;
   if (os) { os.last = { from: mv.from, to: mv.to }; if (cls.cls === 'book') st.ex.steps.splice(1, 0, os); else st.ex.steps.push(os); }
-  renderSteps(); applyStep(0);
+  stopAuto();
+  renderSteps(); applyStep(0); startAuto();
   const ev = an.evals[ply], wp = winPct(ev), flip = board.orientation === 'b';
   setEvalBar(ev);
   // Spieler + Uhr
@@ -269,6 +269,7 @@ function onReviewMove(from, to, promo) {
   showVar(true);
 }
 async function showVar(animate) {
+  stopAuto();
   const v = st.var, fen = v.fens[v.idx], mv = v.moves[v.idx - 1];
   board.setPosition(fen, { last: mv ? { from: mv.from, to: mv.to } : null, animate }); board.setArrows([]); board.setMarks({});
   board.setMovable(movableColor(fen));
@@ -360,8 +361,14 @@ function renderSteps() {
   const el = $('#steps'), ex = st.ex;
   if (!ex || !ex.steps.length) { el.innerHTML = ''; el.style.display = 'none'; return; }
   el.style.display = '';
-  const n = ex.steps.length;
-  el.innerHTML = `<div class="step-text"></div>` + (n > 1 ? `<div class="steps-nav"><button data-s="-1" title="Zurück (↑)">◀</button><span class="dots">${ex.steps.map((_, k) => `<i data-k="${k}"></i>`).join('')}</span><button data-s="1" title="Weiter (↓)">▶</button></div>` : '');
+  el.innerHTML = ex.steps.map((s, k) => `<div class="st-line ${k === st.step ? 'on' : ''}" data-k="${k}">${esc(s.text)}</div>`).join('');
+}
+// Folge automatisch auf dem Brett abspielen, danach zurück zur Partiestellung
+function stopAuto() { clearTimeout(st.autoT); st.autoT = null; }
+function startAuto() {
+  stopAuto(); const n = st.ex?.steps.length || 0; if (n < 2) return;
+  const tick = k => { st.autoT = setTimeout(() => { if (k < n) { applyStep(k); tick(k + 1); } else { applyStep(0); st.autoT = null; } }, k === 1 ? 1400 : 1700); };
+  tick(1);
 }
 function applyStep(k) {
   const ex = st.ex, i = st.ply - 1;
@@ -374,8 +381,7 @@ function applyStep(k) {
   st.step = k;
   const live0 = s.fen === st.P.fens[st.ply];
   board.setArrows([...s.arrows, ...(live0 ? bestArrow() : [])]); board.setMarks({ ...s.marks, ...(live0 ? hintMarks() : {}) });
-  const tx = document.querySelector('#steps .step-text'); if (tx) tx.textContent = s.text;
-  document.querySelectorAll('#steps .dots i').forEach(e => e.classList.toggle('on', +e.dataset.k === k));
+  document.querySelectorAll('#steps .st-line').forEach(e => e.classList.toggle('on', +e.dataset.k === k));
 }
 function curBest() { if (st.var) return live.get(st.var.fens[st.var.idx])?.best; return st.an.lines[st.ply]?.[0]?.move; }
 function bestArrow() { const nb = curBest(); return st.hint === 2 && nb ? [{ from: nb.slice(0, 2), to: nb.slice(2, 4), color: 'rgba(91,143,199,.85)' }] : []; }
@@ -579,45 +585,53 @@ const pboard = new Board($('#puzzleBoard'), { onMove: onPuzzleMove });
 new ResizeObserver(() => { $('.evalbar').style.height = $('#reviewBoard').offsetHeight + 'px'; }).observe($('#reviewBoard'));
 
 document.querySelectorAll('nav button').forEach(b => b.onclick = () => show(b.dataset.view));
-$('#userForm').onsubmit = e => { e.preventDefault(); const u = $('#user').value.trim(); if (!u) return; closeProfMenu(); loadUser(u); };
+$('#userForm').onsubmit = e => { e.preventDefault(); const u = $('#user').value.trim(); if (!u) return; closeProfMenu(); $('#ratings').innerHTML = ''; loadUser(u); };
 $('#reloadBtn').onclick = () => st.user ? loadUser(st.user) : openProfMenu();
 
-// ---------- Profile: einmal verknüpfen, dauerhaft wieder aufrufen ----------
-st.profiles = [];
+// ---------- Profil: nur das eigene wird dauerhaft verknüpft, andere Spieler werden gesucht ----------
+st.profiles = []; st.me = '';
+const lc = x => (x || '').toLowerCase();
 function avatarSrc(url) { return url ? '/api/img?u=' + encodeURIComponent(url) : ''; }
 function avHtml(p) {
   const letter = esc((p?.user || '?')[0].toUpperCase());
   return p?.avatar ? `<img src="${avatarSrc(p.avatar)}" alt="" onerror="this.outerHTML='<b>${letter}</b>'">` : `<b>${letter}</b>`;
 }
+st.avatars = {};
+async function avatarOf(user) {
+  if (!user) return null; const k = lc(user);
+  if (!(k in st.avatars)) { st.avatars[k] = null; const info = await S.loadPlayer(user); st.avatars[k] = info?.avatar || null; renderProfile(); }
+  return st.avatars[k];
+}
 function renderProfile() {
-  const cur = st.profiles.find(p => p.user.toLowerCase() === st.user.toLowerCase());
-  $('#profAv').innerHTML = st.user ? avHtml(cur || { user: st.user }) : '<b>+</b>';
-  $('#profName').textContent = st.user || 'Profil verknüpfen';
-  $('#profList').innerHTML = st.profiles.map((p, i) => `<div class="prof-item ${p.user.toLowerCase() === st.user.toLowerCase() ? 'on' : ''}" data-i="${i}"><span class="prof-av">${avHtml(p)}</span><span class="pi-name">${esc(p.user)}</span><button class="pi-del" data-del="${i}" title="Verknüpfung entfernen">✕</button></div>`).join('') || '<div class="prof-empty">Noch kein Profil verknüpft.</div>';
+  const mine = st.me && lc(st.user) === lc(st.me);
+  $('#profAv').innerHTML = st.user ? avHtml({ user: st.user, avatar: st.avatars[lc(st.user)] }) : '<b>+</b>';
+  $('#profName').innerHTML = st.user ? `${esc(st.user)}${mine ? '' : ' <span class="tag">angesehen</span>'}` : 'Profil verknüpfen';
+  avatarOf(st.user); if (st.me) avatarOf(st.me);
+  $('#profList').innerHTML = st.me
+    ? `<div class="prof-label">Mein Profil</div><div class="prof-item ${mine ? 'on' : ''}" data-me="1"><span class="prof-av">${avHtml({ user: st.me, avatar: st.avatars[lc(st.me)] })}</span><span class="pi-name">${esc(st.me)}</span></div>` +
+      (!mine && st.user ? `<button class="prof-set" id="setMine" type="button">„${esc(st.user)}“ als mein Profil festlegen</button>` : '')
+    : '<div class="prof-label">Verknüpfe zuerst dein eigenes chess.com-Profil</div>';
+  $('#user').placeholder = st.me ? 'Spieler suchen …' : 'Dein chess.com-Name';
 }
-async function linkProfile(user) {
-  const lc = user.toLowerCase();
-  let p = st.profiles.find(x => x.user.toLowerCase() === lc);
-  if (!p) { p = { user }; st.profiles.push(p); }
-  if (!p.avatar) { const info = await S.loadPlayer(user); if (info?.avatar) p.avatar = info.avatar; if (info?.username) p.user = info.username; }
-  saveCfg({ profiles: st.profiles }); renderProfile();
+function setMine(user) {
+  st.me = user; S.ls.set('user', user);
+  saveCfg({ user, profiles: [{ user }] });
 }
-function openProfMenu() { $('#profMenu').classList.add('on'); setTimeout(() => $('#user').focus(), 30); }
+function openProfMenu() { renderProfile(); $('#profMenu').classList.add('on'); setTimeout(() => $('#user').focus(), 30); }
 function closeProfMenu() { $('#profMenu').classList.remove('on'); }
 $('#profBtn').onclick = e => { e.stopPropagation(); $('#profMenu').classList.contains('on') ? closeProfMenu() : openProfMenu(); };
 $('#profMenu').onclick = e => {
   e.stopPropagation();
-  const d = e.target.closest('[data-del]');
-  if (d) { const p = st.profiles.splice(+d.dataset.del, 1)[0]; saveCfg({ profiles: st.profiles }); if (p && p.user.toLowerCase() === st.user.toLowerCase()) { st.user = st.profiles[0]?.user || ''; S.ls.set('user', st.user); saveCfg({ user: st.user }); if (st.user) loadUser(st.user, true); else { st.games = []; renderGames(); $('#ratings').innerHTML = ''; } } renderProfile(); return; }
-  const it = e.target.closest('.prof-item');
-  if (it) { closeProfMenu(); const p = st.profiles[+it.dataset.i]; if (p.user.toLowerCase() !== st.user.toLowerCase()) { $('#ratings').innerHTML = ''; loadUser(p.user, true).then(() => S.cachedGames(p.user).then(g => { if (!g.length) loadUser(p.user); })); } }
+  if (e.target.closest('#setMine')) { setMine(st.user); renderProfile(); toast(`${st.user} ist jetzt dein Profil.`); return; }
+  if (e.target.closest('[data-me]')) { closeProfMenu(); if (lc(st.user) !== lc(st.me)) { $('#ratings').innerHTML = ''; loadUser(st.me, true); } }
 };
 document.addEventListener('click', () => closeProfMenu());
 $('#quality').value = st.quality; $('#quality').onchange = e => { st.quality = e.target.value; S.ls.set('quality', st.quality); };
 $('#tcFilter').onclick = e => { const b = e.target.closest('button'); if (!b) return; st.tc = b.dataset.tc; $('#tcFilter').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); renderGames(); };
 $('#gameList').onclick = e => { const r = e.target.closest('.g-row'); if (r) openReview(filtered()[+r.dataset.i]); };
 $('#batchBtn').onclick = batch;
-$('#steps').onclick = e => { const b = e.target.closest('[data-s]'); if (b) return applyStep(st.step + +b.dataset.s); const d = e.target.closest('[data-k]'); if (d) applyStep(+d.dataset.k); };
+$('#steps').onclick = e => { stopAuto(); const d = e.target.closest('[data-k]'); if (d) applyStep(+d.dataset.k); };
+$('#reviewBoard').addEventListener('pointerdown', () => stopAuto());
 // Klick auf eine Stufe in der Tabelle → zum (nächsten) Zug dieser Stufe springen
 $('#clsTable').onclick = e => {
   const c = e.target.closest('.jump'); if (!c || !st.an) return;
@@ -630,7 +644,7 @@ $('#varLine').onclick = e => { const m = e.target.closest('[data-vi]'); if (m &&
 $('#moveList').onclick = e => { const m = e.target.closest('.mv'); if (m) go(+m.dataset.ply); };
 $('#graph').onclick = e => { if (!st.an) return; const b = e.currentTarget.getBoundingClientRect(); go(Math.round((e.clientX - b.left) / b.width * (st.an.evals.length - 1))); };
 document.querySelector('.controls').onclick = e => { const n = e.target.closest('[data-nav]')?.dataset.nav; if (!n) return; go({ first: 0, prev: st.ply - 1, next: st.ply + 1, last: 1e9 }[n]); };
-$('#hintBtn').onclick = () => { st.hint = ((st.hint || 0) + 1) % 3; updHint(); if (st.var) applyVarHint(); else applyStep(st.step); };
+$('#hintBtn').onclick = () => { stopAuto(); st.hint = ((st.hint || 0) + 1) % 3; updHint(); if (st.var) applyVarHint(); else applyStep(st.step); };
 $('#nextBtn').onclick = () => { if (st.var) { if (st.var.idx < st.var.moves.length) { st.var.idx++; showVar(true); } } else go(st.ply + 1); };
 $('#startBtn').onclick = () => go(Math.max(1, st.ply));
 $('#flipBtn').onclick = () => { board.flip(); if (st.an) { renderGraph(); go(st.ply); } };
@@ -667,6 +681,7 @@ document.addEventListener('keydown', e => {
   if (st.view === 'review' && e.key === '/' ) { openPicker(); e.preventDefault(); return; }
   if (st.view === 'review' && e.key === 'Escape' && !isFull()) { show('games'); return; }
   if (st.view !== 'review' || e.target.matches('input,select')) return;
+  stopAuto();
   if (st.var) {
     if (e.key === 'ArrowLeft') { if (st.var.idx > 0) { st.var.idx--; showVar(false); } else go(st.var.base); e.preventDefault(); return; }
     if (e.key === 'ArrowRight') { if (st.var.idx < st.var.moves.length) { st.var.idx++; showVar(true); } e.preventDefault(); return; }
@@ -686,13 +701,10 @@ async function initCfg() {
     $('#autoOpen').checked = c.autoOpen; $('#autostart').checked = c.autostart;
     if (c.version) $('#verLabel').textContent = 'Version ' + c.version;
     st.version = c.version;
-    st.profiles = Array.isArray(c.profiles) ? c.profiles : [];
-    if (!st.user && c.user) { st.user = c.user; S.ls.set('user', c.user); }
-    else if (st.user && c.user !== st.user) saveCfg({ user: st.user });
-    if (st.user && !st.profiles.some(p => p.user.toLowerCase() === st.user.toLowerCase())) linkProfile(st.user);
+    st.me = c.user || st.user || '';
+    if (st.me && c.user !== st.me) saveCfg({ user: st.me });
+    st.user = st.me;
     renderProfile();
-    // fehlende Avatare nachladen
-    for (const p of st.profiles.filter(p => !p.avatar)) S.loadPlayer(p.user).then(info => { if (info?.avatar) { p.avatar = info.avatar; if (info.username) p.user = info.username; saveCfg({ profiles: st.profiles }); renderProfile(); } });
   } catch {}
 }
 $('#quitBtn').onclick = async () => {

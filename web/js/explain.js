@@ -35,7 +35,7 @@ function describe(fen, u) {
   }
   if (c.inCheck() && targets.length) { parts.push(`greift dabei ${list(targets.map(t => AKK[t.type] + ' auf ' + t.square))} an – Doppelangriff`); }
   else if (targets.length >= 2) parts.push(`greift ${list(targets.map(t => AKK[t.type] + ' auf ' + t.square))} gleichzeitig an – eine Gabel`);
-  else if (targets.length === 1) parts.push(`greift ${AKK[targets[0].type]} auf ${targets[0].square} an${c.attackers(targets[0].square, opp).length ? '' : ', der ungedeckt ist'}`);
+  else if (targets.length === 1) parts.push(`greift ${AKK[targets[0].type]} auf ${targets[0].square} an${c.attackers(targets[0].square, opp).length ? '' : (targets[0].type === 'q' ? ', die' : ', der') + ' ungedeckt ist'}`);
   targets.forEach(t => marks[t.square] = 'bad');
   if (c.inCheck()) { const k = c.board().flat().find(p => p && p.type === 'k' && p.color === opp); marks[k.square] = 'bad'; }
   return { san: m.san, text: parts.join(', '), marks, r };
@@ -50,6 +50,21 @@ function pawnWeak(fen, col) {
 const castleRights = (fen, col) => { const f = fen.split(' ')[2]; return col === 'w' ? /[KQ]/.test(f) : /[kq]/.test(f); };
 // Materialbilanz am Ende einer Zugfolge relativ zu einer Ausgangsstellung
 function lineEnd(fen, pv, n) { let f = fen; for (const u of (pv || []).slice(0, n)) { const r = mv(f, u); if (!r) break; f = r.fen; } return f; }
+
+// Ist ein Zug für Menschen naheliegend? (Schlagen, Schach, Rochade, Entwicklung, Zentrumsbauer)
+function natural(fen, u, ply) {
+  const r = mv(fen, u); if (!r) return false; const m = r.m;
+  if (m.captured || r.c.inCheck() || m.san.startsWith('O-O')) return true;
+  if (ply < 30 && (m.piece === 'n' || m.piece === 'b') && (m.from[1] === '1' || m.from[1] === '8')) return true;
+  if (m.piece === 'p' && 'de'.includes(m.to[0]) && ply < 20) return true;
+  return false;
+}
+// Menschliche Alternative: zweitbester Zug, fast gleich gut und naheliegender als der Engine-Zug
+function humanAlt(fen, lines, ply) {
+  const [l1, l2] = lines || []; if (!l1 || !l2) return null;
+  const close = Math.abs(winPct(l1) - winPct(l2)) <= 4;
+  return close && !natural(fen, l1.move, ply) && natural(fen, l2.move, ply) ? l2 : null;
+}
 
 const sent = (who, d) => `${who} ${d.san}${d.text ? ' – ' + d.text.replace(/ – /g, ': ') : ''}.`;
 const arrow = (u, color, label) => ({ from: u.slice(0, 2), to: u.slice(2, 4), color, label });
@@ -119,17 +134,24 @@ export function explain(game, an, P, i, ctx = {}) {
   } else if (x.cls === 'forced') {
     steps.push({ fen: after, last, arrows: [], marks: {}, text: 'Das war der einzige legale Zug – da gab es nichts zu entscheiden.' });
   } else if (x.cls === 'brilliant') {
-    const capT = reply && mv(after, reply.move)?.m.to === m.to;
-    const pron = m.piece === 'q' ? 'sie' : 'ihn';
-    steps.push({ fen: after, last, arrows: reply ? [arrow(reply.move, you ? COL.red : COL.grey, 1)] : [], marks: { [m.to]: 'brill' },
-      text: you
-        ? `Wow – brillant! Du opferst ${AKK[m.piece]} auf ${m.to}. ${capT ? `${oppName} kann ${pron} mit ${mv(after, reply.move).m.san} schlagen – aber genau darauf hast du spekuliert.` : `${oppName} traut sich nicht, ${pron} zu nehmen – zu Recht.`}`
-        : `Respekt an ${oppName}: brillant. ${AKK[m.piece][0].toUpperCase() + AKK[m.piece].slice(1)} auf ${m.to} wird geopfert. ${capT ? `Du kannst ${pron} mit ${mv(after, reply.move).m.san} schlagen – aber das hilft dir nicht.` : ''}` });
-    if (reply) {
-      const r1 = mv(after, reply.move);
-      const end = playLine(r1.fen, reply.pv.slice(1), 4, 1, you ? { me: COL.teal, them: COL.red } : { me: COL.grey, them: COL.teal });
-      steps.push({ fen: end, last: null, arrows: [], marks: {}, text: `${outcome(before, end)} Bewertung danach: ${evA}. ${you ? 'So ein Zug bleibt hängen – stark gesehen!' : 'Solche Opfer lernst du am besten, indem du sie dir merkst: Was hat die Figur danach geöffnet?'}` });
-    }
+    // Was opfert wer – und warum lohnt es sich?
+    const r1 = reply ? mv(after, reply.move) : null;
+    const capT = r1 && r1.m.to === m.to;
+    const check = new Chess(after).inCheck();
+    const giver = you ? 'Du opferst' : `${oppName} opfert`;
+    let t = `${you ? 'Brillant! ' : ''}${giver} ${AKK[m.piece]} auf ${m.to}${check ? ' mit Schach' : ''}. `;
+    const follow = reply && reply.pv[1] && r1 ? describe(r1.fen, reply.pv[1]) : null;
+    const endF = reply ? lineEnd(after, reply.pv, 6) : after;
+    const gain = bal(endF, c) - bal(before, c);
+    const mateLine = an.evals[i + 1].mate != null && an.evals[i + 1].mate * (c === 'w' ? 1 : -1) > 0;
+    if (capT) t += `${you ? `Nimmt ${oppName}` : 'Schlägst du'} mit ${r1.m.san}, folgt ${follow ? follow.san + (follow.text ? ' – ' + follow.text : '') : 'ein Angriff'}. `;
+    else if (r1) t += `Annehmen geht nicht gut, deshalb ${you ? oppName + ' spielt' : 'musst du'} ${r1.m.san}${you ? '' : ' spielen'}. `;
+    t += mateLine ? 'Am Ende steht Matt.' : gain >= 1 ? `Unterm Strich ${you ? 'gewinnst du' : 'gewinnt ' + oppName} ${lossName(gain)}.` : 'Dafür gibt es starken Angriff und Initiative.';
+    const arr = [];
+    if (r1) arr.push(arrow(reply.move, you ? COL.grey : COL.red));
+    if (follow && r1) arr.push(arrow(reply.pv[1], COL.teal));
+    steps.push({ fen: after, last, arrows: arr, marks: { [m.to]: 'brill', ...(follow?.marks || {}) }, text: t });
+    if (reply && reply.pv.length > 2) { let f2 = after; for (const u of reply.pv.slice(0, 2)) f2 = mv(f2, u)?.fen || f2; playLine(f2, reply.pv.slice(2), ctx.elo && ctx.elo < 1200 ? 2 : 4, 2, you ? { me: COL.teal, them: COL.grey } : { me: COL.grey, them: COL.teal }); }
   } else if (x.cls === 'great') {
     steps.push({ fen: after, last, arrows: [], marks: self.marks, text: you
       ? `${pick(['Genau richtig erkannt!', 'Stark gefunden!', 'Sehr gut gesehen!'], seed)} Der einzige gute Zug in dieser Stellung.${self.text ? ' Der Zug ' + self.text + '.' : ''}`
@@ -139,6 +161,9 @@ export function explain(game, an, P, i, ctx = {}) {
       steps.push({ fen: before, last: lastPrev, arrows: [arrow(m.uci, COL.blue, 1), arrow(second.move, COL.grey, 2)], marks: {},
         text: `${you ? `Viele hätten hier ${d2.san} gespielt` : `Naheliegend wäre ${d2.san} gewesen`} – das hätte etwa ${drop} % Gewinnchance gekostet (${myEv(second)} statt ${myEv(best)}).` });
     }
+  } else if (x.obvious && ['best', 'excellent', 'good', 'great'].includes(x.cls)) {
+    const re = i > 0 && P.moves[i - 1].captured && m.to === P.moves[i - 1].to;
+    steps.push({ fen: after, last, arrows: [], marks: {}, text: re ? (you ? 'Klar: zurückschlagen.' : `${oppName} schlägt zurück – klar.`) : `${you ? 'Klar' : oppName}: ${AKK[m.captured]} schlagen, ${m.captured === m.piece || VAL[m.captured] === VAL[m.piece] ? 'gleichwertiger Tausch' : 'mehr wert als die eigene Figur'}.` });
   } else if (['best', 'excellent', 'good'].includes(x.cls)) {
     const head = you
       ? { best: pick(['Sauber gespielt – der beste Zug.', 'Genau so – der beste Zug.', 'Top – der beste Zug.'], seed), excellent: 'Exzellent – fast perfekt.', good: 'Solide.' }[x.cls]
@@ -194,7 +219,10 @@ export function explain(game, an, P, i, ctx = {}) {
       const end = playLine(before, best.pv, 4, 0, { me: COL.green, them: COL.grey });
       const g = outcome(before, end); if (g.includes('gewinnst') || g.includes('setzt du matt')) steps.push({ fen: end, last: null, arrows: [], marks: {}, text: g.replace('Unterm Strich', 'So') });
     } else if (reply) {
-      const end = playLine(after, reply.pv, x.cls === 'inaccuracy' ? 2 : 4, 0, { me: COL.grey, them: COL.red });
+      // die Antwort steht schon im ersten Satz → Folge erst danach abspielen
+      const skip = kind === 'loss' || kind === 'tempo' ? 1 : 0;
+      const startF = skip ? (mv(after, reply.move)?.fen || after) : after;
+      const end = playLine(startF, reply.pv.slice(skip), (x.cls === 'inaccuracy' ? 2 : (ctx.elo && ctx.elo < 1200 ? 3 : 4)) - skip, skip, { me: COL.grey, them: COL.red });
       const oc = outcome(before, end);
       if (oc && !oc.includes('gewinnst') && !oc.includes('setzt du matt')) steps.push({ fen: end, last: null, arrows: [], marks: {}, text: oc });
     }
@@ -206,6 +234,8 @@ export function explain(game, an, P, i, ctx = {}) {
       steps.push({ fen: before, last: lastPrev, arrows: [arrow(m.uci, COL.red, '✕'), arrow(best.move, COL.green, '✓')], marks: db.marks,
         text: `Besser war ${db.san}${db.text ? ' – ' + db.text : ''} (${myEv(best)}). Zum Beispiel: ${line.join(' ')}.` });
     }
+    const ha = humanAlt(before, an.lines[i], i);
+    if (ha) { const hs = mv(before, ha.move)?.m.san; steps.push({ fen: before, last: lastPrev, arrows: [arrow(ha.move, COL.green)], marks: {}, text: `Einfacher zu finden und fast genauso gut: ${hs}.` }); }
     if (x.err && LESSON[x.err] && x.cls !== 'inaccuracy') steps[steps.length - 1].text += ` Merksatz: ${LESSON[x.err]}`;
   } else {
     // Fehler deines Gegners – deine Chance
