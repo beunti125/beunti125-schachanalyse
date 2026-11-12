@@ -23,7 +23,7 @@ function describe(fen, u) {
   const { c, m } = r, opp = m.color === 'w' ? 'b' : 'w', parts = [], marks = {};
   if (m.captured) parts.push(`schlägt ${AKK[m.captured]} auf ${m.to}`);
   if (m.promotion) parts.push(`wandelt in ${m.promotion === 'q' ? 'eine Dame' : NAME[m.promotion]} um`);
-  if (c.isCheckmate()) return { san: m.san, text: (parts.length ? parts.join(', ') + ' – ' : '') + 'Schachmatt', marks, r, mate: true };
+  if (c.isCheckmate()) return { san: m.san, text: (parts.length ? parts.join(', ') + ' und ' : '') + 'setzt matt', marks, r, mate: true };
   if (c.inCheck()) parts.push('gibt Schach');
   // Was greift die gezogene Figur jetzt an?
   const targets = [];
@@ -145,23 +145,31 @@ export function explain(game, an, P, i, ctx = {}) {
   } else if (x.cls === 'forced') {
     steps.push({ fen: after, last, arrows: [], marks: {}, text: 'Das war der einzige legale Zug – da gab es nichts zu entscheiden.' });
   } else if (x.cls === 'brilliant') {
-    // Was opfert wer – und warum lohnt es sich?
+    // Was opfert wer – und warum lohnt es sich? Geopfert ist die Figur aus der Analyse (x.sac), nicht automatisch die gezogene.
+    const sac = x.sac || { piece: m.piece, square: m.to };
     const r1 = reply ? mv(after, reply.move) : null;
-    const capT = r1 && r1.m.to === m.to;
+    const capT = !!(r1 && r1.m.captured && r1.m.to === sac.square);
     const check = new Chess(after).inCheck();
     const giver = you ? 'Du opferst' : `${oppName} opfert`;
-    let t = `${you ? 'Brillant! ' : ''}${giver} ${AKK[m.piece]} auf ${m.to}${check ? ' mit Schach' : ''}. `;
+    const how = sac.square === m.to ? (check ? ' mit Schach' : '') : ` und lässt ${sac.piece === 'q' ? 'sie' : 'ihn'} einfach stehen`;
+    let t = `${you ? 'Brillant! ' : ''}${giver} ${AKK[sac.piece]} auf ${sac.square}${how}. `;
     const follow = reply && reply.pv[1] && r1 ? describe(r1.fen, reply.pv[1]) : null;
     const endF = reply ? lineEnd(after, reply.pv, 6) : after;
     const gain = bal(endF, c) - bal(before, c);
     const mateLine = an.evals[i + 1].mate != null && an.evals[i + 1].mate * (c === 'w' ? 1 : -1) > 0;
     if (capT) t += `${you ? `Nimmt ${oppName}` : 'Schlägst du'} mit ${r1.m.san}, folgt ${follow ? follow.san + (follow.text ? ' – ' + follow.text : '') : 'ein Angriff'}. `;
-    else if (r1) t += `Annehmen geht nicht gut, deshalb ${you ? 'spielt ' + oppName : 'musst du'} ${r1.m.san}${you ? '' : ' spielen'}. `;
+    else if (r1) {
+      // Opfer abgelehnt: der naheliegende Schlag auf das Opferfeld (billigste Figur) geht schief
+      const take = new Chess(after).moves({ verbose: true }).filter(y => y.to === sac.square && y.captured).sort((a, b) => VAL[a.piece] - VAL[b.piece])[0];
+      const AKK_GROSS = AKK[sac.piece][0].toUpperCase() + AKK[sac.piece].slice(1);
+      t += take ? `${AKK_GROSS} zu nehmen (${take.san}) geht schief – deshalb ${you ? 'spielt ' + oppName : 'spielst du am besten'} ${r1.m.san}. `
+        : `${you ? oppName + ' antwortet' : 'Du antwortest am besten'} mit ${r1.m.san}. `;
+    }
     t += mateLine ? 'Am Ende steht Matt.' : gain >= 1 ? `Unterm Strich ${you ? 'gewinnst du' : 'gewinnt ' + oppName} ${lossName(gain)}.` : 'Dafür gibt es starken Angriff und Initiative.';
     const arr = [];
     if (r1) arr.push(arrow(reply.move, you ? COL.grey : COL.red));
     if (follow && r1) arr.push(arrow(reply.pv[1], COL.teal));
-    steps.push({ fen: after, last, arrows: arr, marks: { [m.to]: 'brill', ...(follow?.marks || {}) }, text: t });
+    steps.push({ fen: after, last, arrows: arr, marks: { [m.to]: 'brill', [sac.square]: 'brill', ...(follow?.marks || {}) }, text: t });
     if (reply && reply.pv.length > 2) { let f2 = after; for (const u of reply.pv.slice(0, 2)) f2 = mv(f2, u)?.fen || f2; playLine(f2, reply.pv.slice(2), ctx.elo && ctx.elo < 1200 ? 2 : 4, 2, you ? { me: COL.teal, them: COL.grey } : { me: COL.grey, them: COL.teal }); }
   } else if (x.cls === 'great') {
     steps.push({ fen: after, last, arrows: [], marks: self.marks, text: you
@@ -172,6 +180,8 @@ export function explain(game, an, P, i, ctx = {}) {
       steps.push({ fen: before, last: lastPrev, arrows: [arrow(m.uci, COL.blue, 1), arrow(second.move, COL.grey, 2)], marks: {},
         text: `${you ? `Viele hätten hier ${d2.san} gespielt` : `Naheliegend wäre ${d2.san} gewesen`} – das hätte etwa ${drop} % Gewinnchance gekostet (${myEv(second)} statt ${myEv(best)}).` });
     }
+  } else if (self.mate && ['best', 'excellent', 'good'].includes(x.cls)) {
+    steps.push({ fen: after, last, arrows: [], marks: self.marks, text: you ? `Schachmatt mit ${m.san} – sauber zu Ende gespielt.` : `${oppName} setzt mit ${m.san} matt.` });
   } else if (x.obvious && ['best', 'excellent', 'good', 'great'].includes(x.cls)) {
     const re = i > 0 && P.moves[i - 1].captured && m.to === P.moves[i - 1].to;
     steps.push({ fen: after, last, arrows: [], marks: {}, text: re ? (you ? 'Klar: zurückschlagen.' : `${oppName} schlägt zurück – klar.`) : `${you ? 'Klar' : oppName}: ${AKK[m.captured]} schlagen, ${m.captured === m.piece || VAL[m.captured] === VAL[m.piece] ? 'gleichwertiger Tausch' : 'mehr wert als die eigene Figur'}.` });

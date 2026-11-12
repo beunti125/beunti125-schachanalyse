@@ -91,7 +91,7 @@ function renderGames() {
 // Alte Analysen auf die aktuelle Einstufung bringen (sofort, ohne Engine)
 async function upgradeAnalyses() {
   const up = [];
-  for (const g of st.games) { const a = st.analyses.get(g.url); if (a && (a.v || 1) < 6) { try { const n = reclassify(g, a); st.analyses.set(g.url, n); up.push(n); } catch {} } }
+  for (const g of st.games) { const a = st.analyses.get(g.url); if (a && (a.v || 1) < 7) { try { const n = reclassify(g, a); st.analyses.set(g.url, n); up.push(n); } catch {} } }
   if (up.length) await S.putMany('analyses', up);
 }
 
@@ -765,7 +765,7 @@ async function brilList() {
   const items = [], up = []; let analysed = 0;
   for (const g of games) {
     let an = st.analyses.get(g.url); if (!an) continue;
-    if ((an.v || 1) < 6) { try { an = reclassify(g, an); st.analyses.set(g.url, an); up.push(an); } catch { continue; } }
+    if ((an.v || 1) < 7) { try { an = reclassify(g, an); st.analyses.set(g.url, an); up.push(an); } catch { continue; } }
     analysed++;
     const c = me(g); let P = null;
     an.moves.forEach((m, i) => { if (m.cls !== 'brilliant') return; P = P || parseGame(g); if (P.moves[i].color === c) items.push({ g, i, P }); });
