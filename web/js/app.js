@@ -415,12 +415,14 @@ function renderErrors() {
     o.n++; o[resultOf(g)]++;
     const an = st.analyses.get(g.url); if (an?.accuracy[c] != null) o.acc.push(an.accuracy[c]);
   }
-  const ops = Object.values(op).sort((a, b) => b.n - a.n).slice(0, 12);
-  const opTable = `<table class="op"><tr><th>Eröffnung</th><th>Farbe</th><th class="r">Partien</th><th>S / R / N</th><th class="r">Punkte</th><th class="r">Ø Gen.</th></tr>` +
-    ops.map(o => { const sc = Math.round(100 * (o.w + o.d / 2) / o.n); return `<tr><td>${esc(o.name)}</td><td>${o.c === 'w' ? 'Weiß' : 'Schwarz'}</td><td class="r">${o.n}</td><td><div class="wdl"><i style="width:${100 * o.w / o.n}%"></i><i style="width:${100 * o.d / o.n}%"></i><i style="width:${100 * o.l / o.n}%"></i></div></td><td class="r" style="color:${sc < 40 ? 'var(--red)' : sc >= 60 ? 'var(--acc)' : ''}">${sc} %</td><td class="r">${o.acc.length ? (o.acc.reduce((a, b) => a + b, 0) / o.acc.length).toFixed(1) : '–'}</td></tr>`; }).join('') + '</table>';
+  // nach Siegquote sortiert; Eröffnungen mit nur 1 Partie ans Ende (sonst zufällige 100 %)
+  const wr = o => o.w / o.n;
+  const ops = Object.values(op).sort((a, b) => (b.n > 1) - (a.n > 1) || wr(b) - wr(a) || b.n - a.n).slice(0, 15);
+  const opTable = `<table class="op"><tr><th>Eröffnung</th><th>Farbe</th><th class="r">Partien</th><th>S / R / N</th><th class="r">Siegquote</th><th class="r">Ø Gen.</th></tr>` +
+    ops.map(o => { const sc = Math.round(100 * o.w / o.n); return `<tr${o.n < 2 ? ' style="opacity:.55"' : ''}><td>${esc(o.name)}</td><td>${o.c === 'w' ? 'Weiß' : 'Schwarz'}</td><td class="r">${o.n}</td><td><div class="wdl"><i style="width:${100 * o.w / o.n}%"></i><i style="width:${100 * o.d / o.n}%"></i><i style="width:${100 * o.l / o.n}%"></i></div></td><td class="r" style="color:${sc < 40 ? 'var(--red)' : sc >= 60 ? 'var(--acc)' : ''}">${sc} %</td><td class="r">${o.acc.length ? (o.acc.reduce((a, b) => a + b, 0) / o.acc.length).toFixed(1) : '–'}</td></tr>`; }).join('') + '</table>';
 
   if (!ag.length) {
-    el.innerHTML = `<h2>Fehleranalyse</h2><div class="card" style="margin-bottom:14px">Noch keine Partie analysiert. Für die Fehlerauswertung brauche ich die Engine-Analyse deiner Partien.<br><br><button class="btn primary" id="eBatch">Letzte 20 Partien analysieren</button></div><div class="card"><h3>Deine Eröffnungen (${games.length} Partien)</h3>${opTable}</div>`;
+    el.innerHTML = `<h2>Fehleranalyse</h2><div class="card" style="margin-bottom:14px">Noch keine Partie analysiert. Für die Fehlerauswertung brauche ich die Engine-Analyse deiner Partien.<br><br><button class="btn primary" id="eBatch">Letzte 20 Partien analysieren</button></div><div class="card"><h3>Deine Eröffnungen nach Siegquote (${games.length} Partien)</h3>${opTable}</div>`;
     $('#eBatch').onclick = batch; return;
   }
   // Eigene Züge sammeln
@@ -472,7 +474,7 @@ function renderErrors() {
       <h3 style="margin-top:18px">Genauigkeit im Verlauf</h3>${trendSvg}</div>
   </div>
   <div class="grid2">
-    <div class="card"><h3>Deine Eröffnungen (${games.length} Partien)</h3>${opTable}</div>
+    <div class="card"><h3>Deine Eröffnungen nach Siegquote (${games.length} Partien)</h3>${opTable}</div>
     <div class="card moments"><h3>Teuerste Fehler</h3>${worst.map((m, k) => `<div class="mo" data-k="${k}">${icon(m.cls, 20)}<div><b>${esc(m.san)}</b> <em>gegen ${esc(me(m.g) === 'w' ? m.g.black.username : m.g.white.username)} · ${ERR_DE[m.err] || ''}${m.pressure ? ' · Zeitdruck' : ''}</em></div><em>−${m.loss.toFixed(0)} %</em></div>`).join('')}</div>
   </div>`;
   el.querySelectorAll('.mo').forEach(d => d.onclick = () => { const m = worst[+d.dataset.k]; openReview(m.g, m.i + 1); });
