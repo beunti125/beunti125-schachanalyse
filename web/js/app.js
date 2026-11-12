@@ -75,7 +75,7 @@ function renderGames() {
   if (!list.length) { $('#gameList').innerHTML = `<div class="empty">${st.games.length ? 'Keine Partien in dieser Zeitkontrolle.' : 'Gib deinen chess.com-Namen ein und lade deine Partien.'}</div>`; return; }
   $('#gameList').innerHTML = list.slice(0, 300).map((g, i) => {
     const r = resultOf(g), an = st.analyses.get(g.url), c = me(g);
-    const acc = an ? `<span class="g-acc">${an.accuracy[c] ?? '–'}<small> %</small></span>` : (g.accuracies ? `<span class="g-acc"><small>chess.com:</small> ${g.accuracies[c === 'w' ? 'white' : 'black']?.toFixed(1)}</span>` : '<span class="tag">nicht analysiert</span>');
+    const av = accOf(g, an, c), acc = av != null ? `<span class="g-acc">${av}<small> %</small></span>` : '<span class="tag">nicht analysiert</span>';
     return `<div class="g-row" data-i="${i}">
       <div class="g-res ${r}">${r === 'w' ? 'S' : r === 'l' ? 'N' : '½'}</div>
       <div class="g-pl"><span><i class="wsq"></i>${esc(g.white.username)} <em>(${g.white.rating})</em></span><span><i class="bsq"></i>${esc(g.black.username)} <em>(${g.black.rating})</em></span></div>
@@ -90,7 +90,7 @@ function renderGames() {
 // Alte Analysen auf die aktuelle Einstufung bringen (sofort, ohne Engine)
 async function upgradeAnalyses() {
   const up = [];
-  for (const g of st.games) { const a = st.analyses.get(g.url); if (a && (a.v || 1) < 4) { try { const n = reclassify(g, a); st.analyses.set(g.url, n); up.push(n); } catch {} } }
+  for (const g of st.games) { const a = st.analyses.get(g.url); if (a && (a.v || 1) < 5) { try { const n = reclassify(g, a); st.analyses.set(g.url, n); up.push(n); } catch {} } }
   if (up.length) await S.putMany('analyses', up);
 }
 
@@ -154,7 +154,7 @@ function renderReview() {
   $('#exitFocus').onclick = () => show('games');
   $('#pickBtn').onclick = openPicker;
   $('#backSum').onclick = () => { setMode('sum'); go(0); };
-  $('#accRow').innerHTML = ['w', 'b'].map(c => { const p = c === 'w' ? g.white : g.black; return `<div class="acc ${c}b"><div class="n">${esc(p.username)} (${p.rating})</div><div class="v">${an.accuracy[c] ?? '–'}</div><div class="n">Genauigkeit</div></div>`; }).join('');
+  $('#accRow').innerHTML = ['w', 'b'].map(c => { const p = c === 'w' ? g.white : g.black; return `<div class="acc ${c}b"><div class="n">${esc(p.username)} (${p.rating})</div><div class="v">${accOf(g, an, c) ?? '–'}</div><div class="n">Genauigkeit <small>(${accSrc(g)})</small></div></div>`; }).join('');
   const cnt = { w: {}, b: {} };
   an.moves.forEach((m, i) => { const c = P.moves[i].color; cnt[c][m.cls] = (cnt[c][m.cls] || 0) + 1; });
   const mine = me(g);
@@ -329,10 +329,14 @@ function renderVarLine() {
   $('#varBack').onclick = () => go(v.base);
 }
 
+// Genauigkeit: chess.com-Wert 1:1, wenn chess.com ihn liefert (Partie dort ausgewertet), sonst eigene Schätzung
+function accOf(g, an, c) { const v = g && g.accuracies && g.accuracies[c === 'w' ? 'white' : 'black']; if (v != null) return +(+v).toFixed(1); return an && an.accuracy ? an.accuracy[c] : null; }
+function accSrc(g) { return g && g.accuracies && g.accuracies.white != null ? 'chess.com' : 'geschätzt'; }
+
 // Persönliche Zusammenfassung zu Beginn
 function summary(g, an, P) {
   const c = me(g), o = c === 'w' ? 'b' : 'w', r = resultOf(g), opp = (o === 'w' ? g.white : g.black).username;
-  const a = an.accuracy[c], b = an.accuracy[o];
+  const a = accOf(g, an, c), b = accOf(g, an, o);
   const mine = an.moves.map((m, i) => ({ ...m, i })).filter(m => P.moves[m.i].color === c);
   const worst = mine.filter(m => SERIOUS.includes(m.cls)).sort((x, y) => y.loss - x.loss)[0];
   const best = mine.filter(m => ['brilliant', 'great'].includes(m.cls))[0];
@@ -433,7 +437,7 @@ function renderErrors() {
     const c = me(g), k = c + '|' + openingOf(g).split(' ').slice(0, 4).join(' ');
     const o = op[k] ??= { c, name: k.slice(2), n: 0, w: 0, d: 0, l: 0, acc: [] };
     o.n++; o[resultOf(g)]++;
-    const an = st.analyses.get(g.url); if (an?.accuracy[c] != null) o.acc.push(an.accuracy[c]);
+    const an = st.analyses.get(g.url); if (accOf(g, an, c) != null) o.acc.push(accOf(g, an, c));
   }
   // nach Siegquote sortiert; Eröffnungen mit nur 1 Partie ans Ende (sonst zufällige 100 %)
   const wr = o => o.w / o.n;
@@ -450,7 +454,7 @@ function renderErrors() {
   for (const g of ag) { const an = st.analyses.get(g.url), P = parseGame(g), c = me(g); an.moves.forEach((m, i) => { if (P.moves[i].color === c) mv.push({ ...m, g, i, san: P.moves[i].san }); }); }
   const serious = mv.filter(m => SERIOUS.includes(m.cls));
   const blunders = mv.filter(m => m.cls === 'blunder').length;
-  const accs = ag.map(g => st.analyses.get(g.url).accuracy[me(g)]).filter(x => x != null);
+  const accs = ag.map(g => accOf(g, st.analyses.get(g.url), me(g))).filter(x => x != null);
   const avgAcc = accs.reduce((a, b) => a + b, 0) / accs.length;
   const pressN = serious.filter(m => m.pressure).length;
   const phases = ['opening', 'middlegame', 'endgame'].map(p => { const all = mv.filter(m => m.phase === p).length, bad = serious.filter(m => m.phase === p).length; return { p, all, bad, rate: all ? 100 * bad / all : 0 }; });
@@ -472,7 +476,7 @@ function renderErrors() {
   const badOp = ops.filter(o => o.n >= 4).map(o => ({ ...o, sc: (o.w + o.d / 2) / o.n })).sort((a, b) => a.sc - b.sc)[0];
   if (badOp && badOp.sc < .4) tips.push([`Problem-Eröffnung: ${badOp.name} mit ${badOp.c === 'w' ? 'Weiß' : 'Schwarz'} (${Math.round(badOp.sc * 100)} % Punkte)`, 'Entweder gezielt lernen oder durch eine andere Eröffnung ersetzen.']);
 
-  const trend = ag.slice().sort((a, b) => a.end_time - b.end_time).map(g => st.analyses.get(g.url).accuracy[me(g)]).filter(x => x != null);
+  const trend = ag.slice().sort((a, b) => a.end_time - b.end_time).map(g => accOf(g, st.analyses.get(g.url), me(g))).filter(x => x != null);
   const tN = Math.max(1, trend.length - 1);
   const trendSvg = `<svg viewBox="0 0 ${tN} 100" preserveAspectRatio="none" style="width:100%;height:120px;background:#2e2d29;border-radius:6px">
     ${[25, 50, 75].map(y => `<line x1="0" x2="${tN}" y1="${y}" y2="${y}" stroke="#3b3a36" vector-effect="non-scaling-stroke"/>`).join('')}
@@ -692,7 +696,7 @@ function renderPicker() {
     return `<div class="pk-row ${st.g && st.g.url === g.url ? 'cur' : ''}" data-i="${i}"><div class="g-res ${r}">${r === 'w' ? 'S' : r === 'l' ? 'N' : '½'}</div>
       <div><b>${esc(o.username)}</b> <em>(${o.rating})</em><div class="pk-sub">${esc(openingOf(g))}</div></div>
       <div class="pk-sub">${TC_DE[g.time_class] || ''}<br>${fmtDate(g.end_time)}</div>
-      <div class="g-acc">${an ? an.accuracy[c] + '<small> %</small>' : '<span class="tag">neu</span>'}</div></div>`;
+      <div class="g-acc">${accOf(g, an, c) != null ? accOf(g, an, c) + '<small> %</small>' : '<span class="tag">neu</span>'}</div></div>`;
   }).join('') : '<div class="empty">Keine Partie gefunden.</div>';
 }
 $('#pickQ').oninput = renderPicker;

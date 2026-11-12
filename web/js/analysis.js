@@ -113,50 +113,101 @@ export async function analyseGame(game, engine, quality = 'standard', onProgress
   return finish(game, P, res, quality);
 }
 
+// ---------- Zugeinstufung nach dem Expected-Points-Prinzip (wie chess.com „Classification V2“) ----------
+// Alle Werte in Prozentpunkten Expected Points (0..100 = 0.00..1.00), aus Sicht des Ziehenden, Elo-skaliert (winPctR).
+// Schwellen (von chess.com veröffentlicht): Best 0.00, Exzellent ≤ 0.02, Gut ≤ 0.05, Ungenauigkeit ≤ 0.10, Fehler ≤ 0.20, Patzer > 0.20
+export const EP = { best: 0.5, excellent: 2, good: 5, inaccuracy: 10, mistake: 20 };
+// Großartig: Abstand zum zweitbesten Zug – für Anfänger großzügiger (10 Pkt. bei ≤ 1000, linear bis 20 Pkt. ab 2000)
+export const greatGap = R => 10 + 10 * Math.max(0, Math.min(1, ((R || 1500) - 1000) / 1000));
+// Opfer: Mindest-Materialverlust (Bauerneinheiten); für Anfänger zählt auch, wenn das Opfer nur statisch hängt
+export const sacNeed = () => 2;
+// Stellungslage aus Expected Points: 0 verloren, 1 offen/ausgeglichen, 2 gewonnen
+export const outcome = wp => wp < 30 ? 0 : wp > 70 ? 2 : 1;
+
+// Reine Entscheidungsfunktion (testbar ohne Engine/Brett). Eingaben:
+//  legal, inBook, R, loss (EP-Verlust gegenüber dem besten Zug), isBest, wpA (EP nach dem Zug),
+//  wpAlt (EP des besten ANDEREN Zugs, null wenn unbekannt), wpB (EP vor dem Zug = bester Zug),
+//  sacrifice (Figurenopfer erkannt), obvious, prevOppCls, wpPrev (eigene EP vor dem Gegnerzug)
+export function classifyMove(o) {
+  if (o.inBook) return 'book';
+  if (o.legal === 1) return 'forced';
+  const { loss } = o;
+  let cls = o.isBest || loss < EP.best ? 'best' : loss < EP.excellent ? 'excellent' : loss < EP.good ? 'good'
+    : loss < EP.inaccuracy ? 'inaccuracy' : loss < EP.mistake ? 'mistake' : 'blunder';
+  const alt = o.wpAlt ?? o.wpB;
+  // Brillant: bester oder fast bester Zug (≤ 0.02) + gutes Figurenopfer, danach nicht schlecht (≥ 0.45),
+  // und ohne diesen Zug nicht ohnehin schon völlig gewonnen (bester anderer Zug < 0.90). Vorrang vor allem anderen.
+  if ((cls === 'best' || cls === 'excellent') && o.sacrifice && !o.obvious && o.wpA >= 45 && alt < 90) return 'brilliant';
+  // Großartig: einziger guter Zug – der beste andere Zug ist deutlich schlechter (Abstand je nach Wertung),
+  // kritisch für den Ausgang: ohne den Zug nicht ohnehin gewonnen, mit dem Zug nicht verloren. Gleich gute Alternativen ⇒ kein Großartig.
+  if (cls === 'best' && !o.obvious && o.wpAlt != null && o.wpA - o.wpAlt >= greatGap(o.R) && outcome(o.wpAlt) < 2 && outcome(o.wpA) > 0) return 'great';
+  // Verpasst: Gegner hat gerade einen Fehler gemacht, du gibst den Vorteil wieder her –
+  // aber nicht schlechter als vor seinem Fehler (sonst bleibt es Fehler/Patzer).
+  if ((cls === 'mistake' || cls === 'blunder') && ['mistake', 'blunder', 'miss'].includes(o.prevOppCls) && o.wpPrev != null
+    && o.wpB - o.wpPrev >= EP.inaccuracy && o.wpA >= o.wpPrev - 5) return 'miss';
+  return cls;
+}
+
+// Figurenopfer: nach dem Zug kann der Gegner eine Figur (kein Bauer) mit Nettogewinn ≥ need schlagen
+// (statisch: Wert der Figur minus Wert des Schlagenden, falls gedeckt; abzüglich dessen, was der Zug selbst geschlagen hat),
+// und/oder die Hauptvariante zeigt den Materialverlust über zwei Halbzüge.
+function isSacrifice(fenB, fenA, m, pvA, c, R) {
+  const need = sacNeed(R);
+  const b0 = bal(new Chess(fenB), c);
+  const seq = balAlong(fenA, pvA || [], c, 4);
+  // in der Hauptvariante muss der Gegner in den nächsten Halbzügen eine eigene Figur (kein Bauer) schlagen
+  const pvPiece = (() => { const t = new Chess(fenA); for (const u of (pvA || []).slice(0, 3)) {
+    let x; try { x = t.move({ from: u.slice(0, 2), to: u.slice(2, 4), promotion: u[4] }); } catch { return false; }
+    if (x.color !== c && x.captured && x.captured !== 'p') return true; } return false; })();
+  const pvSac = pvPiece && seq.length >= 2 && seq[0] <= b0 - need && seq[1] <= b0 - need;
+  // Felder, auf denen der Gegner eine Figur (kein Bauer) gewinnbringend schlagen kann
+  const hanging = (ch, minus) => {
+    const out = new Set();
+    for (const x of ch.moves({ verbose: true })) {
+      if (!x.captured || x.captured === 'p') continue;
+      const defended = ch.attackers(x.to, c).length > 0;
+      if (VAL[x.captured] - (defended ? VAL[x.piece] : 0) - minus >= need) out.add(x.to);
+    }
+    return out;
+  };
+  const nowH = hanging(new Chess(fenA), m.captured ? VAL[m.captured] : 0);
+  // Was schon vor dem Zug hing, ist kein neues Opfer (Stellung vorher mit Gegner am Zug betrachten)
+  let preH = new Set();
+  try { const f = fenB.split(' '); f[1] = f[1] === 'w' ? 'b' : 'w'; f[3] = '-'; preH = hanging(new Chess(f.join(' ')), 0); } catch {}
+  if (preH.has(m.from)) preH.add(m.to);
+  const stat = [...nowH].some(sq => !preH.has(sq));
+  // Ab 1200: Opfer muss auch in der besten Fortsetzung tatsächlich angenommen werden; darunter genügt die hängende Figur
+  return R < 1200 ? (stat || pvSac) : pvSac;
+}
+
 function finish(game, P, res, quality) {
   const out = [];
+  const side = (c, ev, R) => ev ? (c === 'w' ? winPctR(ev, R) : 100 - winPctR(ev, R)) : null;
   for (let i = 0; i < P.moves.length; i++) {
     const m = P.moves[i], c = m.color, sgn = c === 'w' ? 1 : -1;
     const before = res[i], after = res[i + 1];
     const R = (c === 'w' ? game.white : game.black)?.rating || 1500;
-    const wpB = c === 'w' ? winPctR(before.ev, R) : 100 - winPctR(before.ev, R);
-    const wpA = c === 'w' ? winPctR(after.ev, R) : 100 - winPctR(after.ev, R);
-    const loss = Math.max(0, wpB - wpA);
+    const wpB = side(c, before.ev, R);
+    let wpA = side(c, after.ev, R);
     const best = before.lines[0]?.move;
     const isBest = best === m.uci;
+    // Ist der gespielte Zug eine der MultiPV-Linien, nimm deren Bewertung (gleiche Suche, kein Tiefenrauschen)
+    const own = before.lines.findIndex(l => l.move === m.uci);
+    if (own >= 0 && !terminalEval(P.fens[i + 1])) wpA = side(c, before.lines[own], R);
+    if (isBest) wpA = Math.max(wpA, wpB);
+    const loss = Math.max(0, wpB - wpA);
+    const altLine = before.lines.find(l => l.move !== m.uci);
+    const wpAlt = altLine ? side(c, altLine, R) : null;
     const legal = new Chess(P.fens[i]).moves().length;
-    let cls;
     const inBook = i < 30 && bookKey(P.fens[i + 1]) in BOOK && (i === 0 || out[i - 1].cls === 'book');
-    if (inBook) cls = 'book';
-    else if (legal === 1) cls = 'forced';
-    else if (isBest || loss < 0.5) cls = 'best';
-    else if (loss < 2) cls = 'excellent';
-    else if (loss < 5) cls = 'good';
-    else if (loss < 10) cls = 'inaccuracy';
-    else if (loss < 20) cls = 'mistake';
-    else cls = 'blunder';
-
     // Offensichtlich: Zurückschlagen oder eine gleich-/höherwertige Figur schlagen
     const prevM = i > 0 ? P.moves[i - 1] : null;
     const obvious = !!(prevM && prevM.captured && m.to === prevM.to) || !!(m.captured && VAL[m.captured] >= VAL[m.piece]);
-    // Großartig: einziger guter Zug (zweitbester deutlich schlechter) – aber nicht bei offensichtlichen Zügen
-    if (cls === 'best' && before.lines[1] && !obvious) {
-      const wp1 = c === 'w' ? winPctR(before.lines[0], R) : 100 - winPctR(before.lines[0], R);
-      const wp2 = c === 'w' ? winPctR(before.lines[1], R) : 100 - winPctR(before.lines[1], R);
-      // bei Anfängern großzügiger (wie chess.com)
-      const gap = R < 1000 ? 10 : R < 1600 ? 13 : R < 2000 ? 16 : 20;
-      if (wp1 - wp2 >= gap && wpA >= 40 && wpB < 95) cls = 'great';
-    }
-    // Brillant: guter Zug mit echtem Materialopfer, Stellung nicht schon völlig gewonnen
-    if ((cls === 'best' || cls === 'great' || cls === 'excellent') && wpB < 95 && wpA >= 45 && after.lines[0]) {
-      const b0 = bal(new Chess(P.fens[i]), c);
-      const seq = balAlong(P.fens[i + 1], after.lines[0].pv, c, 4);
-      // Opfer: bei Anfängern zählt schon weniger Material (wie chess.com), Starke brauchen ein echtes Figurenopfer
-      const need = R < 1200 ? 2 : 3;
-      if (!obvious && seq.length >= 2 && seq[0] <= b0 - need && seq[1] <= b0 - need && m.piece !== 'p' && (cls !== 'excellent' || R < 1200)) cls = 'brilliant';
-    }
-    // Verpasst: Gegner hat zuvor gepatzt, und du nutzt es nicht
-    if ((cls === 'mistake' || cls === 'blunder' || cls === 'inaccuracy') && i > 0 && ['mistake', 'blunder', 'miss'].includes(out[i - 1].cls) && loss >= 10 && wpB >= 55 && !(cls === 'blunder' && wpA < 30)) cls = 'miss';
+    const sacrifice = !inBook && legal > 1 && loss < EP.excellent && isSacrifice(P.fens[i], P.fens[i + 1], m, after.lines[0]?.pv, c, R);
+    const cls = classifyMove({
+      legal, inBook, R, loss, isBest, wpA, wpB, wpAlt, sacrifice, obvious,
+      prevOppCls: i > 0 ? out[i - 1].cls : null, wpPrev: i > 0 ? side(c, res[i - 1].ev, R) : null,
+    });
 
     // Genauigkeit wie Lichess: aus dem Verlust an (Standard-)Gewinnchance, ohne Elo-Anpassung
     const sB = c === 'w' ? winPct(before.ev) : 100 - winPct(before.ev), sA = c === 'w' ? winPct(after.ev) : 100 - winPct(after.ev);
@@ -206,7 +257,7 @@ function finish(game, P, res, quality) {
     return +((wmean + harm) / 2).toFixed(1);
   };
   return {
-    url: game.url, quality, v: 4, end_time: game.end_time,
+    url: game.url, quality, v: 5, end_time: game.end_time,
     evals: res.map(r => r.ev), lines: res.map(r => r.lines), moves: out,
     accuracy: { w: accOf('w'), b: accOf('b') },
   };
