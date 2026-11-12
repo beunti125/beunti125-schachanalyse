@@ -179,7 +179,7 @@ function go(ply) {
   board.setPosition(P.fens[ply], { last: mv ? { from: mv.from, to: mv.to } : null, animate: true, badge: mv && cls.cls !== 'forced' ? { sq: mv.to, cls: cls.cls } : null });
   st.ex = cls ? explain(g, an, P, i, { my: me(g), hist: st.hist }) : null; st.step = 0;
   st.hint = 0; updHint();
-  const os = cls && ply <= 20 ? openingStep(P.fens, ply, me(g)) : null;
+  const os = cls ? openingStep(P.fens, ply, me(g), an.lines[ply]?.[0]?.pv) : null;
   if (os) { os.last = { from: mv.from, to: mv.to }; if (cls.cls === 'book') st.ex.steps.splice(1, 0, os); else st.ex.steps.push(os); }
   renderSteps(); applyStep(0);
   const ev = an.evals[ply], wp = winPct(ev), flip = board.orientation === 'b';

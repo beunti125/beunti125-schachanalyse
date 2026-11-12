@@ -104,16 +104,16 @@ export function explain(game, an, P, i, ctx = {}) {
 
   if (x.cls === 'book') {
     const nm = BOOK[bookKey(after)];
-    steps.push({ fen: after, last, arrows: [], marks: {}, text: `${you ? 'Du bleibst' : oppName + ' bleibt'} mit ${m.san} in der Theorie${nm ? ` (${nm.slice(4)})` : ''}. Alles im grünen Bereich.` });
+    steps.push({ fen: after, last, arrows: [], marks: {}, text: `${you ? 'Du bleibst' : oppName + ' bleibt'} in der Theorie${nm ? ` (${nm.slice(4)})` : ''}. Alles im grünen Bereich.` });
   } else if (x.cls === 'forced') {
-    steps.push({ fen: after, last, arrows: [], marks: {}, text: `${m.san} war der einzige legale Zug – da gab es nichts zu entscheiden.` });
+    steps.push({ fen: after, last, arrows: [], marks: {}, text: 'Das war der einzige legale Zug – da gab es nichts zu entscheiden.' });
   } else if (x.cls === 'brilliant') {
     const capT = reply && mv(after, reply.move)?.m.to === m.to;
     const pron = m.piece === 'q' ? 'sie' : 'ihn';
     steps.push({ fen: after, last, arrows: reply ? [arrow(reply.move, you ? COL.red : COL.grey, 1)] : [], marks: { [m.to]: 'brill' },
       text: you
-        ? `Wow – ${m.san} ist brillant! Du opferst ${AKK[m.piece]} auf ${m.to}. ${capT ? `${oppName} kann ${pron} mit ${mv(after, reply.move).m.san} schlagen – aber genau darauf hast du spekuliert.` : `${oppName} traut sich nicht, ${pron} zu nehmen – zu Recht.`}`
-        : `Respekt an ${oppName}: ${m.san} ist brillant. ${AKK[m.piece][0].toUpperCase() + AKK[m.piece].slice(1)} auf ${m.to} wird geopfert. ${capT ? `Du kannst ${pron} mit ${mv(after, reply.move).m.san} schlagen – aber das hilft dir nicht.` : ''}` });
+        ? `Wow – brillant! Du opferst ${AKK[m.piece]} auf ${m.to}. ${capT ? `${oppName} kann ${pron} mit ${mv(after, reply.move).m.san} schlagen – aber genau darauf hast du spekuliert.` : `${oppName} traut sich nicht, ${pron} zu nehmen – zu Recht.`}`
+        : `Respekt an ${oppName}: brillant. ${AKK[m.piece][0].toUpperCase() + AKK[m.piece].slice(1)} auf ${m.to} wird geopfert. ${capT ? `Du kannst ${pron} mit ${mv(after, reply.move).m.san} schlagen – aber das hilft dir nicht.` : ''}` });
     if (reply) {
       const r1 = mv(after, reply.move);
       const end = playLine(r1.fen, reply.pv.slice(1), 4, 1, you ? { me: COL.teal, them: COL.red } : { me: COL.grey, them: COL.teal });
@@ -121,8 +121,8 @@ export function explain(game, an, P, i, ctx = {}) {
     }
   } else if (x.cls === 'great') {
     steps.push({ fen: after, last, arrows: [], marks: self.marks, text: you
-      ? `${pick(['Genau richtig erkannt!', 'Stark gefunden!', 'Sehr gut gesehen!'], seed)} ${m.san} ist der einzige gute Zug in dieser Stellung.${self.text ? ' Der Zug ' + self.text + '.' : ''}`
-      : `${oppName} findet mit ${m.san} den einzigen guten Zug.${self.text ? ' Der Zug ' + self.text + '.' : ''}` });
+      ? `${pick(['Genau richtig erkannt!', 'Stark gefunden!', 'Sehr gut gesehen!'], seed)} Der einzige gute Zug in dieser Stellung.${self.text ? ' Der Zug ' + self.text + '.' : ''}`
+      : `${oppName} findet den einzigen guten Zug.${self.text ? ' Der Zug ' + self.text + '.' : ''}` });
     if (second) {
       const d2 = describe(before, second.move), drop = Math.round(Math.abs(winPct(best) - winPct(second)));
       steps.push({ fen: before, last: lastPrev, arrows: [arrow(m.uci, COL.blue, 1), arrow(second.move, COL.grey, 2)], marks: {},
@@ -130,8 +130,8 @@ export function explain(game, an, P, i, ctx = {}) {
     }
   } else if (['best', 'excellent', 'good'].includes(x.cls)) {
     const head = you
-      ? { best: pick(['Sauber gespielt –', 'Genau so –', 'Top –'], seed) + ` ${m.san} ist der beste Zug.`, excellent: `${m.san} ist exzellent – fast perfekt.`, good: `${m.san} ist solide.` }[x.cls]
-      : { best: `${oppName} spielt mit ${m.san} den besten Zug.`, excellent: `${oppName} spielt ${m.san} – exzellent.`, good: `${oppName} spielt ${m.san} – solide.` }[x.cls];
+      ? { best: pick(['Sauber gespielt – der beste Zug.', 'Genau so – der beste Zug.', 'Top – der beste Zug.'], seed), excellent: 'Exzellent – fast perfekt.', good: 'Solide.' }[x.cls]
+      : { best: `${oppName} spielt den besten Zug.`, excellent: `${oppName} spielt exzellent.`, good: `${oppName} spielt solide.` }[x.cls];
     steps.push({ fen: after, last, arrows: [], marks: self.marks, text: `${head}${self.text ? ' Der Zug ' + self.text + '.' : ''}` });
     if (x.cls !== 'best' && best && best.move !== m.uci) {
       const db = describe(before, best.move);
@@ -140,8 +140,8 @@ export function explain(game, an, P, i, ctx = {}) {
   } else if (you) {
     // Dein Fehler
     const head = {
-      inaccuracy: `Kleine Ungenauigkeit: ${m.san}.`, mistake: `${m.san} war leider ein Fehler.`,
-      miss: `Hier hast du eine Chance liegen lassen: ${m.san}.`, blunder: pick([`Autsch – ${m.san} ist ein Patzer.`, `${m.san} – das tut weh, ein Patzer.`], seed)
+      inaccuracy: 'Kleine Ungenauigkeit.', mistake: 'Leider ein Fehler.',
+      miss: 'Hier hast du eine Chance liegen lassen.', blunder: pick(['Autsch – ein Patzer.', 'Das tut weh – ein Patzer.'], seed)
     }[x.cls];
     let intro = `${head} Die Bewertung kippt von ${evB} auf ${evA}. `;
     if (x.cls === 'miss' && i > 0) intro += `${oppName} hatte dir gerade mit ${P.moves[i - 1].san} eine Tür geöffnet – du bist nicht durchgegangen. `;
@@ -164,7 +164,7 @@ export function explain(game, an, P, i, ctx = {}) {
     }
   } else {
     // Fehler deines Gegners – deine Chance
-    const head = { inaccuracy: `${oppName} spielt ungenau: ${m.san}.`, mistake: `${oppName} macht einen Fehler: ${m.san}.`, miss: `${oppName} lässt mit ${m.san} eine Chance liegen.`, blunder: `${oppName} patzt mit ${m.san}!` }[x.cls];
+    const head = { inaccuracy: `${oppName} spielt ungenau.`, mistake: `${oppName} macht einen Fehler.`, miss: `${oppName} lässt eine Chance liegen.`, blunder: `${oppName} patzt!` }[x.cls];
     const intro = `${head} Die Bewertung springt von ${evB} auf ${evA} – zu deinen Gunsten. ${x.cls === 'inaccuracy' ? '' : 'Jetzt bist du dran: '}`;
     if (reply) {
       playLine(after, reply.pv, x.cls === 'inaccuracy' ? 1 : 3, 0, { me: COL.green, them: COL.grey }, intro);

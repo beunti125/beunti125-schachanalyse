@@ -1,6 +1,7 @@
 // Eröffnungspläne: Idee der Eröffnung, Pläne beider Seiten und wohin die Figuren wollen
 import { Chess } from '../vendor/chess.js';
 import { BOOK } from '../vendor/book.js';
+import { detectStructure, enginePlan } from './structure.js';
 
 const key = fen => fen.split(' ').slice(0, 4).join(' ');
 // go: [Figur, Zielfeld]  (P = Bauer, K auf g1/g8 = kurze Rochade)
@@ -185,17 +186,31 @@ function arrowsFor(ch, color, goals, col, n = 3) {
 const GENERIC = { w: [['N', 'f3'], ['N', 'c3'], ['B', 'c4'], ['K', 'g1']], b: [['N', 'f6'], ['N', 'c6'], ['B', 'e7'], ['K', 'g8']] };
 
 const PURPLE = 'rgba(155,89,200,.85)', GREY = 'rgba(160,158,150,.75)';
-export function openingStep(fens, ply, my) {
-  if (ply > 20) return null;
+// Plan-Schritt: Eröffnungsidee (bis Zug 10) + erkannte Bauernstruktur + konkreter Engine-Plan
+export function planStep(fens, ply, my, pv) {
+  const fen = fens[ply], op = my === 'w' ? 'b' : 'w';
+  const st = detectStructure(fen), prevSt = ply > 0 ? detectStructure(fens[ply - 1]) : null;
+  const opening = ply <= 20;
+  const newStruct = st && (!prevSt || prevSt.id !== st.id);
+  if (!opening && !(newStruct && ply <= 60)) return null;
   let name = null;
-  for (let k = Math.min(ply, fens.length - 1); k >= 0 && !name; k--) name = BOOK[key(fens[k])] || null;
-  const fen = fens[ply], ch = new Chess(fen), op = my === 'w' ? 'b' : 'w';
+  if (opening) for (let k = Math.min(ply, fens.length - 1); k >= 0 && !name; k--) name = BOOK[key(fens[k])] || null;
   const plan = name && PLANS.find(p => p.m.test(name));
-  if (plan) {
-    const arrows = [...arrowsFor(ch, my, plan[my + 'Go'], PURPLE), ...arrowsFor(ch, op, plan[op + 'Go'], GREY, 2)];
-    const marks = Object.fromEntries((plan.sq || []).map(s => [s, 'plan']));
-    return { fen, arrows, marks, text: `${plan.t}: ${plan.idea} Dein Plan (lila): ${plan[my]}`, more: plan[op] };
+  const ep = enginePlan(fen, pv, my);
+  let arrows = ep.arrows;
+  if (!arrows.length) {
+    const ch = new Chess(fen);
+    arrows = plan ? [...arrowsFor(ch, my, plan[my + 'Go'], PURPLE), ...arrowsFor(ch, op, plan[op + 'Go'], GREY, 2)] : [...arrowsFor(ch, my, GENERIC[my], PURPLE), ...arrowsFor(ch, op, GENERIC[op], GREY, 2)];
   }
-  const arrows = [...arrowsFor(ch, my, GENERIC[my], PURPLE), ...arrowsFor(ch, op, GENERIC[op], GREY, 2)];
-  return { fen, arrows, marks: { d4: 'plan', e4: 'plan', d5: 'plan', e5: 'plan' }, text: `${name ? name.slice(4) + ': ' : ''}Zentrum (markiert) besetzen, Springer vor Läufern, früh rochieren, Dame nicht zu früh. Lila: wohin deine Figuren wollen.` };
+  const sq = [...(st?.sq || []), ...(plan?.sq || [])];
+  const marks = Object.fromEntries(sq.map(s => [s, 'plan']));
+  let text = '';
+  if (plan) text += `${plan.t}: ${plan.idea} `;
+  else if (opening && name) text += `${name.slice(4)}. `;
+  if (st) text += `Struktur: ${st.name}. Dein Plan: ${st[my]} `;
+  else if (plan) text += `Dein Plan: ${plan[my]} `;
+  else if (opening) text += 'Zentrum besetzen, Springer vor Läufern, früh rochieren, Dame nicht zu früh. ';
+  if (ep.mine.length) text += `Konkret laut Engine (lila): ${ep.mine.join(', ')}${ep.opp.length ? ` – der Gegner (grau): ${ep.opp.join(', ')}` : ''}.`;
+  return { fen, arrows, marks, text: text.trim() };
 }
+export const openingStep = (fens, ply, my, pv) => planStep(fens, ply, my, pv);
