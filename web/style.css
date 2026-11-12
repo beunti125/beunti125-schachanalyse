@@ -362,3 +362,5 @@ body.focus #v-review.analysing .board-col{width:min(calc(100vh - 80px),calc(100v
 .sq.um-o::after{content:"";position:absolute;inset:0;background:rgba(240,150,40,.6)}
 .sq.um-r::after{content:"";position:absolute;inset:0;background:rgba(226,57,43,.6)}
 .sq.um-b::after{content:"";position:absolute;inset:0;background:rgba(70,140,220,.6)}
+/* Pfeile halbtransparent über den Figuren */
+.arrow-layer{z-index:4;opacity:.82}
