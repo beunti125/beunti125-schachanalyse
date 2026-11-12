@@ -15,6 +15,7 @@
     <button data-view="review"><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>Spielbericht</button>
     <button data-view="errors"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>Fehleranalyse</button>
     <button data-view="puzzles"><svg viewBox="0 0 24 24"><path d="M9 3h6v3a2 2 0 1 0 0 4v3h3a2 2 0 1 1 4 0"/><path d="M3 9h6v3a2 2 0 1 0 0 4v5h12v-8"/></svg>Taktik<span class="pill" id="puzzleCount"></span></button>
+    <button data-view="brilliant"><svg viewBox="0 0 24 24"><path d="M12 2l2.6 6.4L21 9l-5 4.6L17.4 21 12 17.3 6.6 21 8 13.6 3 9l6.4-.6z"/></svg>Brillant<span class="pill bril" id="brilCount"></span></button>
   </nav>
   <div class="side-foot">
     <label>Analysetiefe
@@ -116,6 +117,9 @@
 
   <!-- Fehleranalyse -->
   <section id="v-errors" class="view"><div id="errorsBody" class="errors"></div></section>
+
+  <!-- Brillante Züge -->
+  <section id="v-brilliant" class="view"><div id="brilBody" class="errors"></div></section>
 
   <!-- Taktik -->
   <section id="v-puzzles" class="view">

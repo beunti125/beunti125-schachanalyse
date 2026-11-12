@@ -156,7 +156,7 @@ export function explain(game, an, P, i, ctx = {}) {
     const gain = bal(endF, c) - bal(before, c);
     const mateLine = an.evals[i + 1].mate != null && an.evals[i + 1].mate * (c === 'w' ? 1 : -1) > 0;
     if (capT) t += `${you ? `Nimmt ${oppName}` : 'Schlägst du'} mit ${r1.m.san}, folgt ${follow ? follow.san + (follow.text ? ' – ' + follow.text : '') : 'ein Angriff'}. `;
-    else if (r1) t += `Annehmen geht nicht gut, deshalb ${you ? oppName + ' spielt' : 'musst du'} ${r1.m.san}${you ? '' : ' spielen'}. `;
+    else if (r1) t += `Annehmen geht nicht gut, deshalb ${you ? 'spielt ' + oppName : 'musst du'} ${r1.m.san}${you ? '' : ' spielen'}. `;
     t += mateLine ? 'Am Ende steht Matt.' : gain >= 1 ? `Unterm Strich ${you ? 'gewinnst du' : 'gewinnt ' + oppName} ${lossName(gain)}.` : 'Dafür gibt es starken Angriff und Initiative.';
     const arr = [];
     if (r1) arr.push(arrow(reply.move, you ? COL.grey : COL.red));

@@ -410,3 +410,29 @@ body.focus #v-review.analysing .board-col{width:min(calc(100vh - 80px),calc(100v
 .st-nav{display:flex;gap:6px}
 .st-nav button{background:#e3e0d6;border:0;border-radius:6px;padding:4px 14px;cursor:pointer;font-weight:700;color:#26241f}
 .st-nav button:hover{background:#d4d0c4}
+
+/* Brillante Züge */
+.pill.bril{background:#1baca6}
+.bril-head{display:flex;gap:28px;align-items:center;flex-wrap:wrap;background:#262421;border-radius:10px;padding:18px 22px;margin-bottom:12px}
+.bril-count{display:flex;align-items:center;gap:14px}
+.bril-count b{display:block;font-size:44px;line-height:1;color:#1fb3a8}
+.bril-count span{color:#bdbbb5;font-size:13px}
+.bril-stats{display:flex;gap:26px;margin-left:auto}
+.bril-stats b{display:block;font-size:22px;color:#fff}
+.bril-stats span{font-size:12px;color:#9a9893}
+.bril-actions{display:flex;gap:10px;align-items:center;margin:0 0 16px}
+.bril-actions .btn{padding:9px 16px;font-size:14px;border-radius:7px;border:0;background:#3a3835;color:#fff;cursor:pointer}
+.bril-actions .btn.pri{background:var(--acc);color:#fff;font-weight:600}
+.bril-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.bril-card{background:#262421;border-radius:9px;overflow:hidden;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.bril-card:hover{transform:translateY(-2px);box-shadow:0 0 0 2px #1fb3a8}
+.mb{display:grid;grid-template-columns:repeat(8,1fr);aspect-ratio:1}
+.mb>div{position:relative}
+.mb .l{background:var(--sqL)}.mb .d{background:var(--sqD)}
+.mb .hl::after{content:"";position:absolute;inset:0;background:rgba(31,179,168,.45)}
+.mb i{position:absolute;inset:0;background-size:100%;z-index:1}
+.mb-ico{position:absolute;top:-3px;right:-3px;z-index:2;line-height:0}
+.bc-txt{padding:9px 11px;display:flex;flex-direction:column;gap:2px;font-size:12px;color:#bdbbb5}
+.bc-txt b{font-size:15px;color:#1fb3a8}
+.bc-txt em{font-style:normal}.bc-txt em.w{color:var(--acc)}.bc-txt em.l{color:var(--red)}
+.muted{color:#9a9893}

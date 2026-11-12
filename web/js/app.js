@@ -32,6 +32,7 @@ function show(view) {
   if (view !== 'review') exitFull();
   if (view === 'errors') renderErrors();
   if (view === 'puzzles') puzzleStart();
+  if (view === 'brilliant') renderBrilliant();
   if (view === 'review' && !st.g) $('.coach-txt').textContent = 'Wähle eine Partie unter „Partien“.';
 }
 const me = g => g.white.username.toLowerCase() === st.user.toLowerCase() ? 'w' : 'b';
@@ -49,7 +50,7 @@ async function loadUser(user, fromCache, makeMine = false) {
   if (cachedStats) renderRatings(cachedStats);
   st.games = await S.cachedGames(st.user);
   await upgradeAnalyses();
-  renderGames(); updatePuzzleCount();
+  renderGames(); updatePuzzleCount(); updateBrilCount();
   if (fromCache && st.games.length) { status(`${st.games.length} Partien (gespeichert)`); return; }
   try {
     status('Lade Wertungen …');
@@ -755,6 +756,95 @@ setInterval(async () => {
 }, 60000);
 $('#autoOpen').onchange = e => { saveCfg({ autoOpen: e.target.checked }); toast(e.target.checked ? 'Neue Partien öffnen sich automatisch.' : 'Automatisches Öffnen aus.'); };
 $('#autostart').onchange = e => { saveCfg({ autostart: e.target.checked }); toast(e.target.checked ? 'Startet ab jetzt beim Anmelden am Mac im Hintergrund.' : 'Autostart aus.'); };
+
+// ---------- Brillante Züge (ganzer Account) ----------
+const BRIL = { running: false, stop: false };
+async function brilList() {
+  if (!st.user) return { games: [], items: [], analysed: 0 };
+  const games = await S.cachedGames(st.user);
+  const items = [], up = []; let analysed = 0;
+  for (const g of games) {
+    let an = st.analyses.get(g.url); if (!an) continue;
+    if ((an.v || 1) < 6) { try { an = reclassify(g, an); st.analyses.set(g.url, an); up.push(an); } catch { continue; } }
+    analysed++;
+    const c = me(g); let P = null;
+    an.moves.forEach((m, i) => { if (m.cls !== 'brilliant') return; P = P || parseGame(g); if (P.moves[i].color === c) items.push({ g, i, P }); });
+  }
+  if (up.length) S.putMany('analyses', up);
+  return { games, items, analysed };
+}
+async function updateBrilCount() {
+  try { const { items } = await brilList(); $('#brilCount').textContent = items.length ? (items.length > 999 ? '999+' : items.length) : ''; } catch {}
+}
+function miniBoard(fen, flip, from, to) {
+  const rows = fen.split(' ')[0].split('/').map(r => r.replace(/\d/g, d => '.'.repeat(+d)));
+  let h = '';
+  for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) {
+    const r = flip ? 7 - y : y, f = flip ? 7 - x : x, sq = 'abcdefgh'[f] + (8 - r), p = rows[r][f];
+    const pc = p !== '.' ? `<i style="background-image:url(pieces/${p === p.toUpperCase() ? 'w' : 'b'}${p.toUpperCase()}.svg)"></i>` : '';
+    h += `<div class="${(r + f) % 2 ? 'd' : 'l'}${sq === from || sq === to ? ' hl' : ''}">${pc}${sq === to ? `<span class="mb-ico">${icon('brilliant', 22)}</span>` : ''}</div>`;
+  }
+  return `<div class="mb">${h}</div>`;
+}
+async function renderBrilliant() {
+  const el = $('#brilBody');
+  if (!st.user) { el.innerHTML = '<p class="muted">Verknüpfe zuerst dein chess.com-Profil.</p>'; return; }
+  const { games, items, analysed } = await brilList();
+  st.bril = items;
+  const open = games.length - analysed, inGames = new Set(items.map(x => x.g.url)).size;
+  const per100 = analysed ? (items.length / analysed * 100).toFixed(1) : '0';
+  const cards = items.map((x, k) => {
+    const { g, i, P } = x, m = P.moves[i], c = me(g), o = c === 'w' ? g.black : g.white, r = resultOf(g);
+    const no = Math.floor(i / 2) + 1 + (m.color === 'w' ? '.' : '…');
+    return `<div class="bril-card" data-b="${k}">${miniBoard(P.fens[i + 1], c === 'b', m.from, m.to)}
+      <div class="bc-txt"><b>${no}${esc(m.san)}!!</b><span>gegen ${esc(o.username)} (${o.rating})</span><span>${fmtDate(g.end_time)} · ${TC_DE[g.time_class] || ''} · <em class="${r}">${r === 'w' ? 'Sieg' : r === 'l' ? 'Niederlage' : 'Remis'}</em></span></div></div>`;
+  }).join('');
+  el.innerHTML = `<div class="bril-head">
+      <div class="bril-count">${icon('brilliant', 52)}<div><b>${items.length}</b><span>${items.length === 1 ? 'brillanter Zug' : 'brillante Züge'} von ${esc(st.user)}</span></div></div>
+      <div class="bril-stats"><div><b>${inGames}</b><span>Partien mit !!</span></div><div><b>${per100}</b><span>pro 100 Partien</span></div><div><b>${analysed}/${games.length}</b><span>Partien analysiert</span></div></div>
+    </div>
+    <div class="bril-actions">
+      <button id="brilLoad" class="btn">Ganzen Account laden</button>
+      ${BRIL.running ? '<button id="brilStop" class="btn">Stopp</button>' : open ? `<button id="brilRun" class="btn pri">Restliche ${open} Partien analysieren</button>` : '<span class="muted">Alle geladenen Partien sind analysiert.</span>'}
+      <span id="brilProg" class="muted"></span>
+    </div>
+    ${items.length ? `<div class="bril-grid">${cards}</div>` : `<p class="muted">Noch kein brillanter Zug gefunden${open ? ' – analysiere die restlichen Partien.' : '.'}</p>`}`;
+}
+$('#brilBody').onclick = async e => {
+  const card = e.target.closest('.bril-card');
+  if (card) { const x = st.bril[+card.dataset.b]; if (x) openReview(x.g, x.i + 1); return; }
+  if (e.target.closest('#brilStop')) { BRIL.stop = true; $('#brilProg').textContent = 'Stoppt nach der aktuellen Partie …'; return; }
+  if (e.target.closest('#brilLoad')) {
+    if (BRIL.running) return toast('Analyse läuft noch – erst stoppen.');
+    try {
+      await S.loadGames(st.user, 9999, (i, n) => { $('#brilProg').textContent = `Lade Monat ${i} von ${n} …`; });
+      toast('Alle Partien deines Accounts geladen.');
+    } catch (err) { toast(err.message); }
+    renderBrilliant(); return;
+  }
+  if (e.target.closest('#brilRun')) {
+    if (BRIL.running) return;
+    BRIL.running = true; BRIL.stop = false; renderBrilliant();
+    const todo = (await S.cachedGames(st.user)).filter(g => !st.analyses.has(g.url));
+    const t0 = performance.now(); let n = 0, found = 0;
+    try {
+      for (const g of todo) {
+        if (BRIL.stop) break;
+        const an = await ensureAnalysis(g, 'schnell');
+        n++; const c = me(g), P = parseGame(g);
+        found += an.moves.filter((m, i) => m.cls === 'brilliant' && P.moves[i].color === c).length;
+        const left = Math.round((performance.now() - t0) / n * (todo.length - n) / 60000);
+        if (st.view === 'brilliant') {
+          if (n % 5 === 0) await renderBrilliant();
+          const pe = $('#brilProg'); if (pe) pe.textContent = `Partie ${n} von ${todo.length} · ${found} neue !! · noch ca. ${Math.max(1, left)} min`;
+        }
+        updateBrilCount();
+      }
+      toast(`${n} Partien analysiert – ${found === 1 ? '1 neuer brillanter Zug' : found + ' neue brillante Züge'}.`);
+    } catch (err) { toast('Fehler: ' + err.message); }
+    finally { BRIL.running = false; updateBrilCount(); if (st.view === 'brilliant') renderBrilliant(); }
+  }
+};
 
 window.__appOk = true;
 (async () => {
