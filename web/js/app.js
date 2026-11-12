@@ -313,11 +313,8 @@ function summary(g, an, P) {
   const mine = an.moves.map((m, i) => ({ ...m, i })).filter(m => P.moves[m.i].color === c);
   const worst = mine.filter(m => SERIOUS.includes(m.cls)).sort((x, y) => y.loss - x.loss)[0];
   const best = mine.filter(m => ['brilliant', 'great'].includes(m.cls))[0];
-  let t = r === 'w' ? `Glückwunsch zum Sieg gegen ${opp}! ` : r === 'l' ? `Bittere Niederlage gegen ${opp} – schauen wir, wo es gekippt ist. ` : `Remis gegen ${opp}. `;
-  t += `Du hast mit ${a} % Genauigkeit gespielt, ${opp} mit ${b} %. `;
-  if (best) t += `Dein stärkster Moment: ${P.moves[best.i].san} in Zug ${Math.floor(best.i / 2) + 1}. `;
-  if (worst) t += `Die entscheidende Stelle war ${P.moves[worst.i].san} in Zug ${Math.floor(worst.i / 2) + 1} – klick drauf, ich zeige dir, was passiert ist.`;
-  else t += 'Ohne einen echten Fehler – so muss das aussehen.';
+  let t = r === 'w' ? `Sieg gegen ${opp}!` : r === 'l' ? `Niederlage gegen ${opp}.` : `Remis gegen ${opp}.`;
+  t += worst ? ` Entscheidend: ${P.moves[worst.i].san} (Zug ${Math.floor(worst.i / 2) + 1}).` : ' Ohne echten Fehler – stark!';
   return t;
 }
 function myHistory() {
