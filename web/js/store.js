@@ -19,10 +19,20 @@ export const putMany = (s, vs) => tx(s, 'readwrite', st => { vs.forEach(v => st.
 export const get = (s, k) => tx(s, 'readonly', st => st.get(k));
 export const all = (s) => tx(s, 'readonly', st => st.getAll());
 
+// Ohne lokalen Server (Handy/Web-Version): chess.com direkt abfragen
+export const STATIC = !['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
 async function cc(path) {
   let r;
-  try { r = await fetch('/api/cc/' + path); }
-  catch { throw new Error('Die App läuft im Hintergrund nicht mehr. Starte „Schachanalyse“ neu über das App-Symbol.'); }
+  if (STATIC) {
+    for (let k = 0; k < 3; k++) {
+      try { r = await fetch('https://api.chess.com/pub/' + path); if (r.status !== 429) break; } catch { r = null; }
+      await new Promise(res => setTimeout(res, 800 * (k + 1)));
+    }
+    if (!r) throw new Error('Keine Verbindung zu chess.com. Prüfe dein Internet und versuche es erneut.');
+  } else {
+    try { r = await fetch('/api/cc/' + path); }
+    catch { throw new Error('Die App läuft im Hintergrund nicht mehr. Starte „Schachanalyse“ neu über das App-Symbol.'); }
+  }
   if (r.status === 404) throw new Error('Spieler nicht gefunden');
   if (!r.ok) throw new Error('chess.com antwortet nicht (' + r.status + ')');
   return r.json();

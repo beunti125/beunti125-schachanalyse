@@ -81,8 +81,8 @@ function renderGames() {
       <div class="g-res ${r}">${r === 'w' ? 'S' : r === 'l' ? 'N' : '½'}</div>
       <div class="g-pl"><span><i class="wsq"></i>${esc(g.white.username)} <em>(${g.white.rating})</em></span><span><i class="bsq"></i>${esc(g.black.username)} <em>(${g.black.rating})</em></span></div>
       <div class="g-open" title="${esc(openingOf(g))}">${esc(openingOf(g))}</div>
-      <div class="g-tc">${TC_DE[g.time_class] || g.time_class}<br>${fmtDate(g.end_time)}</div>
-      <div>${acc}</div>
+      <div class="g-tc"><span>${TC_DE[g.time_class] || g.time_class}</span><span>${fmtDate(g.end_time)}</span></div>
+      <div class="g-accw">${acc}</div>
       <button class="btn g-btn ${an ? '' : 'primary'}">${an ? 'Ansehen' : 'Analysieren'}</button>
     </div>`;
   }).join('');
@@ -614,7 +614,7 @@ $('#reloadBtn').onclick = () => st.user ? loadUser(st.user) : openProfMenu();
 // ---------- Profil: nur das eigene wird dauerhaft verknüpft, andere Spieler werden gesucht ----------
 st.profiles = []; st.me = '';
 const lc = x => (x || '').toLowerCase();
-function avatarSrc(url) { return url ? '/api/img?u=' + encodeURIComponent(url) : ''; }
+function avatarSrc(url) { return url ? (S.STATIC ? url : '/api/img?u=' + encodeURIComponent(url)) : ''; }
 function avHtml(p) {
   const letter = esc((p?.user || '?')[0].toUpperCase());
   return p?.avatar ? `<img src="${avatarSrc(p.avatar)}" alt="" onerror="this.outerHTML='<b>${letter}</b>'">` : `<b>${letter}</b>`;
@@ -727,10 +727,13 @@ document.addEventListener('keydown', e => {
 });
 
 // Einstellungen beim lokalen Server (Auto-Öffnen, Autostart)
-async function saveCfg(d) { try { const r = await fetch('/api/config', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) }); return await r.json(); } catch { return null; } }
+// Web-/Handyversion: Einstellungen im Browser statt im lokalen Server
+const localCfg = () => { try { return JSON.parse(localStorage.getItem('cfg') || '{}'); } catch { return {}; } };
+async function getCfg() { if (!S.STATIC) return (await fetch('/api/config')).json(); const v = await fetch('version.json?' + Date.now()).then(r => r.json()).catch(() => ({})); return { ...localCfg(), version: v.version }; }
+async function saveCfg(d) { if (S.STATIC) { const c = { ...localCfg(), ...d }; try { localStorage.setItem('cfg', JSON.stringify(c)); } catch {} return c; } try { const r = await fetch('/api/config', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) }); return await r.json(); } catch { return null; } }
 async function initCfg() {
   try {
-    const c = await (await fetch('/api/config')).json();
+    const c = await getCfg();
     $('#autoOpen').checked = c.autoOpen; $('#autostart').checked = c.autostart;
     if (c.version) $('#verLabel').textContent = 'Version ' + c.version;
     st.version = c.version;
@@ -750,7 +753,7 @@ $('#quitBtn').onclick = async () => {
 // Neue Version vom Server installiert? Dann Seite automatisch neu laden (nicht mitten in einer Analyse)
 setInterval(async () => {
   try {
-    const c = await (await fetch('/api/config')).json();
+    const c = await getCfg();
     if (st.version && c.version && c.version > st.version && !st.busy) { toast('Neue Version ' + c.version + ' – lade neu …'); setTimeout(() => location.reload(), 1200); }
   } catch {}
 }, 60000);
@@ -846,13 +849,25 @@ $('#brilBody').onclick = async e => {
   }
 };
 
+// ---------- Handy ----------
+if (S.STATIC) document.body.classList.add('static');
+const mq = matchMedia('(max-width: 820px)');
+function placeMobile() {
+  const q = $('#quality').closest('label'), tb = $('#v-games .toolbar');
+  if (mq.matches) { if (q.parentElement !== tb) tb.appendChild(q); }
+  else if (q.parentElement === tb) $('.side-foot').prepend(q);
+}
+mq.addEventListener?.('change', placeMobile); placeMobile();
+$('#mBack').onclick = () => { if ($('#v-review .panel').classList.contains('mode-mov')) setMode('sum'); else show('games'); };
+if ('serviceWorker' in navigator && S.STATIC) navigator.serviceWorker.register('sw.js').catch(() => {});
+
 window.__appOk = true;
 (async () => {
   for (const a of await S.all('analyses')) st.analyses.set(a.url, a);
   st.view = 'games';
   await initCfg();
   const want = new URLSearchParams(location.search).get('game');
-  if (want) window.history.replaceState(null, '', '/');
+  if (want) window.history.replaceState(null, '', location.pathname);
   if (st.user) await loadUser(st.user, !want);
   if (want) openWanted(want);
 })();
