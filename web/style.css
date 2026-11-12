@@ -402,3 +402,6 @@ body.focus #v-review.analysing .board-col{width:min(calc(100vh - 80px),calc(100v
 .pi-edit:hover{color:#fff;border-color:var(--acc)}
 #userBtn{white-space:nowrap;font-size:13px!important}
 .prof-menu{width:340px}
+.st-toggle{display:block;margin:6px 0 0 -2px;background:none;border:0;color:var(--acc2);font-weight:700;font-size:12.5px;cursor:pointer;padding:2px}
+.st-toggle:hover{text-decoration:underline}
+.st-more .st-line{color:#57544c}

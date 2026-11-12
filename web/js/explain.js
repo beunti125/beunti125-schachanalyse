@@ -38,7 +38,18 @@ function describe(fen, u) {
   else if (targets.length === 1) parts.push(`greift ${AKK[targets[0].type]} auf ${targets[0].square} an${c.attackers(targets[0].square, opp).length ? '' : (targets[0].type === 'q' ? ', die' : ', der') + ' ungedeckt ist'}`);
   targets.forEach(t => marks[t.square] = 'bad');
   if (c.inCheck()) { const k = c.board().flat().find(p => p && p.type === 'k' && p.color === opp); marks[k.square] = 'bad'; }
-  return { san: m.san, text: parts.join(', '), marks, r };
+  return { san: m.san, text: parts.join(', '), marks, r, targets, captured: m.captured, check: c.inCheck() };
+}
+// Nur das Wichtigste eines Zuges in wenigen Worten
+const NOM = { p: 'Bauer', n: 'Springer', b: 'Läufer', r: 'Turm', q: 'Dame', k: 'König' };
+function short(d) {
+  if (!d) return '';
+  if (d.mate) return 'Schachmatt';
+  const tg = (d.targets || []).slice().sort((a, b) => VAL[b.type] - VAL[a.type]);
+  if (tg.length >= 2 || (d.check && tg.length)) return `${d.check ? 'Schach und ' : ''}Gabel gegen ${tg.map(t => NOM[t.type] + ' ' + t.square).join(' und ')}`;
+  if (d.captured) return `schlägt ${AKK[d.captured]}${d.check ? ' mit Schach' : ''}`;
+  if (tg.length) return `greift ${AKK[tg[0].type]} ${tg[0].square} an`;
+  return d.check ? 'Schach' : '';
 }
 function pawnWeak(fen, col) {
   const ps = new Chess(fen).board().flat().filter(p => p && p.type === 'p' && p.color === col).map(p => p.square[0]);
@@ -176,11 +187,11 @@ export function explain(game, an, P, i, ctx = {}) {
   } else if (you) {
     // Dein Fehler
     const head = {
-      inaccuracy: 'Kleine Ungenauigkeit.', mistake: 'Leider ein Fehler.',
-      miss: 'Hier hast du eine Chance liegen lassen.', blunder: pick(['Autsch – ein Patzer.', 'Das tut weh – ein Patzer.'], seed)
+      inaccuracy: 'Ungenau.', mistake: 'Fehler:',
+      miss: 'Chance verpasst.', blunder: 'Patzer:'
     }[x.cls];
     let intro = `${head} `;
-    if (x.cls === 'miss' && i > 0) intro += `${oppName} hatte dir mit ${P.moves[i - 1].san} eine Tür geöffnet. `;
+    const missNote = x.cls === 'miss' && i > 0 ? `${oppName} hatte mit ${P.moves[i - 1].san} einen Fehler gemacht – den hättest du bestrafen können.` : '';
     const sgn = c === 'w' ? 1 : -1, base = bal(before, c);
     const dr = reply ? describe(after, reply.move) : null;
     const lossA = reply ? bal(lineEnd(after, reply.pv, 4), c) - base : 0;
@@ -190,13 +201,13 @@ export function explain(game, an, P, i, ctx = {}) {
     const hadMate = best?.mate != null && best.mate * sgn > 0;
     let kind = 'generic', why = '', f0 = after, arr = [], mk = {};
     if (allowsMate) {
-      kind = 'loss'; why = `Damit lässt du Matt zu: ${oppName} antwortet ${dr.san}${dr.text ? ' – ' + dr.text : ''}.`; arr = [arrow(reply.move, COL.red)]; mk = dr.marks;
+      kind = 'loss'; why = `Danach setzt ${oppName} matt (${dr.san}).`; arr = [arrow(reply.move, COL.red)]; mk = dr.marks;
     } else if (hadMate && db) {
-      kind = 'missed'; f0 = before; why = `Du hattest Matt in ${Math.abs(best.mate)} – mit ${db.san}${db.text ? ' (' + db.text + ')' : ''}.`; arr = [arrow(m.uci, COL.red, '✕'), arrow(best.move, COL.green, '✓')]; mk = db.marks;
+      kind = 'missed'; f0 = before; why = `Du hattest Matt in ${Math.abs(best.mate)} mit ${db.san}.`; arr = [arrow(m.uci, COL.red, '✕'), arrow(best.move, COL.green, '✓')]; mk = db.marks;
     } else if (reply && lossA <= -2) {
-      kind = 'loss'; why = `${oppName} antwortet ${dr.san}${dr.text ? ' – ' + dr.text : ''} – und am Ende verlierst du ${lossName(lossA)}.`; arr = [arrow(reply.move, COL.red)]; mk = dr.marks;
+      kind = 'loss'; why = `${dr.san}${short(dr) ? ' – ' + short(dr) : ''}. Du verlierst ${lossName(lossA)}.`; arr = [arrow(reply.move, COL.red)]; mk = dr.marks;
     } else if (db && gainB >= 2 && gainB - lossA >= 2) {
-      kind = 'missed'; f0 = before; why = `Du hast eine Taktik übersehen: ${db.san}${db.text ? ' – ' + db.text : ''} hätte ${lossName(gainB)} gewonnen.`; arr = [arrow(m.uci, COL.red, '✕'), arrow(best.move, COL.green, '✓')]; mk = db.marks;
+      kind = 'missed'; f0 = before; why = `Taktik übersehen: ${db.san}${short(db) ? ' (' + short(db) + ')' : ''} gewinnt ${lossName(gainB)}.`; arr = [arrow(m.uci, COL.red, '✕'), arrow(best.move, COL.green, '✓')]; mk = db.marks;
     } else {
       const rm = reply ? mv(after, reply.move) : null;
       const kicked = rm && rm.m.piece === 'p' && m.piece !== 'p' && m.piece !== 'k' && rm.c.attackers(m.to, rm.m.color).includes(rm.m.to);
@@ -210,10 +221,11 @@ export function explain(game, an, P, i, ctx = {}) {
       } else if (i < 24 && P.moves.slice(0, i).some(q => q.color === c && q.to === m.from) && new Chess(before).board()[c === 'w' ? 7 : 0].filter(p => p && p.color === c && (p.type === 'n' || p.type === 'b')).length >= 2) {
         kind = 'dev'; why = 'Du ziehst dieselbe Figur ein zweites Mal, während andere Figuren noch unentwickelt sind – das kostet Entwicklungszeit.';
       }
-      if (kind === 'generic' && db) { f0 = before; why = `Zu harmlos – stärker war ${db.san}${db.text ? ' (' + db.text + ')' : ''}.`; arr = [arrow(m.uci, COL.red, '✕'), arrow(best.move, COL.green, '✓')]; mk = db.marks; }
-      else if (dr && dr.text && kind !== 'tempo') why += ` Danach spielt ${oppName} ${dr.san} – ${dr.text}.`;
+      if (kind === 'generic' && db) { f0 = before; why = `Stärker war ${db.san}${short(db) ? ' (' + short(db) + ')' : ''}.`; arr = [arrow(m.uci, COL.red, '✕'), arrow(best.move, COL.green, '✓')]; mk = db.marks; }
+      else if (dr && short(dr) && kind !== 'tempo') why += ` ${oppName}: ${dr.san} – ${short(dr)}.`;
     }
     steps.push({ fen: f0, last: f0 === before ? lastPrev : last, arrows: arr, marks: mk, text: intro + why });
+    if (missNote) steps.push({ fen: before, last: lastPrev, arrows: [], marks: {}, text: missNote });
     if (kind === 'missed' || (kind === 'generic' && db)) {
       // So wäre es richtig gegangen
       const end = playLine(before, best.pv, 4, 0, { me: COL.green, them: COL.grey });

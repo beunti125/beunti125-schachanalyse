@@ -192,7 +192,7 @@ function go(ply) {
   const os = cls && !['mistake', 'miss', 'blunder'].includes(cls.cls) ? openingStep(P.fens, ply, me(g), an.lines[ply]?.[0]?.pv) : null;
   if (os) { os.last = { from: mv.from, to: mv.to }; if (cls.cls === 'book') st.ex.steps.splice(1, 0, os); else st.ex.steps.push(os); }
   stopAuto();
-  renderSteps(); applyStep(0); startAuto();
+  st.more = false; renderSteps(); applyStep(0);
   const ev = an.evals[ply], wp = winPct(ev), flip = board.orientation === 'b';
   setEvalBar(ev);
   // Spieler + Uhr
@@ -370,7 +370,9 @@ function renderSteps() {
   const el = $('#steps'), ex = st.ex;
   if (!ex || !ex.steps.length) { el.innerHTML = ''; el.style.display = 'none'; return; }
   el.style.display = '';
-  el.innerHTML = ex.steps.map((s, k) => `<div class="st-line ${k === st.step ? 'on' : ''}" data-k="${k}">${esc(s.text)}</div>`).join('');
+  const line = (s, k) => `<div class="st-line ${k === st.step ? 'on' : ''}" data-k="${k}">${esc(s.text)}</div>`;
+  const rest = ex.steps.slice(1);
+  el.innerHTML = line(ex.steps[0], 0) + (rest.length ? `<div class="st-more" style="display:${st.more ? 'block' : 'none'}">${rest.map((s, k) => line(s, k + 1)).join('')}</div><button class="st-toggle" type="button">${st.more ? 'Weniger ▴' : 'Mehr ▾'}</button>` : '');
 }
 // Folge automatisch auf dem Brett abspielen, danach zurück zur Partiestellung
 function stopAuto() { clearTimeout(st.autoT); st.autoT = null; }
@@ -652,7 +654,10 @@ $('#quality').value = st.quality; $('#quality').onchange = e => { st.quality = e
 $('#tcFilter').onclick = e => { const b = e.target.closest('button'); if (!b) return; st.tc = b.dataset.tc; $('#tcFilter').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); renderGames(); };
 $('#gameList').onclick = e => { const r = e.target.closest('.g-row'); if (r) openReview(filtered()[+r.dataset.i]); };
 $('#batchBtn').onclick = batch;
-$('#steps').onclick = e => { stopAuto(); const d = e.target.closest('[data-k]'); if (d) applyStep(+d.dataset.k); };
+$('#steps').onclick = e => {
+  if (e.target.closest('.st-toggle')) { st.more = !st.more; renderSteps(); if (st.more) startAuto(); else { stopAuto(); applyStep(0); } return; }
+  stopAuto(); const d = e.target.closest('[data-k]'); if (d) applyStep(+d.dataset.k);
+};
 $('#reviewBoard').addEventListener('pointerdown', () => stopAuto());
 // Klick auf eine Stufe in der Tabelle → zum (nächsten) Zug dieser Stufe springen
 $('#clsTable').onclick = e => {
