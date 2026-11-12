@@ -5,7 +5,7 @@ import { icon, CLASS_COLOR } from './icons.js';
 import { explain, judgeIdea } from './explain.js';
 import { openingStep } from './openings.js';
 import * as S from './store.js';
-import { CLASSES, CLASS_DE, ERR_DE, PHASE_DE, parseGame, analyseGame, extractPuzzles, reclassify, coachText, winPct, fmtEval, uciToSan, pvToSan } from './analysis.js';
+import { CLASSES, CLASS_DE, ERR_DE, PHASE_DE, parseGame, analyseGame, extractPuzzles, reclassify, winPct, fmtEval } from './analysis.js';
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -17,9 +17,8 @@ const st = {
   user: S.ls.get('user', ''), games: [], analyses: new Map(), tc: '', quality: S.ls.get('quality', 'standard'),
   g: null, P: null, an: null, ply: 0, showBest: false, busy: false,
 };
-// Schnell/Standard: viele kleine Engines parallel. Gründlich + Taktik-Prüfung: eine große Engine (erst bei Bedarf geladen).
+// Alle Analysestufen laufen über die parallelen Lite-Engines (App bleibt klein)
 const pool = new EnginePool();
-const engineFor = () => pool; // alle Stufen über die parallelen Lite-Engines (App bleibt klein)
 pool.ready.then(() => $('#engineLabel').textContent = pool.label).catch(() => $('#engineLabel').textContent = 'Engine-Fehler');
 
 function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 2600); }
@@ -39,6 +38,7 @@ const me = g => g.white.username.toLowerCase() === st.user.toLowerCase() ? 'w' :
 const resultOf = g => { const r = (me(g) === 'w' ? g.white : g.black).result; return r === 'win' ? 'w' : ['agreed', 'repetition', 'stalemate', 'insufficient', '50move', 'timevsinsufficient'].includes(r) ? 'd' : 'l'; };
 const fmtDate = t => new Date(t * 1000).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: '2-digit' });
 const fmtClock = s => s == null ? '' : s >= 3600 ? `${Math.floor(s / 3600)}:${String(Math.floor(s % 3600 / 60)).padStart(2, '0')}:${String(Math.floor(s % 60)).padStart(2, '0')}` : `${Math.floor(s / 60)}:${(s % 60).toFixed(s < 20 ? 1 : 0).padStart(s < 20 ? 4 : 2, '0')}`;
+const resLetter = r => r === 'w' ? 'S' : r === 'l' ? 'N' : '½';
 const openingOf = g => ((g.eco || '').split('/openings/')[1] || '').replace(/-/g, ' ').replace(/\s\d.*$/, '').replace(/\.\.\./g, '').trim() || 'Unbekannt';
 
 // ---------- Laden ----------
@@ -78,7 +78,7 @@ function renderGames() {
     const r = resultOf(g), an = st.analyses.get(g.url), c = me(g);
     const av = accOf(g, an, c), acc = av != null ? `<span class="g-acc">${av}<small> %</small></span>` : '<span class="tag">nicht analysiert</span>';
     return `<div class="g-row" data-i="${i}">
-      <div class="g-res ${r}">${r === 'w' ? 'S' : r === 'l' ? 'N' : '½'}</div>
+      <div class="g-res ${r}">${resLetter(r)}</div>
       <div class="g-pl"><span><i class="wsq"></i>${esc(g.white.username)} <em>(${g.white.rating})</em></span><span><i class="bsq"></i>${esc(g.black.username)} <em>(${g.black.rating})</em></span></div>
       <div class="g-open" title="${esc(openingOf(g))}">${esc(openingOf(g))}</div>
       <div class="g-tc"><span>${TC_DE[g.time_class] || g.time_class}</span><span>${fmtDate(g.end_time)}</span></div>
@@ -104,7 +104,7 @@ function progress(on, title, done, total, sub) {
 async function ensureAnalysis(g, quality, onP) {
   let an = st.analyses.get(g.url);
   if (an && (quality == null || rank(an.quality) >= rank(quality))) return an;
-  an = await analyseGame(g, engineFor(quality || st.quality), quality || st.quality, onP);
+  an = await analyseGame(g, pool, quality || st.quality, onP);
   st.analyses.set(g.url, an); await S.put('analyses', an);
   if (st.user && [g.white.username, g.black.username].some(n => n.toLowerCase() === st.user.toLowerCase())) {
     const old = new Map((await S.all('puzzles')).map(p => [p.id, p]));
@@ -192,9 +192,8 @@ function go(ply) {
   st.hint = 0; updHint();
   const os = cls && !['mistake', 'miss', 'blunder'].includes(cls.cls) ? openingStep(P.fens, ply, me(g), an.lines[ply]?.[0]?.pv) : null;
   if (os) { os.last = { from: mv.from, to: mv.to }; if (cls.cls === 'book') st.ex.steps.splice(1, 0, os); else st.ex.steps.push(os); }
-  stopAuto();
   st.more = false; renderSteps(); applyStep(0);
-  const ev = an.evals[ply], wp = winPct(ev), flip = board.orientation === 'b';
+  const ev = an.evals[ply], flip = board.orientation === 'b';
   setEvalBar(ev);
   // Spieler + Uhr
   const top = flip ? 'w' : 'b', bot = flip ? 'b' : 'w';
@@ -208,16 +207,13 @@ function go(ply) {
     $('.coach-txt').innerHTML = `<b>${esc(mv.san)}</b> – <b style="color:${CLASS_COLOR[cls.cls]}">${CLASS_DE[cls.cls]}</b>${cls.pressure && BAD.includes(cls.cls) ? ' <span class="tag">unter Zeitdruck</span>' : ''}`;
   } else {
     $('.coach-ico').innerHTML = icon('book', 30);
-    const r = resultOf(g);
     $('.coach-txt').textContent = summary(g, an, P);
   }
-  const ce = $('.coach-eval'); ce.textContent = fmtEval(ev); ce.classList.toggle('neg', wp < 50);
+  setCoachEval(ev);
   setCoachPiece(mv ? mv.color : null, mv ? mv.piece : null);
   board.setMovable(movableColor(P.fens[ply]));
   // Trainer reagiert auf den Zug
-  const av = $('.avatar'), mood = cls ? ({ brilliant: 'jump', great: 'jump', best: 'nod', excellent: 'nod', good: 'nod', book: 'tilt', inaccuracy: 'shake', mistake: 'shake', miss: 'shake', blunder: 'shake' }[cls.cls] || 'nod') : 'tilt';
-  av.style.borderColor = cls ? CLASS_COLOR[cls.cls] : '';
-  av.classList.remove('jump', 'nod', 'tilt', 'shake'); void av.offsetWidth; av.classList.add(mood);
+  coachMood(cls ? ({ brilliant: 'jump', great: 'jump', best: 'nod', excellent: 'nod', good: 'nod', book: 'tilt', inaccuracy: 'shake', mistake: 'shake', miss: 'shake', blunder: 'shake' }[cls.cls] || 'nod') : 'tilt', cls ? CLASS_COLOR[cls.cls] : '');
   const bb = $('.bubble'); bb.classList.remove('pop'); void bb.offsetWidth; bb.classList.add('pop');
   document.querySelectorAll('.mv').forEach(e => e.classList.toggle('cur', +e.dataset.ply === ply));
   const cur = document.querySelector('.mv.cur'), ml = $('#moveList');
@@ -234,8 +230,14 @@ function setEvalBar(ev) {
   tx.textContent = fmtEval(ev).replace('+', '').replace(/^-/, '');
   const atBottom = whiteBetter !== flip; tx.style.top = atBottom ? 'auto' : '0'; tx.style.bottom = atBottom ? '0' : 'auto'; tx.style.color = whiteBetter ? '#333' : '#eee';
 }
-// Die gezogene Figur ist der Trainer
-// Figuren optisch mittig im Kreis (gemessene Verschiebung/Größe je Figur)
+// Bewertung in der Sprechblase (dunkel bei Schwarz-Vorteil)
+function setCoachEval(ev) { const ce = $('.coach-eval'); ce.textContent = fmtEval(ev); ce.classList.toggle('neg', winPct(ev) < 50); }
+// Trainer-Animation neu starten (Randfarbe = Bewertungsstufe)
+function coachMood(mood, border) {
+  const av = $('.avatar'); av.style.borderColor = border;
+  av.classList.remove('jump', 'nod', 'tilt', 'shake'); void av.offsetWidth; av.classList.add(mood);
+}
+// Die gezogene Figur ist der Trainer; Figuren optisch mittig im Kreis (gemessene Verschiebung/Größe je Figur)
 const FIG_CENTER = {"wK": {"dx": 0.1, "dy": -0.7, "s": 0.997}, "wQ": {"dx": 0.0, "dy": 0.3, "s": 0.909}, "wR": {"dx": 0.0, "dy": -3.3, "s": 1.111}, "wB": {"dx": 0.0, "dy": 0.8, "s": 1.006}, "wN": {"dx": 1.1, "dy": -1.1, "s": 1.045}, "wP": {"dx": 0.0, "dy": -3.9, "s": 1.093}, "bK": {"dx": 0.1, "dy": -0.7, "s": 0.997}, "bQ": {"dx": 0.0, "dy": -1.6, "s": 0.909}, "bR": {"dx": 0.0, "dy": -3.3, "s": 1.111}, "bB": {"dx": 0.0, "dy": 0.8, "s": 1.006}, "bN": {"dx": 1.1, "dy": -1.1, "s": 1.045}, "bP": {"dx": 0.0, "dy": -3.9, "s": 1.093}};
 function setCoachPiece(color, piece) {
   const img = $('.avatar img'), av = $('.avatar'), k = (color || 'w') + (piece || 'n').toUpperCase(), f = FIG_CENTER[k];
@@ -279,7 +281,6 @@ function onReviewMove(from, to, promo) {
   showVar(true);
 }
 async function showVar(animate) {
-  stopAuto();
   const v = st.var, fen = v.fens[v.idx], mv = v.moves[v.idx - 1];
   board.setPosition(fen, { last: mv ? { from: mv.from, to: mv.to } : null, animate }); board.setArrows([]); board.setMarks({});
   board.setMovable(movableColor(fen));
@@ -293,7 +294,7 @@ async function showVar(animate) {
   const [b, a] = await Promise.all([mv ? evalOf(v.fens[v.idx - 1]) : null, evalOf(fen)]);
   if (tok !== st.varTok) return;
   setEvalBar(a.ev);
-  const ce = $('.coach-eval'); ce.textContent = fmtEval(a.ev); ce.classList.toggle('neg', winPct(a.ev) < 50);
+  setCoachEval(a.ev);
   const c = new Chess(fen);
   let text;
   if (mv) {
@@ -305,12 +306,10 @@ async function showVar(animate) {
     const g = st.g, opp = me(g) === 'w' ? g.black.username : g.white.username;
     const J = judgeIdea({ before: prev, after: fen, m: { ...mv, promotion: mv.uci[4] }, b, a, my: me(g), oppName: opp, startEv: v.idx > 1 ? st.an.evals[v.base] : null, prevFen: v.idx >= 2 ? v.fens[v.idx - 2] : (v.base > 0 ? st.P.fens[v.base - 1] : null) });
     text = J.text; st.varArrows = J.arrows; st.varMarks = J.marks;
-    const av = $('.avatar'); av.style.borderColor = CLASS_COLOR[cls];
-    av.classList.remove('jump', 'nod', 'tilt', 'shake'); void av.offsetWidth; av.classList.add(cls === 'best' ? 'nod' : ['mistake', 'blunder'].includes(cls) ? 'shake' : 'tilt');
+    coachMood(cls === 'best' ? 'nod' : ['mistake', 'blunder'].includes(cls) ? 'shake' : 'tilt', CLASS_COLOR[cls]);
   } else { text = 'Spiel deine Idee: Zieh Figuren für Weiß und Schwarz – ich sage dir nach jedem Zug, ob sie funktioniert und warum.'; st.varArrows = []; st.varMarks = {}; }
   if (c.isCheckmate()) text += ' Schachmatt!';
   else if (c.isDraw()) text += ' Die Stellung ist remis.';
-  else if (a.best && !mv) text += '';
   const el = $('#steps'); el.style.display = ''; el.innerHTML = `<div class="step-text">${esc(text)}</div>`;
   applyVarHint();
 }
@@ -319,7 +318,7 @@ function renderVarLine() {
   const el = $('#varLine'), v = st.var;
   if (!v) { el.style.display = 'none'; el.innerHTML = ''; return; }
   const startNo = Math.floor(v.base / 2) + 1;
-  let h = '', no = startNo;
+  let h = '';
   v.moves.forEach((m, k) => {
     const ply = v.base + k;
     if (m.color === 'w') h += `<span class="vn">${Math.floor(ply / 2) + 1}.</span>`; else if (k === 0) h += `<span class="vn">${Math.floor(ply / 2) + 1}…</span>`;
@@ -337,10 +336,8 @@ function accSrc(g) { return g && g.accuracies && g.accuracies.white != null ? 'c
 // Persönliche Zusammenfassung zu Beginn
 function summary(g, an, P) {
   const c = me(g), o = c === 'w' ? 'b' : 'w', r = resultOf(g), opp = (o === 'w' ? g.white : g.black).username;
-  const a = accOf(g, an, c), b = accOf(g, an, o);
   const mine = an.moves.map((m, i) => ({ ...m, i })).filter(m => P.moves[m.i].color === c);
   const worst = mine.filter(m => SERIOUS.includes(m.cls)).sort((x, y) => y.loss - x.loss)[0];
-  const best = mine.filter(m => ['brilliant', 'great'].includes(m.cls))[0];
   let t = r === 'w' ? `Sieg gegen ${opp}!` : r === 'l' ? `Niederlage gegen ${opp}.` : `Remis gegen ${opp}.`;
   t += worst ? ` Entscheidend: ${P.moves[worst.i].san} (Zug ${Math.floor(worst.i / 2) + 1}).` : ' Ohne echten Fehler – stark!';
   return t;
@@ -378,13 +375,6 @@ function renderSteps() {
   const line = (s, k) => `<div class="st-line ${k === st.step ? 'on' : ''}" data-k="${k}">${esc(s.text)}</div>`;
   const rest = ex.steps.slice(1);
   el.innerHTML = line(ex.steps[0], 0) + (rest.length ? `<div class="st-more" style="display:${st.more ? 'block' : 'none'}">${rest.map((s, k) => line(s, k + 1)).join('')}</div><div class="st-bar"><button class="st-toggle" type="button">${st.more ? 'Weniger ▴' : 'Mehr ▾'}</button>${st.more ? '<span class="st-nav"><button data-s="-1" type="button" title="Schritt zurück (↑)">◀</button><button data-s="1" type="button" title="Nächster Schritt (↓)">▶</button></span>' : ''}</div>` : '');
-}
-// Folge automatisch auf dem Brett abspielen, danach zurück zur Partiestellung
-function stopAuto() { clearTimeout(st.autoT); st.autoT = null; }
-function startAuto() {
-  stopAuto(); const n = st.ex?.steps.length || 0; if (n < 2) return;
-  const tick = k => { st.autoT = setTimeout(() => { if (k < n) { applyStep(k); tick(k + 1); } else { applyStep(0); st.autoT = null; } }, k === 1 ? 1400 : 1700); };
-  tick(1);
 }
 function applyStep(k) {
   const ex = st.ex, i = st.ply - 1;
@@ -660,11 +650,10 @@ $('#tcFilter').onclick = e => { const b = e.target.closest('button'); if (!b) re
 $('#gameList').onclick = e => { const r = e.target.closest('.g-row'); if (r) openReview(filtered()[+r.dataset.i]); };
 $('#batchBtn').onclick = batch;
 $('#steps').onclick = e => {
-  if (e.target.closest('.st-toggle')) { stopAuto(); st.more = !st.more; renderSteps(); applyStep(st.more ? Math.min(1, st.ex.steps.length - 1) : 0); return; }
-  const nb = e.target.closest('[data-s]'); if (nb) { stopAuto(); applyStep(st.step + +nb.dataset.s); return; }
-  stopAuto(); const d = e.target.closest('[data-k]'); if (d) applyStep(+d.dataset.k);
+  if (e.target.closest('.st-toggle')) { st.more = !st.more; renderSteps(); applyStep(st.more ? Math.min(1, st.ex.steps.length - 1) : 0); return; }
+  const nb = e.target.closest('[data-s]'); if (nb) { applyStep(st.step + +nb.dataset.s); return; }
+  const d = e.target.closest('[data-k]'); if (d) applyStep(+d.dataset.k);
 };
-$('#reviewBoard').addEventListener('pointerdown', () => stopAuto());
 // Klick auf eine Stufe in der Tabelle → zum (nächsten) Zug dieser Stufe springen
 $('#clsTable').onclick = e => {
   const c = e.target.closest('.jump'); if (!c || !st.an) return;
@@ -677,8 +666,10 @@ $('#varLine').onclick = e => { const m = e.target.closest('[data-vi]'); if (m &&
 $('#moveList').onclick = e => { const m = e.target.closest('.mv'); if (m) go(+m.dataset.ply); };
 $('#graph').onclick = e => { if (!st.an) return; const b = e.currentTarget.getBoundingClientRect(); go(Math.round((e.clientX - b.left) / b.width * (st.an.evals.length - 1))); };
 document.querySelector('.controls').onclick = e => { const n = e.target.closest('[data-nav]')?.dataset.nav; if (!n) return; go({ first: 0, prev: st.ply - 1, next: st.ply + 1, last: 1e9 }[n]); };
-$('#hintBtn').onclick = () => { stopAuto(); st.hint = ((st.hint || 0) + 1) % 3; updHint(); if (st.var) applyVarHint(); else applyStep(st.step); };
-$('#nextBtn').onclick = () => { if (st.var) { if (st.var.idx < st.var.moves.length) { st.var.idx++; showVar(true); } } else go(st.ply + 1); };
+$('#hintBtn').onclick = () => { st.hint = ((st.hint || 0) + 1) % 3; updHint(); if (st.var) applyVarHint(); else applyStep(st.step); };
+// In der eigenen Variante einen Zug vor
+function varNext() { if (st.var.idx < st.var.moves.length) { st.var.idx++; showVar(true); } }
+$('#nextBtn').onclick = () => { if (st.var) varNext(); else go(st.ply + 1); };
 $('#startBtn').onclick = () => go(Math.max(1, st.ply));
 $('#flipBtn').onclick = () => { board.flip(); if (st.an) { renderGraph(); go(st.ply); } };
 // Partie suchen (im Spielbericht)
@@ -694,7 +685,7 @@ function renderPicker() {
   st.pick = list;
   $('#pickList').innerHTML = list.length ? list.map((g, i) => {
     const c = me(g), o = c === 'w' ? g.black : g.white, r = resultOf(g), an = st.analyses.get(g.url);
-    return `<div class="pk-row ${st.g && st.g.url === g.url ? 'cur' : ''}" data-i="${i}"><div class="g-res ${r}">${r === 'w' ? 'S' : r === 'l' ? 'N' : '½'}</div>
+    return `<div class="pk-row ${st.g && st.g.url === g.url ? 'cur' : ''}" data-i="${i}"><div class="g-res ${r}">${resLetter(r)}</div>
       <div><b>${esc(o.username)}</b> <em>(${o.rating})</em><div class="pk-sub">${esc(openingOf(g))}</div></div>
       <div class="pk-sub">${TC_DE[g.time_class] || ''}<br>${fmtDate(g.end_time)}</div>
       <div class="g-acc">${accOf(g, an, c) != null ? accOf(g, an, c) + '<small> %</small>' : '<span class="tag">neu</span>'}</div></div>`;
@@ -714,10 +705,9 @@ document.addEventListener('keydown', e => {
   if (st.view === 'review' && e.key === '/' ) { openPicker(); e.preventDefault(); return; }
   if (st.view === 'review' && e.key === 'Escape' && !isFull()) { show('games'); return; }
   if (st.view !== 'review' || e.target.matches('input,select')) return;
-  stopAuto();
   if (st.var) {
     if (e.key === 'ArrowLeft') { if (st.var.idx > 0) { st.var.idx--; showVar(false); } else go(st.var.base); e.preventDefault(); return; }
-    if (e.key === 'ArrowRight') { if (st.var.idx < st.var.moves.length) { st.var.idx++; showVar(true); } e.preventDefault(); return; }
+    if (e.key === 'ArrowRight') { varNext(); e.preventDefault(); return; }
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') { e.preventDefault(); return; }
   }
   if (e.key === 'ArrowLeft') { go(st.ply - 1); e.preventDefault(); }
@@ -726,8 +716,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowDown') { if (!st.more && st.ex?.steps.length > 1) { st.more = true; renderSteps(); } applyStep(st.step + 1); e.preventDefault(); }
 });
 
-// Einstellungen beim lokalen Server (Auto-Öffnen, Autostart)
-// Web-/Handyversion: Einstellungen im Browser statt im lokalen Server
+// Einstellungen (Auto-Öffnen, Autostart, Profil): beim lokalen Server bzw. in der Web-/Handyversion im Browser
 const localCfg = () => { try { return JSON.parse(localStorage.getItem('cfg') || '{}'); } catch { return {}; } };
 async function getCfg() { if (!S.STATIC) return (await fetch('/api/config')).json(); const v = await fetch('version.json?' + Date.now()).then(r => r.json()).catch(() => ({})); return { ...localCfg(), version: v.version }; }
 async function saveCfg(d) { if (S.STATIC) { const c = { ...localCfg(), ...d }; try { localStorage.setItem('cfg', JSON.stringify(c)); } catch {} return c; } try { const r = await fetch('/api/config', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) }); return await r.json(); } catch { return null; } }
@@ -851,14 +840,27 @@ $('#brilBody').onclick = async e => {
 
 // ---------- Handy ----------
 if (S.STATIC) document.body.classList.add('static');
-const mq = matchMedia('(max-width: 820px)');
+const mq = matchMedia('(max-width: 820px), (max-height: 500px) and (orientation: landscape)');
 function placeMobile() {
-  const q = $('#quality').closest('label'), tb = $('#v-games .toolbar');
-  if (mq.matches) { if (q.parentElement !== tb) tb.appendChild(q); }
-  else if (q.parentElement === tb) $('.side-foot').prepend(q);
+  const q = $('#quality').closest('label'), tb = $('#v-games .toolbar'), mo = $('#months');
+  if (mq.matches) { if (q.parentElement !== tb) tb.appendChild(q); if (mo.parentElement !== tb) tb.prepend(mo); }
+  else { if (q.parentElement === tb) $('.side-foot').prepend(q); if (mo.parentElement === tb) $('#reloadBtn').before(mo); }
 }
 mq.addEventListener?.('change', placeMobile); placeMobile();
 $('#mBack').onclick = () => { if ($('#v-review .panel').classList.contains('mode-mov')) setMode('sum'); else show('games'); };
+// Partie-Suche im Handy-Kopf (die Desktop-Kopfzeile des Panels ist dort ausgeblendet)
+$('#v-review .m-head').insertAdjacentHTML('beforeend', '<button id="mPick" type="button" aria-label="Partie suchen" title="Partie suchen"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg></button>');
+$('#mPick').onclick = openPicker;
+// Zugstreifen: aktuellen Zug waagerecht in die Mitte scrollen
+function stripFollow() {
+  if (!mq.matches) return;
+  const ml = $('#moveList'), c = ml.querySelector('.mv.cur'); if (!c || !ml.clientWidth) return;
+  const a = ml.getBoundingClientRect(), r = c.getBoundingClientRect(), d = r.left - a.left - (a.width - r.width) / 2;
+  if (Math.abs(d) > 2) ml.scrollTo({ left: ml.scrollLeft + d, behavior: 'smooth' });
+}
+const stripObs = new MutationObserver(() => requestAnimationFrame(stripFollow));
+stripObs.observe($('#moveList'), { subtree: true, childList: true, attributes: true, attributeFilter: ['class'] });
+stripObs.observe($('#v-review .panel'), { attributes: true, attributeFilter: ['class'] });
 if ('serviceWorker' in navigator && S.STATIC) navigator.serviceWorker.register('sw.js').catch(() => {});
 
 window.__appOk = true;

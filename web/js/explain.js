@@ -6,11 +6,12 @@ import { CLASS_DE, winPct, fmtEval, bookKey } from './analysis.js';
 const VAL = { p: 1, n: 3, b: 3, r: 5, q: 9, k: 100 };
 const NAME = { p: 'Bauer', n: 'Springer', b: 'Läufer', r: 'Turm', q: 'Dame', k: 'König' };
 const AKK = { p: 'den Bauern', n: 'den Springer', b: 'den Läufer', r: 'den Turm', q: 'die Dame', k: 'den König' };
-const DAT = { p: 'dem Bauern', n: 'dem Springer', b: 'dem Läufer', r: 'dem Turm', q: 'der Dame', k: 'dem König' };
 export const COL = { red: 'rgba(226,57,43,.85)', green: 'rgba(127,191,77,.88)', teal: 'rgba(38,181,173,.9)', grey: 'rgba(150,148,140,.85)', blue: 'rgba(91,143,199,.88)' };
 
 const mv = (fen, u) => { const c = new Chess(fen); try { const m = c.move({ from: u.slice(0, 2), to: u.slice(2, 4), promotion: u[4] }); return { c, m, fen: c.fen() }; } catch { return null; } };
 const bal = (fen, col) => { let s = 0; for (const p of new Chess(fen).board().flat()) if (p && p.type !== 'k') s += (p.color === col ? 1 : -1) * VAL[p.type]; return s; };
+// Bewertungstext (Weiß-Sicht) aus Sicht der Farbe my
+const evFor = (ev, my) => { const s = fmtEval(ev); if (my === 'w' || !s) return s; return s.startsWith('-M') ? s.slice(1) : s.startsWith('-') ? '+' + s.slice(1) : s.startsWith('+') ? '-' + s.slice(1) : s.startsWith('M') ? '-' + s : s; };
 const list = a => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' und ' + a.at(-1);
 function lossName(d) {
   d = Math.abs(d);
@@ -41,12 +42,11 @@ function describe(fen, u) {
   return { san: m.san, text: parts.join(', '), marks, r, targets, captured: m.captured, check: c.inCheck() };
 }
 // Nur das Wichtigste eines Zuges in wenigen Worten
-const NOM = { p: 'Bauer', n: 'Springer', b: 'Läufer', r: 'Turm', q: 'Dame', k: 'König' };
 function short(d) {
   if (!d) return '';
   if (d.mate) return 'Schachmatt';
   const tg = (d.targets || []).slice().sort((a, b) => VAL[b.type] - VAL[a.type]);
-  if (tg.length >= 2 || (d.check && tg.length)) return `${d.check ? 'Schach und ' : ''}Gabel gegen ${tg.map(t => NOM[t.type] + ' ' + t.square).join(' und ')}`;
+  if (tg.length >= 2 || (d.check && tg.length)) return `${d.check ? 'Schach und ' : ''}Gabel gegen ${tg.map(t => NAME[t.type] + ' ' + t.square).join(' und ')}`;
   if (d.captured) return `schlägt ${AKK[d.captured]}${d.check ? ' mit Schach' : ''}`;
   if (tg.length) return `greift ${AKK[tg[0].type]} ${tg[0].square} an`;
   return d.check ? 'Schach' : '';
@@ -101,7 +101,7 @@ export function explain(game, an, P, i, ctx = {}) {
   const last = { from: m.from, to: m.to }, lastPrev = i > 0 ? { from: P.moves[i - 1].from, to: P.moves[i - 1].to } : null;
   const best = an.lines[i]?.[0], second = an.lines[i]?.[1], reply = an.lines[i + 1]?.[0];
   // Bewertung aus deiner Sicht
-  const myEv = ev => { const s = fmtEval(ev); if (my === 'w' || !s) return s; return s.startsWith('-M') ? s.slice(1) : s.startsWith('-') ? '+' + s.slice(1) : s.startsWith('+') ? '-' + s.slice(1) : s.startsWith('M') ? '-' + s : s; };
+  const myEv = ev => evFor(ev, my);
   const evB = myEv(an.evals[i]), evA = myEv(an.evals[i + 1]);
   const steps = [], self = describe(before, m.uci);
   const who = mine => mine ? 'Du spielst' : `${oppName} spielt`;
@@ -296,9 +296,8 @@ export function judgeIdea({ before, after, m, b, a, my, oppName, startEv, prevFe
   // „scheitert“: schlechter als die beste Fortsetzung; „funktioniert“: echter Gewinn gegenüber vor dem letzten Abtausch
   const lossRel = endA - bal(b?.pv?.length ? lineEnd(before, b.pv, 5) : before, c);
   const gainAbs = endA - bal(prevFen || before, c);
-  const lossA = lossRel;
   const db = b?.best && b.best !== m.from + m.to + (m.promotion || '') ? describe(before, b.best) : null;
-  const evOf = ev => { const s = fmtEval(ev); if (my === 'w' || !s) return s; return s.startsWith('-M') ? s.slice(1) : s.startsWith('-') ? '+' + s.slice(1) : s.startsWith('+') ? '-' + s.slice(1) : s.startsWith('M') ? '-' + s : s; };
+  const evOf = ev => evFor(ev, my);
   const wb = winPct(b.ev), wa = winPct(a.ev), loss = Math.max(0, c === 'w' ? wb - wa : wa - wb);
   const arrows = [], marks = {};
   let text;
@@ -308,8 +307,8 @@ export function judgeIdea({ before, after, m, b, a, my, oppName, startEv, prevFe
   else if (a.ev.mate != null && a.ev.mate * sgn > 0) text = `${who} funktioniert: Matt in ${Math.abs(a.ev.mate)}!${reply ? ` Weiter mit ${uciSan(after, reply.move)}.` : ''}`;
   else if (a.ev.mate != null && a.ev.mate * sgn < 0) {
     text = `${who} scheitert: ${mine ? oppName : 'Die Gegenseite'} setzt nach ${dr.san} matt.`; arrows.push(arrow(reply.move, COL.red)); Object.assign(marks, dr.marks);
-  } else if (lossA <= -2) {
-    text = `${who} scheitert an ${dr.san}${dr.text ? ' – ' + dr.text : ''}. Kostet ${lossName(lossA)}.`; arrows.push(arrow(reply.move, COL.red)); Object.assign(marks, dr.marks);
+  } else if (lossRel <= -2) {
+    text = `${who} scheitert an ${dr.san}${dr.text ? ' – ' + dr.text : ''}. Kostet ${lossName(lossRel)}.`; arrows.push(arrow(reply.move, COL.red)); Object.assign(marks, dr.marks);
   } else if (gainAbs >= 2 && lossRel > -1) {
     const line = []; let f = after; for (const u of (reply?.pv || []).slice(0, 4)) { const r = mv(f, u); if (!r) break; line.push(r.m.san); f = r.fen; }
     text = `${who} funktioniert: ${mine ? 'Du gewinnst' : oppName + ' gewinnt'} ${lossName(gainAbs)}${line.length ? ` (z. B. ${line.join(' ')})` : ''}.`;

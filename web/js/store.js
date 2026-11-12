@@ -16,7 +16,6 @@ function db() {
 const tx = async (s, mode, fn) => { const d = await db(); return new Promise((res, rej) => { const t = d.transaction(s, mode); const out = fn(t.objectStore(s)); t.oncomplete = () => res(out?.result ?? out); t.onerror = () => rej(t.error); }); };
 export const put = (s, v) => tx(s, 'readwrite', st => { st.put(v); });
 export const putMany = (s, vs) => tx(s, 'readwrite', st => { vs.forEach(v => st.put(v)); });
-export const get = (s, k) => tx(s, 'readonly', st => st.get(k));
 export const all = (s) => tx(s, 'readonly', st => st.getAll());
 
 // Ohne lokalen Server (Handy/Web-Version): chess.com direkt abfragen
