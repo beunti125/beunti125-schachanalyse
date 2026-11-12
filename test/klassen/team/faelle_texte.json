@@ -1,0 +1,547 @@
+{
+ "hinweis": "Prüffälle für Erklärtexte (Rolle Text-Prüfer). Format wie faelle.json; text/textNicht = Regex (Flag i) auf allen Texten (explain beider Perspektiven + coachText). Alle Fälle stammen aus echten Partien von MertAbi69 (echte_partien.jsonl). Stand App: alle Fälle sollen derzeit scheitern und nach den Textkorrekturen bestehen.",
+ "faelle": [
+  {
+   "id": "txt_matt1_verpasst_lob",
+   "kategorie": "text_matt_verpasst",
+   "pgn": "g4 g5 Bg2 Bg7 d4 d5 f4 f5 gxf5 gxf4 Bxf4 a5 e3 Ra6 Qh5+ Kd7 Bxd5 Rh6 Qe2 Rh5 Qxh5 h6 Be6+ Kc6 Qf3+ Kb6 a4 h5 Qe2 Rh6 Nc3 Rxe6 fxe6 Bxe6 Qb5+ Ka7 Qxa5+ Na6 Nb5+ Kb8 Bxc7+ Qxc7 Nxc7 Kc8 Nxe6 b6 Qxa6+ Kd7 Qxb6 Ke8 Nxg7+ Kf7 Nxh5 Nf6 Nxf6 exf6 Nf3 f5 a5 Kg7 a6 Kf7 a7 Ke7 a8=Q f4 c4 Kd7 c5 Ke7 c6 Kd6 c7+ Kd7 c8=Q+ Ke7 Ra6 fxe3 b4 e2 Qbb8 Kf7 b5 Kg7 b6 Kf7 Ra7+ Kf6 b7 Ke7 Qcc7+ Ke6 h4 Kd5 Qbc8 Ke4 b8=Q+ Kd3 d5 Ke3 d6 Kf4 d7+ Ke3 d8=Q",
+   "elo": {
+    "w": 1221,
+    "b": 162
+   },
+   "weiss": "MertAbi69",
+   "schwarz": "Anitabonita7777",
+   "zug": "36.c6",
+   "textNicht": [
+    "Solide\\.",
+    "\\(M1 statt M3\\)"
+   ],
+   "text": [
+    "Matt in 1"
+   ],
+   "begruendung": "Weiß hatte Matt in 1 (Ta7#) und spielt c6 (danach nur noch Matt in 3). Der Text sagt „Solide.“ und versteckt das Matt im aufklappbaren Teil. Für 600–1200 Elo muss die erste Zeile das verpasste Matt in 1 nennen.",
+   "quelle": [
+    "echt:186149512952",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_matt1_eval_gleich",
+   "kategorie": "text_bewertung",
+   "pgn": "g4 g5 Bg2 Bg7 d4 d5 f4 f5 gxf5 gxf4 Bxf4 a5 e3 Ra6 Qh5+ Kd7 Bxd5 Rh6 Qe2 Rh5 Qxh5 h6 Be6+ Kc6 Qf3+ Kb6 a4 h5 Qe2 Rh6 Nc3 Rxe6 fxe6 Bxe6 Qb5+ Ka7 Qxa5+ Na6 Nb5+ Kb8 Bxc7+ Qxc7 Nxc7 Kc8 Nxe6 b6 Qxa6+ Kd7 Qxb6 Ke8 Nxg7+ Kf7 Nxh5 Nf6 Nxf6 exf6 Nf3 f5 a5 Kg7 a6 Kf7 a7 Ke7 a8=Q f4 c4 Kd7 c5 Ke7 c6 Kd6 c7+ Kd7 c8=Q+ Ke7 Ra6 fxe3 b4 e2 Qbb8 Kf7 b5 Kg7 b6 Kf7 Ra7+ Kf6 b7 Ke7 Qcc7+ Ke6 h4 Kd5 Qbc8 Ke4 b8=Q+ Kd3 d5 Ke3 d6 Kf4 d7+ Ke3 d8=Q",
+   "elo": {
+    "w": 1221,
+    "b": 162
+   },
+   "weiss": "MertAbi69",
+   "schwarz": "Anitabonita7777",
+   "zug": "34.c4",
+   "textNicht": [
+    "\\(([-+]?M?[\\d.]+) statt \\1\\)",
+    "Exzellent – fast perfekt"
+   ],
+   "text": [
+    "Matt in 1"
+   ],
+   "begruendung": "Text „(M1 statt M1)“: Bewertungspaar ohne Unterschied ist sinnlos; außerdem verpasstes Matt in 1 als „Exzellent – fast perfekt“ gelobt.",
+   "quelle": [
+    "echt:186149512952",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_gabel_bauer_great",
+   "kategorie": "text_gabel",
+   "pgn": "d3 e5 e4 d6 Nf3 Bg4 Be2 Nf6 h3 Bxf3 Bxf3 Nc6 g4 Be7 Bg2 Nd7 f4 Bh4+ Kf1 exf4 Bxf4 Qf6 Qf3 Bg5 Bxg5 Qxg5 Kg1 Nd4 Qf2 Qc5 b3 Ne2+ Kf1 Qxc2 Qxe2 Qxe2+ Kxe2 O-O-O Rf1 f6 h4 Ne5 Ke3 Nxg4+ Kf4 Ne5 Rd1 h6 h5 g5+ Kf5 Ng6 hxg6",
+   "elo": {
+    "w": 767,
+    "b": 595
+   },
+   "weiss": "m4cers",
+   "schwarz": "MertAbi69",
+   "zug": "11...Qf6",
+   "textNicht": [
+    "Bauern auf b2[^.\\n]*(Gabel|Doppelangriff)"
+   ],
+   "begruendung": "Df6 greift Lf4 und den Bauern b2 an. Ein Bauer ist kein Gabel-Ziel; die Drohung ist Lf4 (gefesselt/ungedeckt). „Gabel“ nur bei zwei Zielen ≥ Leichtfigur oder König.",
+   "quelle": [
+    "echt:186895585580",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_doppelangriff_bauer",
+   "kategorie": "text_gabel",
+   "pgn": "e4 e5 Nf3 Nf6 Bc4 h6 O-O d6 Re1 Be7 c3 O-O d4 Bg4 d5 Nbd7 h3 Bxf3 Qxf3 Nc5 Nd2 a6 b4 Ncd7 Nf1 c6 dxc6 bxc6 Ng3 d5 exd5 cxd5 Bb3 d4 Nf5 dxc3 Bxh6 gxh6 Qg3+ Kh7 Qg7#",
+   "elo": {
+    "w": 594,
+    "b": 599
+   },
+   "weiss": "MertAbi69",
+   "schwarz": "Jogabunitaum",
+   "zug": "20.Qg3+",
+   "textNicht": [
+    "Bauern auf c3[^.\\n]*Doppelangriff"
+   ],
+   "begruendung": "Dg3+ gibt Schach und „greift den Bauern c3 an – Doppelangriff“. Schach + Bauer ist kein Doppelangriff im Sinne einer Taktik.",
+   "quelle": [
+    "echt:186069495252",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_gabel_bauern_bauern",
+   "kategorie": "text_gabel",
+   "pgn": "d3 e5 e4 d6 Nf3 Bg4 Be2 Nf6 h3 Bxf3 Bxf3 Nc6 g4 Be7 Bg2 Nd7 f4 Bh4+ Kf1 exf4 Bxf4 Qf6 Qf3 Bg5 Bxg5 Qxg5 Kg1 Nd4 Qf2 Qc5 b3 Ne2+ Kf1 Qxc2 Qxe2 Qxe2+ Kxe2 O-O-O Rf1 f6 h4 Ne5 Ke3 Nxg4+ Kf4 Ne5 Rd1 h6 h5 g5+ Kf5 Ng6 hxg6",
+   "elo": {
+    "w": 767,
+    "b": 595
+   },
+   "weiss": "m4cers",
+   "schwarz": "MertAbi69",
+   "zug": "14...Nd4",
+   "textNicht": [
+    "Gabel gegen Bauer [a-h][1-8] und Bauer",
+    "den Bauern auf b2 und den Bauern auf c2 an: Doppelangriff"
+   ],
+   "begruendung": "Text: „Schach und Gabel gegen Bauer b2 und Bauer c2“ / „Doppelangriff“ auf zwei Bauern. Kein Doppelangriff auf wertvolle Ziele.",
+   "quelle": [
+    "echt:186895585580",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_gabel_figur_wird_geschlagen",
+   "kategorie": "text_gabel",
+   "pgn": "e4 e5 Nf3 d6 Nc3 Nc6 Bc4 Be6 d3 Nf6 b3 Be7 Bg5 O-O Bxe6 fxe6 O-O Nh5 Bxe7 Qxe7 g3 Qf6 Rb1 Qxf3 Qxf3 Rxf3 Nb5 Rc8 c4 a6 Nc3 Nd4 a4 Rcf8 Kg2 R3f6 b4 Nc2 b5 Na3 bxa6 Nxb1 Nxb1 bxa6 Nc3 c6 h3 g6 Ne2 Ng7 d4 exd4 Nxd4 c5 Nc6 e5 Ne7+ Kh8 Nd5 Rf3 Nc7 Ra3 Nd5 Rxa4 Nc7 Rxc4 Rg1 Rxe4 h4 Re2 Nd5 Rfxf2+ Kh3 Rd2 Nf4 Nf5 Nh5 Rf3 Rh1 Rdf2 Kg4 Kg8 Kg5 Kf7 Kg4 h6 Rg1 Rxg3+ Nxg3 h5+ Kh3 Nxg3 Kxg3 Rf5 Rg2 e4 Kh3 Re5 Kh2 e3 Rf2+ exf2 Kg2 Re2 Kf3 Re1 Kxf2 Rc1 Ke2 Ra1 Ke3 Ra4 Kd3 Kf6 Ke3 Kf5 Ke2 Ke4 Kf2 d5 Ke2 d4 Kd2 d3",
+   "elo": {
+    "w": 376,
+    "b": 595
+   },
+   "weiss": "Halbnull",
+   "schwarz": "MertAbi69",
+   "zug": "12.Rb1",
+   "textNicht": [
+    "Qxd1[^\\n]*Gabel",
+    "Dxd1[^\\n]*Gabel"
+   ],
+   "begruendung": "Variante: Nb5 Dxd1 – die Dame schlägt auf d1 und wird sofort von Txd1 zurückgeschlagen (Damentausch). Der Text nennt das „eine Gabel“ gegen c2 und Tb1.",
+   "quelle": [
+    "echt:187054798396",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_praesens_variante",
+   "kategorie": "text_variante",
+   "pgn": "e4 e5 Nf3 d6 Nc3 Nc6 Bc4 Be6 d3 Nf6 b3 Be7 Bg5 O-O Bxe6 fxe6 O-O Nh5 Bxe7 Qxe7 g3 Qf6 Rb1 Qxf3 Qxf3 Rxf3 Nb5 Rc8 c4 a6 Nc3 Nd4 a4 Rcf8 Kg2 R3f6 b4 Nc2 b5 Na3 bxa6 Nxb1 Nxb1 bxa6 Nc3 c6 h3 g6 Ne2 Ng7 d4 exd4 Nxd4 c5 Nc6 e5 Ne7+ Kh8 Nd5 Rf3 Nc7 Ra3 Nd5 Rxa4 Nc7 Rxc4 Rg1 Rxe4 h4 Re2 Nd5 Rfxf2+ Kh3 Rd2 Nf4 Nf5 Nh5 Rf3 Rh1 Rdf2 Kg4 Kg8 Kg5 Kf7 Kg4 h6 Rg1 Rxg3+ Nxg3 h5+ Kh3 Nxg3 Kxg3 Rf5 Rg2 e4 Kh3 Re5 Kh2 e3 Rf2+ exf2 Kg2 Re2 Kf3 Re1 Kxf2 Rc1 Ke2 Ra1 Ke3 Ra4 Kd3 Kf6 Ke3 Kf5 Ke2 Ke4 Kf2 d5 Ke2 d4 Kd2 d3",
+   "elo": {
+    "w": 376,
+    "b": 595
+   },
+   "weiss": "Halbnull",
+   "schwarz": "MertAbi69",
+   "zug": "11.g3",
+   "textNicht": [
+    "Du spielst Rf7\\.",
+    "Du spielst Tf7\\."
+   ],
+   "text": [
+    "[RT]f7"
+   ],
+   "begruendung": "Gegner-Ungenauigkeit: „Du spielst Rf7.“ – in der Partie spielte MertAbi69 11…Df6. Engine-Vorschläge dürfen nicht im Präsens wie ein gespielter Zug klingen („Jetzt gut: …Tf7“ / „Besser für dich: …Tf7“).",
+   "quelle": [
+    "echt:187054798396",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_patzer_ohne_widerlegung",
+   "kategorie": "text_fehler_ohne_grund",
+   "pgn": "e4 e5 Nf3 Nc6 Bc4 Nf6 O-O Bc5 c3 a6 d4 exd4 cxd4 Ba7 e5 Ng8 Be3 d6 Nc3 Be6 Bxe6 fxe6 Bg5 Qd7 exd6 Qxd6 Be3 O-O-O Ne4 Qe7 Rc1 Nf6 Nc5 Bxc5 Rxc5 Qxc5 dxc5 Rxd1 Rxd1 Nb4 a3 Nbd5 Kf1 Rd8 Nd4 Nxe3+ fxe3 e5 Ke2 exd4 exd4 Ng4 Kf3 Nf6 Kf4 Nd5+ Kf5 Ne3+",
+   "elo": {
+    "w": 1024,
+    "b": 1024
+   },
+   "weiss": "MertAbi69",
+   "schwarz": "chandureddy16",
+   "zug": "23.Nd4",
+   "textNicht": [
+    "Patzer: Stärker war [BL]d4\\.(\\n|$)"
+   ],
+   "text": [
+    "[NS]xe3"
+   ],
+   "begruendung": "23.Sd4?? verliert eine Figur: 23…Sxe3+ 24.fxe3 e5 – der Springer d4 ist gegen Td1 gefesselt. Der Text sagt nur „Patzer: Stärker war Bd4.“ und zeigt die Engine-Linie für Ld4, aber nie, was nach Sd4 passiert.",
+   "quelle": [
+    "echt:186000059536",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_fehler_ohne_grund_nxe4",
+   "kategorie": "text_fehler_ohne_grund",
+   "pgn": "e4 e5 Nf3 d6 c3 Nc6 d4 Bg4 d5 Nce7 Be2 c6 c4 Nf6 h3 Bh5 Nc3 Bg6 Bd3 cxd5 cxd5 Qa5 O-O Nxe4 Bxe4 Bxe4 Nxe4 Nxd5 Bd2 Qd8 Bc1 Be7 Qxd5 O-O b3 Rc8 Bb2 Rc2 Rab1",
+   "elo": {
+    "w": 604,
+    "b": 610
+   },
+   "weiss": "DuetIsaiah",
+   "schwarz": "MertAbi69",
+   "zug": "12...Nxe4",
+   "textNicht": [
+    "Fehler: Stärker war a6\\.(\\n|$)"
+   ],
+   "text": [
+    "[BL]xe4|[NS]xe4"
+   ],
+   "begruendung": "12…Sxe4? gibt den Springer für Bauern (Lxe4 Lxe4 Sxe4). Text: „Fehler: Stärker war a6.“ ohne jede Folge des gespielten Zugs.",
+   "quelle": [
+    "echt:186356324060",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_kopf_ohne_subjekt",
+   "kategorie": "text_kopf",
+   "pgn": "e4 e5 Nf3 Bc5 Bc4 Qf6 c3 h6 d4 exd4 cxd4 Bb6 Nc3 d6 O-O c6 Re1 Bd8 e5 dxe5 dxe5 Qg6 b4 Bh3 g3 Bg4 Nd4 Bxd1",
+   "elo": {
+    "w": 601,
+    "b": 597
+   },
+   "weiss": "MertAbi69",
+   "schwarz": "Salvatore6990",
+   "zug": "14.Nd4",
+   "textNicht": [
+    "Patzer: [BL]xd1 – schlägt die Dame\\.",
+    "Unterm Strich verlierst du etwa eine Dame"
+   ],
+   "text": [
+    "[Dd]eine Dame"
+   ],
+   "begruendung": "„Patzer: Bxd1 – schlägt die Dame.“ – ohne Subjekt liest sich Bxd1 wie der eigene Zug. Kern: Sd4 gibt die Fesselung auf, deine Dame d1 geht verloren. Außerdem „Unterm Strich verlierst du etwa eine Dame (-9)“ mitten im Abtausch (Kxd1 fehlt), während Zeile 1 „etwa einen Turm“ sagt.",
+   "quelle": [
+    "echt:186488544292",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_material_widerspruch_qe2",
+   "kategorie": "text_material",
+   "pgn": "d4 d5 Nf3 Nc6 Bf4 Bf5 e3 e6 Be2 Bd6 Bg3 Nf6 a3 O-O Nbd2 Re8 c4 e5 cxd5 Nxd5 Bc4 Nb6 Bb5 exd4 Bxc6 dxe3 Bxe8 exd2+ Qxd2 Qxe8+ Kd1 Nc4 Qc3 Qe2+ Kxe2 Re8+ Kd1 Bg4 Re1",
+   "elo": {
+    "w": 623,
+    "b": 627
+   },
+   "weiss": "Pe3ival",
+   "schwarz": "MertAbi69",
+   "zug": "17...Qe2+",
+   "textNicht": [
+    "Du verlierst etwa einen Turm"
+   ],
+   "text": [
+    "Dame"
+   ],
+   "begruendung": "17…De2+?? Kxe2: die Dame geht ersatzlos verloren (-9). Zeile 1 sagt „Du verlierst etwa einen Turm“, später „Unterm Strich … eine Dame (-9)“.",
+   "quelle": [
+    "echt:186250470540",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_material_widerspruch_qxb2",
+   "kategorie": "text_material",
+   "pgn": "d3 e5 e4 d6 Nf3 Bg4 Be2 Nf6 h3 Bxf3 Bxf3 Nc6 g4 Be7 Bg2 Nd7 f4 Bh4+ Kf1 exf4 Bxf4 Qf6 Qf3 Bg5 Bxg5 Qxg5 Kg1 Nd4 Qf2 Qc5 b3 Ne2+ Kf1 Qxc2 Qxe2 Qxe2+ Kxe2 O-O-O Rf1 f6 h4 Ne5 Ke3 Nxg4+ Kf4 Ne5 Rd1 h6 h5 g5+ Kf5 Ng6 hxg6",
+   "elo": {
+    "w": 767,
+    "b": 595
+   },
+   "weiss": "m4cers",
+   "schwarz": "MertAbi69",
+   "zug": "13...Qxg5",
+   "textNicht": [
+    "gewinnt etwa einen Turm[\\s\\S]*So gewinnst du einen Bauern"
+   ],
+   "begruendung": "Zeile 1: „Qxb2 … gewinnt etwa einen Turm“, Ende der gezeigten Linie: „So gewinnst du einen Bauern (+1)“. Die Linie wird vor Dxa1 abgeschnitten.",
+   "quelle": [
+    "echt:186895585580",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_material_widerspruch_ra3",
+   "kategorie": "text_material",
+   "pgn": "e4 e5 Nf3 d6 Nc3 Nc6 Bc4 Be6 d3 Nf6 b3 Be7 Bg5 O-O Bxe6 fxe6 O-O Nh5 Bxe7 Qxe7 g3 Qf6 Rb1 Qxf3 Qxf3 Rxf3 Nb5 Rc8 c4 a6 Nc3 Nd4 a4 Rcf8 Kg2 R3f6 b4 Nc2 b5 Na3 bxa6 Nxb1 Nxb1 bxa6 Nc3 c6 h3 g6 Ne2 Ng7 d4 exd4 Nxd4 c5 Nc6 e5 Ne7+ Kh8 Nd5 Rf3 Nc7 Ra3 Nd5 Rxa4 Nc7 Rxc4 Rg1 Rxe4 h4 Re2 Nd5 Rfxf2+ Kh3 Rd2 Nf4 Nf5 Nh5 Rf3 Rh1 Rdf2 Kg4 Kg8 Kg5 Kf7 Kg4 h6 Rg1 Rxg3+ Nxg3 h5+ Kh3 Nxg3 Kxg3 Rf5 Rg2 e4 Kh3 Re5 Kh2 e3 Rf2+ exf2 Kg2 Re2 Kf3 Re1 Kxf2 Rc1 Ke2 Ra1 Ke3 Ra4 Kd3 Kf6 Ke3 Kf5 Ke2 Ke4 Kf2 d5 Ke2 d4 Kd2 d3",
+   "elo": {
+    "w": 376,
+    "b": 595
+   },
+   "weiss": "Halbnull",
+   "schwarz": "MertAbi69",
+   "zug": "31...Ra3",
+   "textNicht": [
+    "gewinnt etwa einen Turm[\\s\\S]*So gewinnst du etwa zwei Bauern"
+   ],
+   "begruendung": "„Ungenau. Taktik übersehen: R3f7 … gewinnt etwa einen Turm.“ und danach „So gewinnst du etwa zwei Bauern (+2)“ – widersprüchlich; „Ungenau“ + „gewinnt einen Turm“ passt auch nicht zusammen.",
+   "quelle": [
+    "echt:187054798396",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_verlust_schon_vorher",
+   "kategorie": "text_material",
+   "pgn": "e4 Nf6 e5 b5 exf6 gxf6 Bxb5 Bb7 Qh5 Bxg2 Bc4 Bxh1 Qxf7#",
+   "elo": {
+    "w": 1250,
+    "b": 146
+   },
+   "weiss": "MertAbi69",
+   "schwarz": "Anitabonita7777",
+   "zug": "6.Bc4",
+   "textNicht": [
+    "Du verlierst etwa einen Turm"
+   ],
+   "begruendung": "Der Turm h1 war nach 5.Dh5?? Lxg2 schon verloren (auch der beste Zug f3 verliert ihn: 0.00 f3 Lxh1). 6.Lc4 kostet nur Tempo (…d5). Text: „Du verlierst etwa einen Turm.“ rechnet alten Verlust dem neuen Zug an.",
+   "quelle": [
+    "echt:186149179666",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_kopf_nur_bauernzug",
+   "kategorie": "text_kopf",
+   "pgn": "e4 e5 Nf3 Nc6 Bc4 Nf6 Qe2 d6 c3 Bg4 h3 Bxf3 Qxf3 Be7 O-O O-O d3 a6 Bg5 h6 Bh4 b5 Bxf6 Bxf6 Bd5 Qd7 Nd2 Rab8 Rad1 a5 Nb3 b4 Bxc6 Qxc6 Nxa5 Qa4 Nc4 Qxa2 Ra1 Qb3 Ra7 bxc3 bxc3 Qxc3 Rxc7 Rbc8 Rxc8 Rxc8 Nxd6 Rd8 Nf5 Rxd3 Qe2 Rd8 Rd1 Rxd1+ Qxd1 g6 Nxh6+ Kg7 Ng4 Bg5 Qf3 Bf4 g3 Qxf3 gxf4 Qxh3 f3 Qxf3 Nxe5 Qxf4 Kg2 Qxe5 Kf3 Qxe4+ Kxe4 Kf6 Kf4 g5+ Kg4 Kg6 Kg3 f5 Kf3 Kh5 Kg3 f4+ Kf3 Kh4 Kg2 g4 Kf2 Kh3 Kg1 f3 Kf2 Kh2 Kf1 g3 Ke1 g2 Kd1 g1=Q+ Kd2 f2 Ke2 f1=Q+ Kd2 Qg3 Kc2 Qff2+ Kc1 Qgg1#",
+   "elo": {
+    "w": 586,
+    "b": 635
+   },
+   "weiss": "MertAbi69",
+   "schwarz": "Matheus301124",
+   "zug": "52.Kd1",
+   "textNicht": [
+    "Fehler: f2\\.",
+    "verlierst du etwa einen Turm|Du verlierst etwa einen Turm"
+   ],
+   "text": [
+    "f1=[QD]|Dame|umwandel|wandelt"
+   ],
+   "begruendung": "Text „Fehler: f2. Du verlierst etwa einen Turm.“ – abgehackt; tatsächlich wandelt der f-Bauer nach f2/f1=D um (Bauernendspiel, kein Turm im Spiel).",
+   "quelle": [
+    "echt:186001603352",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_tausch_aber_gratis",
+   "kategorie": "text_schlagen",
+   "pgn": "e4 e5 Nf3 Nc6 Bc4 h6 c3 Nf6 O-O Bc5 Re1 d5 exd5 Nxd5 Nxe5 Nxe5 Rxe5+ Be7 Rxd5 Bd7 d4 O-O Bf4 c6 Re5 Bf6 Re1 Bf5 Nd2 b5 Bb3 Rc8 Ne4 a5 Nd6 Ra8 Nxf5 a4 Bc2 g6 Nxh6+ Kg7 Ng4 Qd5 Nxf6 Kxf6 Be5+ Ke6 Bg7+ Kd7 Bxf8 Rxf8 Qg4+ Kd6 Re5 Qc4 Rae1 Qd5",
+   "elo": {
+    "w": 1024,
+    "b": 527
+   },
+   "weiss": "MertAbi69",
+   "schwarz": "Halbnull",
+   "zug": "19.Nxf5",
+   "textNicht": [
+    "gleichwertiger Tausch"
+   ],
+   "begruendung": "19.Sxf5: der Läufer f5 kann nicht zurückgeschlagen werden – gratis. Text „gleichwertiger Tausch“ ist falsch.",
+   "quelle": [
+    "echt:187054327186",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_gegner_satz_ohne_verb",
+   "kategorie": "text_sprache",
+   "pgn": "e4 e5 Nf3 d6 Nc3 Nc6 Bc4 Be6 d3 Nf6 b3 Be7 Bg5 O-O Bxe6 fxe6 O-O Nh5 Bxe7 Qxe7 g3 Qf6 Rb1 Qxf3 Qxf3 Rxf3 Nb5 Rc8 c4 a6 Nc3 Nd4 a4 Rcf8 Kg2 R3f6 b4 Nc2 b5 Na3 bxa6 Nxb1 Nxb1 bxa6 Nc3 c6 h3 g6 Ne2 Ng7 d4 exd4 Nxd4 c5 Nc6 e5 Ne7+ Kh8 Nd5 Rf3 Nc7 Ra3 Nd5 Rxa4 Nc7 Rxc4 Rg1 Rxe4 h4 Re2 Nd5 Rfxf2+ Kh3 Rd2 Nf4 Nf5 Nh5 Rf3 Rh1 Rdf2 Kg4 Kg8 Kg5 Kf7 Kg4 h6 Rg1 Rxg3+ Nxg3 h5+ Kh3 Nxg3 Kxg3 Rf5 Rg2 e4 Kh3 Re5 Kh2 e3 Rf2+ exf2 Kg2 Re2 Kf3 Re1 Kxf2 Rc1 Ke2 Ra1 Ke3 Ra4 Kd3 Kf6 Ke3 Kf5 Ke2 Ke4 Kf2 d5 Ke2 d4 Kd2 d3",
+   "elo": {
+    "w": 376,
+    "b": 595
+   },
+   "weiss": "Halbnull",
+   "schwarz": "MertAbi69",
+   "zug": "8.Bxe6",
+   "textNicht": [
+    "Halbnull: den Läufer schlagen"
+   ],
+   "begruendung": "„Halbnull: den Läufer schlagen, gleichwertiger Tausch.“ – Satz ohne Verb. Besser: „Halbnull tauscht die Läufer.“",
+   "quelle": [
+    "echt:187054798396",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_gegnerfehler_matt",
+   "kategorie": "text_gegnerfehler",
+   "pgn": "e4 e5 Nf3 d6 Nc3 Nc6 Bc4 Be6 d3 Nf6 b3 Be7 Bg5 O-O Bxe6 fxe6 O-O Nh5 Bxe7 Qxe7 g3 Qf6 Rb1 Qxf3 Qxf3 Rxf3 Nb5 Rc8 c4 a6 Nc3 Nd4 a4 Rcf8 Kg2 R3f6 b4 Nc2 b5 Na3 bxa6 Nxb1 Nxb1 bxa6 Nc3 c6 h3 g6 Ne2 Ng7 d4 exd4 Nxd4 c5 Nc6 e5 Ne7+ Kh8 Nd5 Rf3 Nc7 Ra3 Nd5 Rxa4 Nc7 Rxc4 Rg1 Rxe4 h4 Re2 Nd5 Rfxf2+ Kh3 Rd2 Nf4 Nf5 Nh5 Rf3 Rh1 Rdf2 Kg4 Kg8 Kg5 Kf7 Kg4 h6 Rg1 Rxg3+ Nxg3 h5+ Kh3 Nxg3 Kxg3 Rf5 Rg2 e4 Kh3 Re5 Kh2 e3 Rf2+ exf2 Kg2 Re2 Kf3 Re1 Kxf2 Rc1 Ke2 Ra1 Ke3 Ra4 Kd3 Kf6 Ke3 Kf5 Ke2 Ke4 Kf2 d5 Ke2 d4 Kd2 d3",
+   "elo": {
+    "w": 376,
+    "b": 595
+   },
+   "weiss": "Halbnull",
+   "schwarz": "MertAbi69",
+   "zug": "39.Nh5",
+   "textNicht": [
+    "lässt du Matt"
+   ],
+   "text": [
+    "Deine Chance[^\\n]*[Mm]att"
+   ],
+   "begruendung": "Nach 39.Sh5? hat Schwarz Matt in 3 (…gxh5 …). Die Chance-Zeile nennt das Matt nicht; coachText duzt den Gegner („Damit lässt du Matt in 3 zu“).",
+   "quelle": [
+    "echt:187054798396",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_merksatz_falsch",
+   "kategorie": "text_merksatz",
+   "pgn": "e4 e5 Nf3 Bc5 Bc4 Qf6 c3 h6 d4 exd4 cxd4 Bb6 Nc3 d6 O-O c6 Re1 Bd8 e5 dxe5 dxe5 Qg6 b4 Bh3 g3 Bg4 Nd4 Bxd1",
+   "elo": {
+    "w": 601,
+    "b": 597
+   },
+   "weiss": "MertAbi69",
+   "schwarz": "Salvatore6990",
+   "zug": "3.Bc4",
+   "textNicht": [
+    "Welche meiner Figuren steht am schlechtesten"
+   ],
+   "begruendung": "3.Lc4? lässt den ungedeckten Bauern e5 stehen (Sxe5 gewinnt ihn). Merksatz „Welche meiner Figuren steht am schlechtesten“ passt nicht – es ging um einen Gratisbauern.",
+   "quelle": [
+    "echt:186488544292",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_great_damentausch",
+   "kategorie": "text_konsistenz",
+   "pgn": "e4 e5 Nf3 Nc6 Bc4 Nf6 O-O Bc5 c3 a6 d4 exd4 cxd4 Ba7 e5 Ng8 Be3 d6 Nc3 Be6 Bxe6 fxe6 Bg5 Qd7 exd6 Qxd6 Be3 O-O-O Ne4 Qe7 Rc1 Nf6 Nc5 Bxc5 Rxc5 Qxc5 dxc5 Rxd1 Rxd1 Nb4 a3 Nbd5 Kf1 Rd8 Nd4 Nxe3+ fxe3 e5 Ke2 exd4 exd4 Ng4 Kf3 Nf6 Kf4 Nd5+ Kf5 Ne3+",
+   "elo": {
+    "w": 1024,
+    "b": 1024
+   },
+   "weiss": "MertAbi69",
+   "schwarz": "chandureddy16",
+   "zug": "19...Rxd1",
+   "nicht": [
+    "great"
+   ],
+   "textNicht": [
+    "findet den einzigen guten Zug"
+   ],
+   "begruendung": "19…Txd1 nimmt die angebotene Dame (Damentausch). Das ist offensichtlich; „findet den einzigen guten Zug“ (Großartig) ist für einen klaren Rückschlag/Tausch irreführend. Zudem steht die Bewertung aus Sicht des Gegners verdreht da („(+4.1 statt -0.4)“).",
+   "quelle": [
+    "echt:186000059536",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_opfer_ist_tausch",
+   "kategorie": "text_opfer",
+   "pgn": "e4 e5 Nf3 d6 Nc3 Nc6 Bb5 Bd7 O-O a6 Bxc6 Bxc6 Nd5 Ne7 Nxe7 Bxe7 d4 O-O dxe5 Bxe4 exd6 Bxd6 Re1 Bc6 Ne5 Re8 Nxc6 bxc6 Rxe8+ Qxe8 Be3 Rd8 Qe1 Qe5 c3 Qxh2+ Kf1 Qh1+ Ke2 Qh5+ Kf1 Qb5+ Qe2 Qxe2+ Kxe2 Re8 g3 Kf8 f4 f5 Rd1 Kf7 Kf3 h6 b4 Re4 a3 Ke6 Bc5 Bxc5 bxc5 Rc4 g4 Rxc3+ Kf2 Rxc5 Re1+ Kf6 gxf5 Rxf5 Kf3 g5 Rc1 Rxf4+ Kg3 Kf5 Rxc6 h5 Rxc7 h4+ Kh3 Ke4 Rc4+ Kf3 Rc3+ Ke2 Rc2+ Kd3 Rc6 Rf3+ Kg4 Rg3+ Kh5 h3 Rd6+ Ke4 Rxa6 h2 Re6+ Kf5 Re1 Rg1 Rxg1 hxg1=Q a4 Qh2#",
+   "elo": {
+    "w": 526,
+    "b": 601
+   },
+   "weiss": "inioluwanim",
+   "schwarz": "MertAbi69",
+   "zug": "15.Rxe8+",
+   "opfer": null,
+   "nicht": [
+    "brilliant"
+   ],
+   "textNicht": [
+    "starken Angriff und Initiative"
+   ],
+   "begruendung": "15.Txe8+ schlägt den Turm e8, Dxe8 schlägt zurück: Turmtausch, kein Opfer (+0.08). Text „opfert den Turm … starken Angriff und Initiative“ ist doppelt falsch.",
+   "quelle": [
+    "echt:186069569048",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_angriff_floskel_ausgeglichen",
+   "kategorie": "text_opfer",
+   "pgn": "e4 e5 Nf3 d6 d4 exd4 Nxd4 Ne7 Bd3 Nbc6 Nxc6 Nxc6 O-O Be7 Nc3 h5 Nd5 h4 h3 g5 Nxe7 Qxe7 Bb5 g4 Bxc6+ bxc6 Bf4 gxh3 gxh3 Bxh3 Re1 Rg8+ Kh2 Qe6 e5 Rg2+ Kh1 Rxf2 exd6 Rxf4 Rxe6+ fxe6 Qh5+ Kd7 Rd1 Raf8 Qh7+ R8f7 Qd3 Rf1+ Rxf1 Bxf1 Qc3 Kxd6 Qa3+ Kd7 Qxa7 Bb5 Qd4+ Ke7 Qb4+ Kf6 Qc3+ e5 Qf3+ Ke6",
+   "elo": {
+    "w": 599,
+    "b": 625
+   },
+   "weiss": "esung22",
+   "schwarz": "MertAbi69",
+   "zug": "20...Rxf4",
+   "textNicht": [
+    "starken Angriff und Initiative"
+   ],
+   "begruendung": "Damenopfer endet bei 0.00 (Ausgleich). „Dafür gibt es starken Angriff und Initiative“ ist eine Standardfloskel ohne Deckung; bei |Bewertung| < 1 muss der Text „hält das Gleichgewicht“ o. Ä. sagen.",
+   "quelle": [
+    "echt:186070034314",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_geht_schief_aber_nimmt",
+   "kategorie": "text_opfer",
+   "pgn": "e4 g6 Nf3 Bg7 d4 Nf6 e5 Nd5 Bc4 e6 Bd2 a6 Nc3 b5 Bxd5 exd5 Nxd5 c6 Nf6+ Bxf6 exf6 Qxf6 Qe2+ Qe6 Qxe6+ fxe6 Bh6 d6 O-O Nd7 Rfe1 Nf6 Bg7 Rg8 Bxf6 Rf8 Bg7 Rf7 Bh6 Bd7 Ng5 Re7 Re2 O-O-O Rae1 Rde8 b3 e5 dxe5 Bg4 f3 Bf5 e6 d5 g4 Bxe6 Rxe6 Kd7 Rxe7+ Rxe7 Rxe7+ Kxe7 Nxh7 b4 f4 d4 f5 gxf5 gxf5 c5 f6+ Kf7 Bg7 Kg6 Ng5 a5 f7 Kxg7 Ne6+ Kxf7 Nxc5 Kf6 Kf2 Ke5 Ke2 Kd5 Nd3 Ke4 h4 a4 Nxb4 axb3 axb3 Ke5 Nd3+ Ke4 h5 Kf5 b4 Kg5 b5 Kxh5 b6 Kg5 b7 Kf5 b8=Q Ke4 Qe5#",
+   "elo": {
+    "w": 1040,
+    "b": 1019
+   },
+   "weiss": "MertAbi69",
+   "schwarz": "Wadesr",
+   "zug": "38.Ng5",
+   "textNicht": [
+    "\\(Kxg5\\) geht schief"
+   ],
+   "begruendung": "„Den Springer zu nehmen (Kxg5) geht schief – deshalb spielt Wadesr a5.“ und zwei Schritte später „Wadesr spielt Kxg5“. Widerspruch; der Sinn (f-Bauer läuft durch) fehlt.",
+   "quelle": [
+    "echt:185999338136",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_chance_koenigszug",
+   "kategorie": "text_gegnerfehler",
+   "pgn": "e4 e6 Nf3 d5 e5 c5 c3 Qb6 d4 Nc6 Be3 Qxb2 Nbd2 Qxc3 Rc1 Qa3 dxc5 Nh6 Rc2 Nf5 Qe2 Nxe3 fxe3 Bxc5 Qb5 Qxe3+ Be2 Qf2+ Kd1 Qxg2 Rg1 Bxg1 Rxc6 bxc6 Qxc6+ Ke7 Qc5+ Kd8 Nxg1 Bd7 Qd6 Qxg1+ Bf1 Qg4+ Be2 Qa4+ Nb3 Qxa2 Bb5 Qxb3+",
+   "elo": {
+    "w": 619,
+    "b": 653
+   },
+   "weiss": "MertAbi69",
+   "schwarz": "Mabelgray",
+   "zug": "14...Qf2+",
+   "textNicht": [
+    "Deine Chance: Du spielst Kd1\\.",
+    "Kd1 – stark reagiert"
+   ],
+   "begruendung": "Nach 14…Df2+ ist Kd1 praktisch erzwungen. „Deine Chance: Du spielst Kd1.“ und „Und du hast es gesehen: Kd1 – stark reagiert!“ sind leer bzw. falsches Lob. Inhalt wäre: der Gegner hätte mit …Lb6 Material gewonnen, jetzt ist die Gefahr vorbei.",
+   "quelle": [
+    "echt:186356099444",
+    "team/texte.md"
+   ]
+  },
+  {
+   "id": "txt_ungedeckt_gegenseitig",
+   "kategorie": "text_ungedeckt",
+   "pgn": "e4 e5 Nf3 d6 Nc3 Nc6 Bc4 Be6 d3 Nf6 b3 Be7 Bg5 O-O Bxe6 fxe6 O-O Nh5 Bxe7 Qxe7 g3 Qf6 Rb1 Qxf3 Qxf3 Rxf3 Nb5 Rc8 c4 a6 Nc3 Nd4 a4 Rcf8 Kg2 R3f6 b4 Nc2 b5 Na3 bxa6 Nxb1 Nxb1 bxa6 Nc3 c6 h3 g6 Ne2 Ng7 d4 exd4 Nxd4 c5 Nc6 e5 Ne7+ Kh8 Nd5 Rf3 Nc7 Ra3 Nd5 Rxa4 Nc7 Rxc4 Rg1 Rxe4 h4 Re2 Nd5 Rfxf2+ Kh3 Rd2 Nf4 Nf5 Nh5 Rf3 Rh1 Rdf2 Kg4 Kg8 Kg5 Kf7 Kg4 h6 Rg1 Rxg3+ Nxg3 h5+ Kh3 Nxg3 Kxg3 Rf5 Rg2 e4 Kh3 Re5 Kh2 e3 Rf2+ exf2 Kg2 Re2 Kf3 Re1 Kxf2 Rc1 Ke2 Ra1 Ke3 Ra4 Kd3 Kf6 Ke3 Kf5 Ke2 Ke4 Kf2 d5 Ke2 d4 Kd2 d3",
+   "elo": {
+    "w": 376,
+    "b": 595
+   },
+   "weiss": "Halbnull",
+   "schwarz": "MertAbi69",
+   "zug": "4...Be6",
+   "textNicht": [
+    "greift den Läufer auf c4 an, der ungedeckt ist"
+   ],
+   "begruendung": "4…Le6 „greift den Läufer auf c4 an, der ungedeckt ist“ – Lc4 kann selbst auf e6 schlagen (Läufertausch-Angebot). „ungedeckt“ ist hier irreführend.",
+   "quelle": [
+    "echt:187054798396",
+    "team/texte.md"
+   ]
+  }
+ ]
+}

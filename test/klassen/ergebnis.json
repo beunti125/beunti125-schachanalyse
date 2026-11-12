@@ -1,0 +1,994 @@
+{
+ "tiefe": 16,
+ "results": [
+  {
+   "id": "sufyannz_19Qh3",
+   "kategorie": "rueckzug_scheinopfer",
+   "zug": "19.Qh3",
+   "cls": "brilliant",
+   "err": null,
+   "loss": 0,
+   "wpB": 80,
+   "wpA": 80,
+   "ok": false,
+   "fails": [
+    "Klasse brilliant, erwartet best|excellent|good",
+    "Klasse brilliant ist verboten (brilliant)",
+    "Text spricht von einem Opfer, obwohl keins vorliegt",
+    "verbotener Text /opferst die Dame/",
+    "verbotener Text /Annehmen geht nicht gut/"
+   ],
+   "texts": {
+    "selbst": [
+     "Brillant! Du opferst die Dame auf h3. Annehmen geht nicht gut, deshalb spielt Schwarz Nxc4. Dafür gibt es starken Angriff und Initiative.",
+     "Schwarz spielt Rg4 – greift den Bauern auf f4 an, der ungedeckt ist.",
+     "Du spielst Nxg4 – schlägt den Turm auf g4."
+    ],
+    "gegner": [
+     "Weiß opfert die Dame auf h3. Annehmen geht nicht gut, deshalb musst du Nxc4 spielen. Dafür gibt es starken Angriff und Initiative.",
+     "Du spielst Rg4 – greift den Bauern auf f4 an, der ungedeckt ist.",
+     "Weiß spielt Nxg4 – schlägt den Turm auf g4."
+    ],
+    "coach": [
+     "Qh3 ist brillant. Ein starkes Opfer, das funktioniert."
+    ]
+   }
+  },
+  {
+   "id": "sufyannz_19Qh3_elo1500",
+   "kategorie": "rueckzug_scheinopfer",
+   "zug": "19.Qh3",
+   "cls": "brilliant",
+   "err": null,
+   "loss": 0,
+   "wpB": 90.6,
+   "wpA": 90.6,
+   "ok": false,
+   "fails": [
+    "Klasse brilliant, erwartet best|excellent|good",
+    "Klasse brilliant ist verboten (brilliant)",
+    "Text spricht von einem Opfer, obwohl keins vorliegt",
+    "verbotener Text /opferst die Dame/",
+    "verbotener Text /Annehmen geht nicht gut/"
+   ],
+   "texts": {
+    "selbst": [
+     "Brillant! Du opferst die Dame auf h3. Annehmen geht nicht gut, deshalb spielt Schwarz Nxc4. Dafür gibt es starken Angriff und Initiative.",
+     "Schwarz spielt Rg4 – greift den Bauern auf f4 an, der ungedeckt ist.",
+     "Du spielst Nxg4 – schlägt den Turm auf g4.",
+     "Schwarz spielt fxg4 – schlägt den Springer auf g4, greift die Dame auf h3 an.",
+     "Du spielst Qxg4 – schlägt den Bauern auf g4."
+    ],
+    "gegner": [
+     "Weiß opfert die Dame auf h3. Annehmen geht nicht gut, deshalb musst du Nxc4 spielen. Dafür gibt es starken Angriff und Initiative.",
+     "Du spielst Rg4 – greift den Bauern auf f4 an, der ungedeckt ist.",
+     "Weiß spielt Nxg4 – schlägt den Turm auf g4.",
+     "Du spielst fxg4 – schlägt den Springer auf g4, greift die Dame auf h3 an.",
+     "Weiß spielt Qxg4 – schlägt den Bauern auf g4."
+    ],
+    "coach": [
+     "Qh3 ist brillant. Ein starkes Opfer, das funktioniert."
+    ]
+   }
+  },
+  {
+   "id": "sufyannz_10Raxc8",
+   "kategorie": "zurueckschlagen",
+   "zug": "10...Raxc8",
+   "cls": "best",
+   "err": null,
+   "loss": 0,
+   "wpB": 19.7,
+   "wpA": 19.7,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Klar: zurückschlagen."
+    ],
+    "gegner": [
+     "Schwarz schlägt zurück – klar."
+    ],
+    "coach": [
+     "Raxc8 ist der beste Zug."
+    ]
+   }
+  },
+  {
+   "id": "sufyannz_12Nxg4",
+   "kategorie": "zurueckschlagen",
+   "zug": "12...Nxg4",
+   "cls": "best",
+   "err": null,
+   "loss": 0,
+   "wpB": 20.5,
+   "wpA": 20.5,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Klar: zurückschlagen."
+    ],
+    "gegner": [
+     "Schwarz schlägt zurück – klar."
+    ],
+    "coach": [
+     "Nxg4 ist der beste Zug."
+    ]
+   }
+  },
+  {
+   "id": "sufyannz_8Ng4",
+   "kategorie": "patzer",
+   "zug": "8...Ng4",
+   "cls": "blunder",
+   "err": "hung",
+   "loss": 32.9,
+   "wpB": 52.8,
+   "wpA": 19.9,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Patzer: Nxd6 – schlägt den Läufer. Du verlierst etwa eine Leichtfigur.",
+     "Du spielst b5 – greift den Läufer auf c4 an.",
+     "Weiß spielt Bxb5 – schlägt den Bauern auf b5.",
+     "Unterm Strich verlierst du etwa eine Leichtfigur (-4).",
+     "Besser war Be7 (+0.4). Zum Beispiel: Be7 e5 Ne8 Bb3 a6. Merksatz: Bevor du ziehst: Welche Figur steht nach meinem Zug ungedeckt – und was kann mein Gegner schlagen?"
+    ],
+    "gegner": [
+     "Schwarz patzt! Deine Chance: Du spielst Nxd6 – schlägt den Läufer auf d6.",
+     "Schwarz spielt b5 – greift den Läufer auf c4 an.",
+     "Du spielst Bxb5 – schlägt den Bauern auf b5.",
+     "Und du hast es gesehen: Nxd6 – stark reagiert!"
+    ],
+    "coach": [
+     "Ng4 ist ein Patzer. Bester Zug war Be7. Danach gewinnt Nxd6 Material."
+    ]
+   }
+  },
+  {
+   "id": "sufyannz_13Ne5",
+   "kategorie": "rueckzug",
+   "zug": "13...Ne5",
+   "cls": "good",
+   "err": null,
+   "loss": 4.5,
+   "wpB": 20.4,
+   "wpA": 15.8,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Solide.",
+     "Noch etwas stärker wäre Nxh2 gewesen – schlägt den Springer auf h2, greift den Turm auf f1 an (-5.1 statt -6.3)."
+    ],
+    "gegner": [
+     "Schwarz spielt solide.",
+     "Für Schwarz noch etwas stärker wäre Nxh2 gewesen – schlägt den Springer auf h2, greift den Turm auf f1 an (+5.1 statt +6.3)."
+    ],
+    "coach": [
+     "Ne5 ist gut. Bester Zug war Nxh2."
+    ]
+   }
+  },
+  {
+   "id": "sufyannz_22Bg3",
+   "kategorie": "rueckzug",
+   "zug": "22.Bg3",
+   "cls": "good",
+   "err": null,
+   "loss": 2.1,
+   "wpB": 92.8,
+   "wpA": 90.7,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Solide.",
+     "Noch etwas stärker wäre exf5 gewesen – schlägt den Bauern auf f5, greift den Turm auf g6 an, der ungedeckt ist (+8.8 statt +7.9)."
+    ],
+    "gegner": [
+     "Weiß spielt solide.",
+     "Für Weiß noch etwas stärker wäre exf5 gewesen – schlägt den Bauern auf f5, greift den Turm auf g6 an, der ungedeckt ist (-8.8 statt -7.9)."
+    ],
+    "coach": [
+     "Bg3 ist gut. Bester Zug war exf5."
+    ]
+   }
+  },
+  {
+   "id": "sufyannz_25Rxe7",
+   "kategorie": "schlagen",
+   "zug": "25.Rxe7",
+   "cls": "best",
+   "err": null,
+   "loss": 0,
+   "wpB": 93.6,
+   "wpA": 93.6,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Klar: die Dame schlagen, mehr wert als die eigene Figur."
+    ],
+    "gegner": [
+     "Weiß: die Dame schlagen, mehr wert als die eigene Figur."
+    ],
+    "coach": [
+     "Rxe7 ist der beste Zug."
+    ]
+   }
+  },
+  {
+   "id": "evergreen_9Qg6",
+   "kategorie": "rueckzug",
+   "zug": "9...Qg6",
+   "cls": "best",
+   "err": null,
+   "loss": 0.1,
+   "wpB": 42.8,
+   "wpA": 42.7,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Sauber gespielt – der beste Zug."
+    ],
+    "gegner": [
+     "Schwarz spielt den besten Zug."
+    ],
+    "coach": [
+     "Qg6 ist der beste Zug."
+    ]
+   }
+  },
+  {
+   "id": "evergreen_13Qa4",
+   "kategorie": "rueckzug",
+   "zug": "13.Qa4",
+   "cls": "great",
+   "err": null,
+   "loss": 0,
+   "wpB": 57.3,
+   "wpA": 57.3,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Sehr gut gesehen! Der einzige gute Zug in dieser Stellung.",
+     "Viele hätten hier Nh4 gespielt – das hätte etwa 21 % Gewinnchance gekostet (-1.8 statt +0.6)."
+    ],
+    "gegner": [
+     "Weiß findet den einzigen guten Zug.",
+     "Naheliegend wäre Nh4 gewesen – das hätte etwa 21 % Gewinnchance gekostet (+1.8 statt -0.6)."
+    ],
+    "coach": [
+     "Qa4 ist großartig. Der einzige Zug, der die Stellung hält."
+    ]
+   }
+  },
+  {
+   "id": "evergreen_19Qxf3",
+   "kategorie": "patzer",
+   "zug": "19...Qxf3",
+   "cls": "blunder",
+   "err": "positional",
+   "loss": 35.6,
+   "wpB": 50.7,
+   "wpA": 15.2,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Patzer: Stärker war Rxg2+ (schlägt den Bauern mit Schach).",
+     "Du spielst Rxg2+ – schlägt den Bauern auf g2, gibt Schach.",
+     "Weiß spielt Kxg2 – schlägt den Turm auf g2.",
+     "Du spielst Ne5.",
+     "Weiß spielt Be4. Merksatz: Frag dich: Welche meiner Figuren steht am schlechtesten – und wie verbessere ich sie?"
+    ],
+    "gegner": [
+     "Schwarz patzt! Deine Chance: Du spielst Rxe7+ – schlägt den Springer auf e7, gibt Schach.",
+     "Schwarz spielt Kd8.",
+     "Du spielst Rxd7+ – schlägt den Bauern auf d7, gibt Schach, greift dabei den Bauern auf f7 an: Doppelangriff.",
+     "Und du hast es gesehen: Rxe7+ – stark reagiert!"
+    ],
+    "coach": [
+     "Qxf3 ist ein Patzer. Bester Zug war Rxg2+."
+    ]
+   }
+  },
+  {
+   "id": "evergreen_20Rxe7",
+   "kategorie": "brillant_turm",
+   "zug": "20.Rxe7+",
+   "cls": "great",
+   "err": null,
+   "loss": 0,
+   "wpB": 84.8,
+   "wpA": 84.8,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Sehr gut gesehen! Der einzige gute Zug in dieser Stellung. Der Zug schlägt den Springer auf e7, gibt Schach.",
+     "Viele hätten hier Be4 gespielt – das hätte etwa 59 % Gewinnchance gekostet (-3.9 statt +3.5)."
+    ],
+    "gegner": [
+     "Weiß findet den einzigen guten Zug. Der Zug schlägt den Springer auf e7, gibt Schach.",
+     "Naheliegend wäre Be4 gewesen – das hätte etwa 59 % Gewinnchance gekostet (+3.9 statt -3.5)."
+    ],
+    "coach": [
+     "Rxe7+ ist großartig. Der einzige Zug, der die Stellung hält."
+    ]
+   }
+  },
+  {
+   "id": "evergreen_21Qxd7",
+   "kategorie": "brillant_dame",
+   "zug": "21.Qxd7+",
+   "cls": "brilliant",
+   "err": null,
+   "loss": 0,
+   "wpB": 100,
+   "wpA": 100,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Brillant! Du opferst die Dame auf d7 mit Schach. Nimmt Schwarz mit Kxd7, folgt Bf5+ – gibt Schach, greift dabei den Bauern auf h7 an – Doppelangriff. Am Ende steht Matt.",
+     "Schwarz spielt Ke8.",
+     "Du spielst Bd7+ – gibt Schach.",
+     "Schwarz spielt Kf8.",
+     "Du spielst Bxe7# – schlägt den Springer auf e7: Schachmatt."
+    ],
+    "gegner": [
+     "Weiß opfert die Dame auf d7 mit Schach. Schlägst du mit Kxd7, folgt Bf5+ – gibt Schach, greift dabei den Bauern auf h7 an – Doppelangriff. Am Ende steht Matt.",
+     "Du spielst Ke8.",
+     "Weiß spielt Bd7+ – gibt Schach.",
+     "Du spielst Kf8.",
+     "Weiß spielt Bxe7# – schlägt den Springer auf e7: Schachmatt."
+    ],
+    "coach": [
+     "Qxd7+ ist brillant. Ein starkes Opfer, das funktioniert."
+    ]
+   }
+  },
+  {
+   "id": "evergreen_24Bxe7mate",
+   "kategorie": "mattzug",
+   "zug": "24.Bxe7#",
+   "cls": "best",
+   "err": null,
+   "loss": 0,
+   "wpB": 100,
+   "wpA": 100,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Klar: den Springer schlagen, gleichwertiger Tausch."
+    ],
+    "gegner": [
+     "Weiß: den Springer schlagen, gleichwertiger Tausch."
+    ],
+    "coach": [
+     "Bxe7# ist der beste Zug."
+    ]
+   }
+  },
+  {
+   "id": "opera_13Rxd7",
+   "kategorie": "brillant_turm",
+   "zug": "13.Rxd7",
+   "cls": "best",
+   "err": null,
+   "loss": 0,
+   "wpB": 93.4,
+   "wpA": 93.4,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Top – der beste Zug. Der Zug schlägt den Springer auf d7, greift den Bauern auf a7 und die Dame auf e7 gleichzeitig an – eine Gabel."
+    ],
+    "gegner": [
+     "Weiß spielt den besten Zug. Der Zug schlägt den Springer auf d7, greift den Bauern auf a7 und die Dame auf e7 gleichzeitig an – eine Gabel."
+    ],
+    "coach": [
+     "Rxd7 ist der beste Zug."
+    ]
+   }
+  },
+  {
+   "id": "opera_15Bxd7",
+   "kategorie": "schlagen",
+   "zug": "15.Bxd7+",
+   "cls": "best",
+   "err": null,
+   "loss": 0,
+   "wpB": 97,
+   "wpA": 97,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Klar: den Turm schlagen, mehr wert als die eigene Figur."
+    ],
+    "gegner": [
+     "Weiß: den Turm schlagen, mehr wert als die eigene Figur."
+    ],
+    "coach": [
+     "Bxd7+ ist der beste Zug."
+    ]
+   }
+  },
+  {
+   "id": "opera_16Qb8",
+   "kategorie": "brillant_dame",
+   "zug": "16.Qb8+",
+   "cls": "brilliant",
+   "err": null,
+   "loss": 0,
+   "wpB": 100,
+   "wpA": 100,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Brillant! Du opferst die Dame auf b8 mit Schach. Nimmt Schwarz mit Nxb8, folgt Rd8# – Schachmatt. Am Ende steht Matt."
+    ],
+    "gegner": [
+     "Weiß opfert die Dame auf b8 mit Schach. Schlägst du mit Nxb8, folgt Rd8# – Schachmatt. Am Ende steht Matt."
+    ],
+    "coach": [
+     "Qb8+ ist brillant. Ein starkes Opfer, das funktioniert."
+    ]
+   }
+  },
+  {
+   "id": "opera_17Rd8mate",
+   "kategorie": "mattzug",
+   "zug": "17.Rd8#",
+   "cls": "great",
+   "err": null,
+   "loss": 0,
+   "wpB": 100,
+   "wpA": 100,
+   "ok": false,
+   "fails": [
+    "Klasse great, erwartet best",
+    "verbotener Text /Der Zug Schachmatt/"
+   ],
+   "texts": {
+    "selbst": [
+     "Sehr gut gesehen! Der einzige gute Zug in dieser Stellung. Der Zug Schachmatt.",
+     "Viele hätten hier f4 gespielt – das hätte etwa 90 % Gewinnchance gekostet (-6.1 statt M1)."
+    ],
+    "gegner": [
+     "Weiß findet den einzigen guten Zug. Der Zug Schachmatt.",
+     "Naheliegend wäre f4 gewesen – das hätte etwa 90 % Gewinnchance gekostet (+6.1 statt -M1)."
+    ],
+    "coach": [
+     "Rd8# ist großartig. Der einzige Zug, der die Stellung hält."
+    ]
+   }
+  },
+  {
+   "id": "reti_8Nxe4",
+   "kategorie": "patzer_matt",
+   "zug": "8...Nxe4",
+   "cls": "best",
+   "err": null,
+   "loss": 0,
+   "wpB": 38.5,
+   "wpA": 38.5,
+   "ok": false,
+   "fails": [
+    "Klasse best, erwartet blunder",
+    "Fehlertyp null, erwartet allowedMate"
+   ],
+   "texts": {
+    "selbst": [
+     "Klar: den Springer schlagen, gleichwertiger Tausch."
+    ],
+    "gegner": [
+     "Schwarz: den Springer schlagen, gleichwertiger Tausch."
+    ],
+    "coach": [
+     "Nxe4 ist der beste Zug."
+    ]
+   }
+  },
+  {
+   "id": "reti_9Qd8",
+   "kategorie": "brillant_dame",
+   "zug": "9.Qd8+",
+   "cls": "brilliant",
+   "err": null,
+   "loss": 0,
+   "wpB": 100,
+   "wpA": 100,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Brillant! Du opferst die Dame auf d8 mit Schach. Nimmt Schwarz mit Kxd8, folgt Bg5+ – gibt Schach. Am Ende steht Matt.",
+     "Schwarz spielt Ke8.",
+     "Du spielst Rd8# – Schachmatt."
+    ],
+    "gegner": [
+     "Weiß opfert die Dame auf d8 mit Schach. Schlägst du mit Kxd8, folgt Bg5+ – gibt Schach. Am Ende steht Matt.",
+     "Du spielst Ke8.",
+     "Weiß spielt Rd8# – Schachmatt."
+    ],
+    "coach": [
+     "Qd8+ ist brillant. Ein starkes Opfer, das funktioniert."
+    ]
+   }
+  },
+  {
+   "id": "reti_9Kxd8",
+   "kategorie": "erzwungen",
+   "zug": "9...Kxd8",
+   "cls": "forced",
+   "err": null,
+   "loss": 0,
+   "wpB": 0,
+   "wpA": 0,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Das war der einzige legale Zug – da gab es nichts zu entscheiden."
+    ],
+    "gegner": [
+     "Das war der einzige legale Zug – da gab es nichts zu entscheiden."
+    ],
+    "coach": [
+     "Kxd8 war erzwungen."
+    ]
+   }
+  },
+  {
+   "id": "lasker_10Qe7",
+   "kategorie": "patzer_matt",
+   "zug": "10...Qe7",
+   "cls": "blunder",
+   "err": "allowedMate",
+   "loss": 50,
+   "wpB": 50,
+   "wpA": 0,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Patzer: Danach setzt Weiß matt (Qxh7+).",
+     "Du spielst Kxh7 – schlägt die Dame auf h7.",
+     "Weiß spielt Nxf6+ – schlägt den Läufer auf f6, gibt Schach.",
+     "Du spielst Kh6.",
+     "Besser war Bxe5 – schlägt den Springer auf e5, greift den Bauern auf d4 an, der ungedeckt ist (0.0). Zum Beispiel: Bxe5 Nd2 g6 Qxe5 Nc6. Merksatz: Frag dich vor jedem Zug: Welche Schachs hat mein Gegner danach – und ist meine Grundreihe sicher?"
+    ],
+    "gegner": [
+     "Schwarz patzt! Deine Chance: Du spielst Qxh7+ – schlägt den Bauern auf h7, gibt Schach.",
+     "Schwarz spielt Kxh7 – schlägt die Dame auf h7.",
+     "Du spielst Nxf6+ – schlägt den Läufer auf f6, gibt Schach.",
+     "Und du hast es gesehen: Qxh7+ – stark reagiert!"
+    ],
+    "coach": [
+     "Qe7 ist ein Patzer. Bester Zug war Bxe5. Damit lässt du Matt in 7 zu (Qxh7+)."
+    ]
+   }
+  },
+  {
+   "id": "lasker_11Qxh7",
+   "kategorie": "brillant_dame",
+   "zug": "11.Qxh7+",
+   "cls": "brilliant",
+   "err": null,
+   "loss": 0,
+   "wpB": 100,
+   "wpA": 100,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Brillant! Du opferst die Dame auf h7 mit Schach. Nimmt Schwarz mit Kxh7, folgt Nxf6+ – schlägt den Läufer auf f6, gibt Schach. Am Ende steht Matt.",
+     "Schwarz spielt Kh6.",
+     "Du spielst Neg4+ – gibt Schach.",
+     "Schwarz spielt Kg5.",
+     "Du spielst h4+ – gibt Schach."
+    ],
+    "gegner": [
+     "Weiß opfert die Dame auf h7 mit Schach. Schlägst du mit Kxh7, folgt Nxf6+ – schlägt den Läufer auf f6, gibt Schach. Am Ende steht Matt.",
+     "Du spielst Kh6.",
+     "Weiß spielt Neg4+ – gibt Schach.",
+     "Du spielst Kg5.",
+     "Weiß spielt h4+ – gibt Schach."
+    ],
+    "coach": [
+     "Qxh7+ ist brillant. Ein starkes Opfer, das funktioniert."
+    ]
+   }
+  },
+  {
+   "id": "legal_5Nxe5",
+   "kategorie": "scheinopfer_dame",
+   "zug": "5.Nxe5",
+   "cls": "best",
+   "err": null,
+   "loss": 0,
+   "wpB": 71.9,
+   "wpA": 71.9,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Sauber gespielt – der beste Zug. Der Zug schlägt den Bauern auf e5, greift den Läufer auf g4 an, der ungedeckt ist."
+    ],
+    "gegner": [
+     "Weiß spielt den besten Zug. Der Zug schlägt den Bauern auf e5, greift den Läufer auf g4 an, der ungedeckt ist."
+    ],
+    "coach": [
+     "Nxe5 ist der beste Zug."
+    ]
+   }
+  },
+  {
+   "id": "legal_5Nxe5_elo800",
+   "kategorie": "scheinopfer_dame",
+   "zug": "5.Nxe5",
+   "cls": "brilliant",
+   "err": null,
+   "loss": 0,
+   "wpB": 65.8,
+   "wpA": 65.8,
+   "ok": false,
+   "fails": [
+    "Text nennt nicht die Dame als Opfer",
+    "Text nennt falsche Opferfigur: den Springer"
+   ],
+   "texts": {
+    "selbst": [
+     "Brillant! Du opferst den Springer auf e5. Nimmt Schwarz mit dxe5, folgt Qxg4 – schlägt den Läufer auf g4. Unterm Strich gewinnst du einen Bauern.",
+     "Schwarz spielt Nf6 – greift die Dame auf g4 an, die ungedeckt ist.",
+     "Du spielst Qf3."
+    ],
+    "gegner": [
+     "Weiß opfert den Springer auf e5. Schlägst du mit dxe5, folgt Qxg4 – schlägt den Läufer auf g4. Unterm Strich gewinnt Weiß einen Bauern.",
+     "Du spielst Nf6 – greift die Dame auf g4 an, die ungedeckt ist.",
+     "Weiß spielt Qf3."
+    ],
+    "coach": [
+     "Nxe5 ist brillant. Ein starkes Opfer, das funktioniert."
+    ]
+   }
+  },
+  {
+   "id": "legal_5Bxd1",
+   "kategorie": "patzer_matt",
+   "zug": "5...Bxd1",
+   "cls": "blunder",
+   "err": "allowedMate",
+   "loss": 28.4,
+   "wpB": 28.4,
+   "wpA": 0,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Patzer: Danach setzt Weiß matt (Bxf7+).",
+     "Du spielst Ke7.",
+     "Weiß spielt Nd5# – Schachmatt.",
+     "Am Ende wärst du matt.",
+     "Besser war dxe5 – schlägt den Springer auf e5 (-2.0). Zum Beispiel: dxe5 Qxg4 Nf6 Qf3 Bh6. Merksatz: Frag dich vor jedem Zug: Welche Schachs hat mein Gegner danach – und ist meine Grundreihe sicher?"
+    ],
+    "gegner": [
+     "Schwarz patzt! Deine Chance: Du spielst Bxf7+ – schlägt den Bauern auf f7, gibt Schach.",
+     "Schwarz spielt Ke7.",
+     "Du spielst Nd5# – Schachmatt.",
+     "Und du hast es gesehen: Bxf7+ – stark reagiert!"
+    ],
+    "coach": [
+     "Bxd1 ist ein Patzer. Bester Zug war dxe5. Damit lässt du Matt in 2 zu (Bxf7+)."
+    ]
+   }
+  },
+  {
+   "id": "legal_6Bxf7",
+   "kategorie": "grossartig",
+   "zug": "6.Bxf7+",
+   "cls": "great",
+   "err": null,
+   "loss": 0,
+   "wpB": 100,
+   "wpA": 100,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Sehr gut gesehen! Der einzige gute Zug in dieser Stellung. Der Zug schlägt den Bauern auf f7, gibt Schach.",
+     "Viele hätten hier Nxf7 gespielt – das hätte etwa 69 % Gewinnchance gekostet (-2.2 statt M2)."
+    ],
+    "gegner": [
+     "Weiß findet den einzigen guten Zug. Der Zug schlägt den Bauern auf f7, gibt Schach.",
+     "Naheliegend wäre Nxf7 gewesen – das hätte etwa 69 % Gewinnchance gekostet (+2.2 statt -M2)."
+    ],
+    "coach": [
+     "Bxf7+ ist großartig. Der einzige Zug, der die Stellung hält."
+    ]
+   }
+  },
+  {
+   "id": "legal_7Nd5mate",
+   "kategorie": "mattzug",
+   "zug": "7.Nd5#",
+   "cls": "great",
+   "err": null,
+   "loss": 0,
+   "wpB": 100,
+   "wpA": 100,
+   "ok": false,
+   "fails": [
+    "Klasse great, erwartet best",
+    "verbotener Text /Der Zug Schachmatt/"
+   ],
+   "texts": {
+    "selbst": [
+     "Genau richtig erkannt! Der einzige gute Zug in dieser Stellung. Der Zug Schachmatt.",
+     "Viele hätten hier Bc4 gespielt – das hätte etwa 76 % Gewinnchance gekostet (-3.2 statt M1)."
+    ],
+    "gegner": [
+     "Weiß findet den einzigen guten Zug. Der Zug Schachmatt.",
+     "Naheliegend wäre Bc4 gewesen – das hätte etwa 76 % Gewinnchance gekostet (+3.2 statt -M1)."
+    ],
+    "coach": [
+     "Nd5# ist großartig. Der einzige Zug, der die Stellung hält."
+    ]
+   }
+  },
+  {
+   "id": "fool_2g4",
+   "kategorie": "patzer_matt",
+   "zug": "2.g4",
+   "cls": "book",
+   "err": null,
+   "loss": 44.1,
+   "wpB": 44.1,
+   "wpA": 0,
+   "ok": false,
+   "fails": [
+    "Klasse book, erwartet blunder",
+    "Fehlertyp null, erwartet allowedMate"
+   ],
+   "texts": {
+    "selbst": [
+     "Du bleibst in der Theorie. Alles im grünen Bereich."
+    ],
+    "gegner": [
+     "Weiß bleibt in der Theorie. Alles im grünen Bereich."
+    ],
+    "coach": [
+     "g4 ist Eröffnungstheorie."
+    ]
+   }
+  },
+  {
+   "id": "fool_2Qh4mate",
+   "kategorie": "mattzug",
+   "zug": "2...Qh4#",
+   "cls": "book",
+   "err": null,
+   "loss": 0,
+   "wpB": 100,
+   "wpA": 100,
+   "ok": false,
+   "fails": [
+    "Klasse book, erwartet best"
+   ],
+   "texts": {
+    "selbst": [
+     "Du bleibst in der Theorie (Barnes Opening: Fool's Mate). Alles im grünen Bereich."
+    ],
+    "gegner": [
+     "Schwarz bleibt in der Theorie (Barnes Opening: Fool's Mate). Alles im grünen Bereich."
+    ],
+    "coach": [
+     "Qh4# ist Eröffnungstheorie. (Barnes Opening: Fool's Mate)"
+    ]
+   }
+  },
+  {
+   "id": "scholar_3Nf6",
+   "kategorie": "patzer_matt",
+   "zug": "3...Nf6",
+   "cls": "blunder",
+   "err": "allowedMate",
+   "loss": 53,
+   "wpB": 53,
+   "wpA": 0,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Patzer: Danach setzt Weiß matt (Qxf7#).",
+     "Am Ende wärst du matt.",
+     "Besser war g6 – greift die Dame auf h5 an, die ungedeckt ist (+0.4). Zum Beispiel: g6 Qd1 Nf6 Nc3 Na5. Merksatz: Frag dich vor jedem Zug: Welche Schachs hat mein Gegner danach – und ist meine Grundreihe sicher?"
+    ],
+    "gegner": [
+     "Schwarz patzt! Deine Chance: Du spielst Qxf7# – schlägt den Bauern auf f7: Schachmatt.",
+     "Und du hast es gesehen: Qxf7# – stark reagiert!"
+    ],
+    "coach": [
+     "Nf6 ist ein Patzer. Bester Zug war g6. Damit lässt du Matt in 1 zu (Qxf7#)."
+    ]
+   }
+  },
+  {
+   "id": "scholar_4Qxf7mate",
+   "kategorie": "mattzug",
+   "zug": "4.Qxf7#",
+   "cls": "great",
+   "err": null,
+   "loss": 0,
+   "wpB": 100,
+   "wpA": 100,
+   "ok": false,
+   "fails": [
+    "Klasse great, erwartet best"
+   ],
+   "texts": {
+    "selbst": [
+     "Stark gefunden! Der einzige gute Zug in dieser Stellung. Der Zug schlägt den Bauern auf f7 – Schachmatt.",
+     "Viele hätten hier Qh4 gespielt – das hätte etwa 61 % Gewinnchance gekostet (-1.3 statt M1)."
+    ],
+    "gegner": [
+     "Weiß findet den einzigen guten Zug. Der Zug schlägt den Bauern auf f7 – Schachmatt.",
+     "Naheliegend wäre Qh4 gewesen – das hätte etwa 61 % Gewinnchance gekostet (+1.3 statt -M1)."
+    ],
+    "coach": [
+     "Qxf7# ist großartig. Der einzige Zug, der die Stellung hält."
+    ]
+   }
+  },
+  {
+   "id": "check_2g6_forced",
+   "kategorie": "erzwungen",
+   "zug": "2...g6",
+   "cls": "forced",
+   "err": null,
+   "loss": 0,
+   "wpB": 52.9,
+   "wpA": 52.9,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Das war der einzige legale Zug – da gab es nichts zu entscheiden."
+    ],
+    "gegner": [
+     "Das war der einzige legale Zug – da gab es nichts zu entscheiden."
+    ],
+    "coach": [
+     "g6 war erzwungen."
+    ]
+   }
+  },
+  {
+   "id": "french_9Bxh7",
+   "kategorie": "brillant_laeufer",
+   "zug": "9.Bxh7+",
+   "cls": "brilliant",
+   "err": null,
+   "loss": 0,
+   "wpB": 69.4,
+   "wpA": 69.4,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Brillant! Du opferst den Läufer auf h7 mit Schach. Nimmt Schwarz mit Kxh7, folgt Ng5+ – gibt Schach. Dafür gibt es starken Angriff und Initiative.",
+     "Schwarz spielt Kg6.",
+     "Du spielst Qd3+ – gibt Schach.",
+     "Schwarz spielt f5.",
+     "Du spielst exf6+ – schlägt den Bauern auf f6, gibt Schach."
+    ],
+    "gegner": [
+     "Weiß opfert den Läufer auf h7 mit Schach. Schlägst du mit Kxh7, folgt Ng5+ – gibt Schach. Dafür gibt es starken Angriff und Initiative.",
+     "Du spielst Kg6.",
+     "Weiß spielt Qd3+ – gibt Schach.",
+     "Du spielst f5.",
+     "Weiß spielt exf6+ – schlägt den Bauern auf f6, gibt Schach."
+    ],
+    "coach": [
+     "Bxh7+ ist brillant. Ein starkes Opfer, das funktioniert."
+    ]
+   }
+  },
+  {
+   "id": "giuoco_11Ng5",
+   "kategorie": "patzer",
+   "zug": "11.Ng5",
+   "cls": "blunder",
+   "err": "hung",
+   "loss": 40.9,
+   "wpB": 51.8,
+   "wpA": 10.9,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Patzer: hxg5 – schlägt den Springer. Du verlierst etwa eine Leichtfigur.",
+     "Du spielst Nf3 – greift den Bauern auf g5 an, der ungedeckt ist.",
+     "Schwarz spielt Nh7.",
+     "Du spielst d4.",
+     "Unterm Strich verlierst du etwa eine Leichtfigur (-3).",
+     "Besser war Nf1 (+0.1). Zum Beispiel: Nf1 Be6 Ng3 d5 exd5. Merksatz: Bevor du ziehst: Welche Figur steht nach meinem Zug ungedeckt – und was kann mein Gegner schlagen?"
+    ],
+    "gegner": [
+     "Weiß patzt! Deine Chance: Du spielst hxg5 – schlägt den Springer auf g5.",
+     "Weiß spielt Nf3 – greift den Bauern auf g5 an, der ungedeckt ist.",
+     "Du spielst Nh7.",
+     "In der Partie hast du Re7 gespielt (Verpasst) und die Chance nicht genutzt. Wenn dein Gegner patzt: Tempo rausnehmen und gezielt nach dem Gewinnzug suchen."
+    ],
+    "coach": [
+     "Ng5 ist ein Patzer. Bester Zug war Nf1. Danach gewinnt hxg5 Material."
+    ]
+   }
+  },
+  {
+   "id": "giuoco_11Re7_verpasst",
+   "kategorie": "verpasst",
+   "zug": "11...Re7",
+   "cls": "miss",
+   "err": "missedTactic",
+   "loss": 41.1,
+   "wpB": 89.1,
+   "wpA": 48,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Chance verpasst. Taktik übersehen: hxg5 (schlägt den Springer) gewinnt etwa eine Leichtfigur.",
+     "Weiß hatte mit Ng5 einen Fehler gemacht – den hättest du bestrafen können.",
+     "Du spielst hxg5 – schlägt den Springer auf g5.",
+     "Weiß spielt Nf3 – greift den Bauern auf g5 an, der ungedeckt ist.",
+     "Du spielst Nh7.",
+     "Weiß spielt d4.",
+     "So gewinnst du etwa eine Leichtfigur (+3). Merksatz: Schau in jeder Stellung zuerst nach Schachs, Schlagzügen und Drohungen – erst danach nach ruhigen Zügen."
+    ],
+    "gegner": [
+     "Schwarz lässt eine Chance liegen. Deine Chance: Du spielst Ngf3.",
+     "Schwarz spielt Be6.",
+     "Du spielst Nf1."
+    ],
+    "coach": [
+     "Re7 ist eine verpasste Chance. Bester Zug war hxg5. Mit hxg5 hättest du Material gewonnen (hxg5 Nf3 Nh7 d4 exd4)."
+    ]
+   }
+  },
+  {
+   "id": "giuoco_11hxg5_bestraft",
+   "kategorie": "patzer_bestraft",
+   "zug": "11...hxg5",
+   "cls": "best",
+   "err": null,
+   "loss": 0,
+   "wpB": 89.1,
+   "wpA": 89.1,
+   "ok": true,
+   "fails": [],
+   "texts": {
+    "selbst": [
+     "Klar: den Springer schlagen, mehr wert als die eigene Figur."
+    ],
+    "gegner": [
+     "Schwarz: den Springer schlagen, mehr wert als die eigene Figur."
+    ],
+    "coach": [
+     "hxg5 ist der beste Zug."
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,8 @@
+{
+  "url": "https://www.chess.com/game/live/186069736928",
+  "white": {"username": "MertAbi69", "rating": 607},
+  "black": {"username": "sufyannz", "rating": 496},
+  "time_control": "120+1",
+  "moves": "1. e4 c5 2. Nf3 Nc6 3. Bc4 e6 4. d3 Bd6 5. Be3 Nf6 6. Nc3 O-O 7. O-O h6 8. Nb5 Ng4 9. Nxd6 Qe7 10. Nxc8 Raxc8 11. h3 Nce5 12. hxg4 Nxg4 13. Nh2 Ne5 14. Qh5 f5 15. Rfe1 Rf6 16. c3 Rg6 17. d4 cxd4 18. Bxd4 Rg5 19. Qh3 Rf8 20. Bxe5 d6 21. Nf3 Rg6 22. Bg3 fxe4 23. Rxe4 d5 24. Bxd5 exd5 25. Rxe7 1-0",
+  "befund": "App v28 nannte 19.Qh3 'Brillant! Du opferst die Dame auf h3. Annehmen geht nicht gut, deshalb spielt sufyannz Nxc4. Dafür gibt es starken Angriff und Initiative.' Dann Engine-Linie 'sufyannz spielt Nxb2', 'Du spielst fxe6'. Falsch: 19.Qh3 ist ein Rückzug der angegriffenen Dame (Rg5 griff h5 an), kein Opfer. Der Läufer c4 hing schon vor dem Zug (Ne5xc4). Nutzer-Erwartung: kein Brillant, normale Einstufung (bester/guter Zug o. ä.)."
+}

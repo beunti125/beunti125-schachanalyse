@@ -1,0 +1,1 @@
+{"chess_blitz": {"last": {"rating": 1105}, "best": {"rating": 1203}, "record": {"win": 120, "loss": 118, "draw": 9}}, "chess_rapid": {"last": {"rating": 1250}, "best": {"rating": 1301}, "record": {"win": 30, "loss": 20, "draw": 2}}, "tactics": {"highest": {"rating": 1650}}}

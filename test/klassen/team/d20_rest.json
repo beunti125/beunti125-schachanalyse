@@ -1,0 +1,13905 @@
+[
+{
+"u": "185167134972",
+"ply": 22,
+"zug": "12.Bf4",
+"spieler": "gvplvnj",
+"mert": false,
+"R": 637,
+"cls": "blunder",
+"wpA": 51.6,
+"wpB": 73.5,
+"wpAlt": 73.5,
+"best": "g5e3",
+"uci": "g5f4",
+"fen": "r3kb1r/ppp3pp/2bp1pq1/6Bn/4P3/2N2P2/PPPQ2PP/2KR1B1R w kq - 0 12",
+"sac": null,
+"loss": 21.9,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 51.8,
+"wpBest": 72.9,
+"wpAlt22": 72.9,
+"loss22": 21.2,
+"legal": 37,
+"lines22": [
+[
+"g5e3",
+[
+"cp",
+335
+],
+[
+"g5e3",
+"f6f5",
+"e4f5",
+"g6f7",
+"d2d4",
+"h5f6"
+]
+],
+[
+"g5h4",
+[
+"cp",
+286
+],
+[
+"g5h4",
+"g6f7",
+"c1b1",
+"g7g5",
+"h4f2",
+"h5f4"
+]
+],
+[
+"g5f4",
+[
+"cp",
+24
+],
+[
+"g5f4",
+"h5f4",
+"d2f4",
+"g6g5",
+"f4g5",
+"f6g5"
+]
+]
+],
+"played22": {
+"move": "g5f4",
+"score": [
+"cp",
+24
+],
+"pv": [
+"g5f4",
+"h5f4",
+"d2f4",
+"g6g5",
+"f4g5",
+"f6g5",
+"f1b5",
+"e8c8"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185167134972",
+"ply": 23,
+"zug": "12...Be7",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 669,
+"cls": "miss",
+"wpA": 29.8,
+"wpB": 48.4,
+"wpAlt": 48.4,
+"best": "h5f4",
+"uci": "f8e7",
+"fen": "r3kb1r/ppp3pp/2bp1pq1/7n/4PB2/2N2P2/PPPQ2PP/2KR1B1R b kq - 1 12",
+"sac": null,
+"loss": 18.7,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 30.3,
+"wpBest": 48.6,
+"wpAlt22": 48.6,
+"loss22": 18.4,
+"legal": 32,
+"lines22": [
+[
+"h5f4",
+[
+"cp",
+18
+],
+[
+"h5f4",
+"d2f4",
+"g6g5",
+"f4g5",
+"f6g5",
+"f1b5"
+]
+],
+[
+"f6f5",
+[
+"cp",
+255
+],
+[
+"f6f5",
+"e4f5",
+"g6f5",
+"d1e1",
+"e8d7",
+"f4e3"
+]
+],
+[
+"g6f7",
+[
+"cp",
+266
+],
+[
+"g6f7",
+"f4e3",
+"f6f5",
+"e4f5",
+"f8e7",
+"c1b1"
+]
+]
+],
+"played22": {
+"move": "f8e7",
+"score": [
+"cp",
+276
+],
+"pv": [
+"f8e7",
+"f4e3",
+"f6f5",
+"e4f5",
+"g6f7",
+"c1b1",
+"e8g8",
+"f1e2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185167134972",
+"ply": 34,
+"zug": "18.dxc6",
+"spieler": "gvplvnj",
+"mert": false,
+"R": 637,
+"cls": "great",
+"wpA": 72.6,
+"wpB": 72.6,
+"wpAlt": 57.1,
+"best": "d5c6",
+"uci": "d5c6",
+"fen": "4rrk1/pp2b1pp/2pp1pq1/1B1P4/5Q2/5P2/PPP3PP/2K1R2R w - - 0 18",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 72.6,
+"wpBest": 72.6,
+"wpAlt22": 54.4,
+"loss22": 0,
+"legal": 48,
+"lines22": [
+[
+"d5c6",
+[
+"cp",
+330
+],
+[
+"d5c6",
+"b7c6",
+"b5c6",
+"e8c8",
+"f4c4",
+"g6f7"
+]
+],
+[
+"b5c4",
+[
+"cp",
+59
+],
+[
+"b5c4",
+"f6f5",
+"c1b1",
+"g8h8",
+"d5c6",
+"b7c6"
+]
+],
+[
+"b5d3",
+[
+"cp",
+45
+],
+[
+"b5d3",
+"f6f5",
+"c1b1",
+"g6g2",
+"d5c6",
+"b7c6"
+]
+]
+],
+"played22": {
+"move": "d5c6",
+"score": [
+"cp",
+330
+],
+"pv": [
+"d5c6",
+"b7c6",
+"b5c6",
+"e8c8",
+"f4c4",
+"g6f7",
+"c4f7",
+"g8f7"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185167134972",
+"ply": 42,
+"zug": "22.g4",
+"spieler": "gvplvnj",
+"mert": false,
+"R": 637,
+"cls": "blunder",
+"wpA": 51.4,
+"wpB": 74.8,
+"wpAlt": 74.8,
+"best": "f4f5",
+"uci": "g2g4",
+"fen": "5rk1/p3bqpp/3p1p2/8/2r1BQ2/5P2/PPP3PP/1K2R2R w - - 5 22",
+"sac": null,
+"loss": 23.4,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 50.7,
+"wpBest": 78.7,
+"wpAlt22": 78.7,
+"loss22": 28.0,
+"legal": 39,
+"lines22": [
+[
+"f4f5",
+[
+"cp",
+442
+],
+[
+"f4f5",
+"g7g6",
+"f5d7",
+"c4c5",
+"e4f5",
+"g6f5"
+]
+],
+[
+"b2b3",
+[
+"cp",
+374
+],
+[
+"b2b3",
+"g7g6",
+"f4d2",
+"c4c5",
+"c2c4",
+"g8h8"
+]
+],
+[
+"f4d2",
+[
+"cp",
+360
+],
+[
+"f4d2",
+"c4c5",
+"e1d1",
+"g8h8",
+"e4d5",
+"f7e8"
+]
+]
+],
+"played22": {
+"move": "g2g4",
+"score": [
+"cp",
+10
+],
+"pv": [
+"g2g4",
+"d6d5",
+"b2b3",
+"e7a3",
+"e1e3",
+"c4b4",
+"c2c3",
+"b4c4"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185167134972",
+"ply": 43,
+"zug": "22...Rb8",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 669,
+"cls": "miss",
+"wpA": 26.7,
+"wpB": 48.6,
+"wpAlt": 48.6,
+"best": "d6d5",
+"uci": "f8b8",
+"fen": "5rk1/p3bqpp/3p1p2/8/2r1BQP1/5P2/PPP4P/1K2R2R b - - 0 22",
+"sac": null,
+"loss": 21.8,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 26.6,
+"wpBest": 50.0,
+"wpAlt22": 50.0,
+"loss22": 23.4,
+"legal": 30,
+"lines22": [
+[
+"d6d5",
+[
+"cp",
+0
+],
+[
+"d6d5",
+"b2b3",
+"e7a3",
+"e1e3",
+"c4b4",
+"c2c3"
+]
+],
+[
+"c4c5",
+[
+"cp",
+327
+],
+[
+"c4c5",
+"f4e3",
+"f8b8",
+"e4f5",
+"g8f8",
+"f5e6"
+]
+],
+[
+"f8b8",
+[
+"cp",
+335
+],
+[
+"f8b8",
+"f4d2",
+"c4c5",
+"e4f5",
+"g8h8",
+"f5e6"
+]
+]
+],
+"played22": {
+"move": "f8b8",
+"score": [
+"cp",
+335
+],
+"pv": [
+"f8b8",
+"f4d2",
+"c4c5",
+"e4f5",
+"g8h8",
+"f5e6",
+"f7f8",
+"e6b3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185177136720",
+"ply": 35,
+"zug": "18...b5",
+"spieler": "Pepe-kunglez",
+"mert": false,
+"R": 642,
+"cls": "blunder",
+"wpA": 28.5,
+"wpB": 48.7,
+"wpAlt": 48.7,
+"best": "c8c7",
+"uci": "b6b5",
+"fen": "2r2rk1/p4pp1/bp1R4/2p3p1/B7/8/PPP2PPP/2KR4 b - - 4 18",
+"sac": null,
+"loss": 20.2,
+"grund": "vorher",
+"kand": {
+"app": [
+{
+"piece": "b",
+"square": "a6",
+"net": 1,
+"before": false
+}
+],
+"heur": [
+{
+"piece": "b",
+"square": "a6",
+"ungedeckt": true,
+"minAtt": 5
+}
+]
+},
+"d": 20,
+"top": false,
+"wpPlay": 26.7,
+"wpBest": 48.4,
+"wpAlt22": 48.4,
+"loss22": 21.7,
+"legal": 22,
+"lines22": [
+[
+"c8c7",
+[
+"cp",
+21
+],
+[
+"c8c7",
+"d6d7",
+"f8c8",
+"a4b3",
+"c5c4",
+"b3a4"
+]
+],
+[
+"c8b8",
+[
+"cp",
+34
+],
+[
+"c8b8",
+"h2h3",
+"f8c8",
+"d6d7",
+"b8b7",
+"a4b3"
+]
+],
+[
+"a6e2",
+[
+"cp",
+46
+],
+[
+"a6e2",
+"d1e1",
+"e2h5",
+"a4d7",
+"c8c7",
+"d7b5"
+]
+]
+],
+"played22": {
+"move": "b6b5",
+"score": [
+"cp",
+340
+],
+"pv": [
+"b6b5",
+"d6a6",
+"b5a4",
+"a6a7",
+"f8e8",
+"a7a4",
+"e8e2",
+"d1f1"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185177136720",
+"ply": 36,
+"zug": "19.Bb3",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 670,
+"cls": "miss",
+"wpA": 56.9,
+"wpB": 71.9,
+"wpAlt": 71.9,
+"best": "d6a6",
+"uci": "a4b3",
+"fen": "2r2rk1/p4pp1/b2R4/1pp3p1/B7/8/PPP2PPP/2KR4 w - - 0 19",
+"sac": null,
+"loss": 15,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 54.9,
+"wpBest": 73.3,
+"wpAlt22": 73.3,
+"loss22": 18.4,
+"legal": 36,
+"lines22": [
+[
+"d6a6",
+[
+"cp",
+334
+],
+[
+"d6a6",
+"b5a4",
+"a6a7",
+"c5c4",
+"a7a4",
+"f8e8"
+]
+],
+[
+"g2g3",
+[
+"cp",
+240
+],
+[
+"g2g3",
+"b5a4",
+"d6a6",
+"c8c7",
+"a6a4",
+"c5c4"
+]
+],
+[
+"d1e1",
+[
+"cp",
+237
+],
+[
+"d1e1",
+"a6b7",
+"a4b5",
+"b7g2",
+"e1e7",
+"c5c4"
+]
+]
+],
+"played22": {
+"move": "a4b3",
+"score": [
+"cp",
+65
+],
+"pv": [
+"a4b3",
+"a6b7",
+"b3d5",
+"b7d5",
+"d1d5",
+"f8e8",
+"d5g5",
+"e8e2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185177136720",
+"ply": 54,
+"zug": "28.Ke3",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 670,
+"cls": "mistake",
+"wpA": 54.7,
+"wpB": 69.2,
+"wpAlt": 69.2,
+"best": "c5g5",
+"uci": "d2e3",
+"fen": "1r4k1/5pp1/8/ppR3p1/2p5/2P5/PP1K1PPP/8 w - - 2 28",
+"sac": null,
+"loss": 14.6,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 52.4,
+"wpBest": 71.6,
+"wpAlt22": 71.6,
+"loss22": 19.2,
+"legal": 25,
+"lines22": [
+[
+"c5g5",
+[
+"cp",
+306
+],
+[
+"c5g5",
+"f7f6",
+"g5c5",
+"g7g5",
+"d2e3",
+"g8f7"
+]
+],
+[
+"d2c2",
+[
+"cp",
+135
+],
+[
+"d2c2",
+"f7f6",
+"a2a4",
+"b5a4",
+"c5a5",
+"b8e8"
+]
+],
+[
+"d2c1",
+[
+"cp",
+127
+],
+[
+"d2c1",
+"f7f6",
+"a2a4",
+"b5a4",
+"c5c4",
+"b8e8"
+]
+]
+],
+"played22": {
+"move": "d2e3",
+"score": [
+"cp",
+32
+],
+"pv": [
+"d2e3",
+"f7f6",
+"e3d4",
+"g8f7",
+"g2g4",
+"a5a4",
+"a2a3",
+"f7e6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185177136720",
+"ply": 55,
+"zug": "28...b4",
+"spieler": "Pepe-kunglez",
+"mert": false,
+"R": 642,
+"cls": "miss",
+"wpA": 29.5,
+"wpB": 45.4,
+"wpAlt": 45.4,
+"best": "a5a4",
+"uci": "b5b4",
+"fen": "1r4k1/5pp1/8/ppR3p1/2p5/2P1K3/PP3PPP/8 b - - 3 28",
+"sac": null,
+"loss": 16,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 26.4,
+"wpBest": 47.3,
+"wpAlt22": 47.3,
+"loss22": 20.8,
+"legal": 16,
+"lines22": [
+[
+"a5a4",
+[
+"cp",
+37
+],
+[
+"a5a4",
+"e3d4",
+"f7f6",
+"g2g4",
+"g8f7",
+"a2a3"
+]
+],
+[
+"f7f6",
+[
+"cp",
+38
+],
+[
+"f7f6",
+"g2g4",
+"a5a4",
+"e3d4",
+"g8f7",
+"a2a3"
+]
+],
+[
+"g5g4",
+[
+"cp",
+147
+],
+[
+"g5g4",
+"c5g5",
+"a5a4",
+"a2a3",
+"b8e8",
+"e3d2"
+]
+]
+],
+"played22": {
+"move": "b5b4",
+"score": [
+"cp",
+345
+],
+"pv": [
+"b5b4",
+"e3d4",
+"a5a4",
+"d4c4",
+"b4c3",
+"c4c3",
+"f7f6",
+"c5c4"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185177136720",
+"ply": 56,
+"zug": "29.cxb4",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 670,
+"cls": "miss",
+"wpA": 50.6,
+"wpB": 70.9,
+"wpAlt": 70.9,
+"best": "e3d4",
+"uci": "c3b4",
+"fen": "1r4k1/5pp1/8/p1R3p1/1pp5/2P1K3/PP3PPP/8 w - - 0 29",
+"sac": null,
+"loss": 20.3,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 50.5,
+"wpBest": 72.2,
+"wpAlt22": 72.2,
+"loss22": 21.7,
+"legal": 25,
+"lines22": [
+[
+"e3d4",
+[
+"cp",
+315
+],
+[
+"e3d4",
+"a5a4",
+"c3b4",
+"b8b4",
+"d4c3",
+"a4a3"
+]
+],
+[
+"c5c4",
+[
+"cp",
+232
+],
+[
+"c5c4",
+"b4c3",
+"b2b3",
+"g8h7",
+"e3d3",
+"h7g6"
+]
+],
+[
+"h2h3",
+[
+"cp",
+134
+],
+[
+"h2h3",
+"b4c3",
+"b2c3",
+"b8e8",
+"e3d4",
+"a5a4"
+]
+]
+],
+"played22": {
+"move": "c3b4",
+"score": [
+"cp",
+7
+],
+"pv": [
+"c3b4",
+"b8b4",
+"c5g5",
+"a5a4",
+"g5a5",
+"g7g6",
+"g2g4",
+"b4b2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185177136720",
+"ply": 60,
+"zug": "31.Kxc4",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 670,
+"cls": "great",
+"wpA": 77.1,
+"wpB": 77.1,
+"wpAlt": 67.1,
+"best": "d4c4",
+"uci": "d4c4",
+"fen": "5rk1/5pp1/8/2R3p1/1ppK4/8/PP3PPP/8 w - - 2 31",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 79.9,
+"wpBest": 79.9,
+"wpAlt22": 72.0,
+"loss22": 0,
+"legal": 24,
+"lines22": [
+[
+"d4c4",
+[
+"cp",
+456
+],
+[
+"d4c4",
+"f8a8",
+"c4b3",
+"g5g4",
+"c5g5",
+"a8d8"
+]
+],
+[
+"c5b5",
+[
+"cp",
+312
+],
+[
+"c5b5",
+"f8a8",
+"d4c4",
+"a8a2",
+"c4b3",
+"a2a1"
+]
+],
+[
+"c5c4",
+[
+"cp",
+281
+],
+[
+"c5c4",
+"f8a8",
+"c4b4",
+"a8a2",
+"d4c3",
+"a2a1"
+]
+]
+],
+"played22": {
+"move": "d4c4",
+"score": [
+"cp",
+456
+],
+"pv": [
+"d4c4",
+"f8a8",
+"c4b3",
+"g5g4",
+"c5g5",
+"a8d8",
+"g5g4",
+"d8d2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181008812",
+"ply": 26,
+"zug": "14.Rad1",
+"spieler": "dlensitu",
+"mert": false,
+"R": 682,
+"cls": "blunder",
+"wpA": 23,
+"wpB": 55.5,
+"wpAlt": 55.5,
+"best": "a3b5",
+"uci": "a1d1",
+"fen": "r4rk1/pp2bppp/1q1p1n2/8/2BpP3/NP1Q4/P1P2PPP/R4RK1 w - - 3 14",
+"sac": null,
+"loss": 32.6,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 24.0,
+"wpBest": 56.1,
+"wpAlt22": 56.1,
+"loss22": 32.1,
+"legal": 34,
+"lines22": [
+[
+"a3b5",
+[
+"cp",
+80
+],
+[
+"a3b5",
+"f6d7",
+"d3d4",
+"a7a6",
+"d4b6",
+"d7b6"
+]
+],
+[
+"a3b1",
+[
+"cp",
+9
+],
+[
+"a3b1",
+"a8d8",
+"b1d2",
+"d6d5",
+"e4d5",
+"f6d5"
+]
+],
+[
+"c4d5",
+[
+"cp",
+-16
+],
+[
+"c4d5",
+"f6d5",
+"e4d5",
+"f8e8",
+"a1d1",
+"e7f6"
+]
+]
+],
+"played22": {
+"move": "a1d1",
+"score": [
+"cp",
+-378
+],
+"pv": [
+"a1d1",
+"d6d5",
+"c4d5",
+"e7a3",
+"d3d4",
+"f6d5",
+"e4d5",
+"b6d4"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181008812",
+"ply": 27,
+"zug": "14...a6",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 671,
+"cls": "miss",
+"wpA": 46.1,
+"wpB": 76.8,
+"wpAlt": 76.8,
+"best": "d6d5",
+"uci": "a7a6",
+"fen": "r4rk1/pp2bppp/1q1p1n2/8/2BpP3/NP1Q4/P1P2PPP/3R1RK1 b - - 4 14",
+"sac": null,
+"loss": 30.8,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 44.9,
+"wpBest": 75.8,
+"wpAlt22": 75.8,
+"loss22": 30.9,
+"legal": 32,
+"lines22": [
+[
+"d6d5",
+[
+"cp",
+-377
+],
+[
+"d6d5",
+"c4d5",
+"e7a3",
+"d3d4",
+"f6d5",
+"e4d5"
+]
+],
+[
+"a8d8",
+[
+"cp",
+44
+],
+[
+"a8d8",
+"a3b1",
+"d6d5",
+"e4d5",
+"a7a6",
+"a2a4"
+]
+],
+[
+"a7a6",
+[
+"cp",
+67
+],
+[
+"a7a6",
+"a3b1",
+"b6c6",
+"a2a4",
+"f6e4",
+"d3d4"
+]
+]
+],
+"played22": {
+"move": "a7a6",
+"score": [
+"cp",
+67
+],
+"pv": [
+"a7a6",
+"a3b1",
+"b6c6",
+"a2a4",
+"f6e4",
+"d3d4",
+"e7f6",
+"d4d3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181008812",
+"ply": 28,
+"zug": "15.Qxd4",
+"spieler": "dlensitu",
+"mert": false,
+"R": 682,
+"cls": "miss",
+"wpA": 27.4,
+"wpB": 55.1,
+"wpAlt": 55.1,
+"best": "a3b1",
+"uci": "d3d4",
+"fen": "r4rk1/1p2bppp/pq1p1n2/8/2BpP3/NP1Q4/P1P2PPP/3R1RK1 w - - 0 15",
+"sac": null,
+"loss": 27.7,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 26.7,
+"wpBest": 54.5,
+"wpAlt22": 54.5,
+"loss22": 27.8,
+"legal": 31,
+"lines22": [
+[
+"a3b1",
+[
+"cp",
+59
+],
+[
+"a3b1",
+"b6c6",
+"d3d4",
+"b7b5",
+"c4d3",
+"e7d8"
+]
+],
+[
+"c4d5",
+[
+"cp",
+-13
+],
+[
+"c4d5",
+"f6d5",
+"a3c4",
+"b6c5",
+"e4d5",
+"b7b5"
+]
+],
+[
+"b3b4",
+[
+"cp",
+-47
+],
+[
+"b3b4",
+"b6b4",
+"a3b1",
+"b7b5",
+"c4b3",
+"f8c8"
+]
+]
+],
+"played22": {
+"move": "d3d4",
+"score": [
+"cp",
+-331
+],
+"pv": [
+"d3d4",
+"b6d4",
+"d1d4",
+"d6d5",
+"c4d5",
+"f6d5",
+"d4d5",
+"e7a3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181008812",
+"ply": 29,
+"zug": "15...Qa5",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 671,
+"cls": "miss",
+"wpA": 47.4,
+"wpB": 72.4,
+"wpAlt": 72.4,
+"best": "b6d4",
+"uci": "b6a5",
+"fen": "r4rk1/1p2bppp/pq1p1n2/8/2BQP3/NP6/P1P2PPP/3R1RK1 b - - 0 15",
+"sac": null,
+"loss": 25.1,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 43.7,
+"wpBest": 71.9,
+"wpAlt22": 71.9,
+"loss22": 28.1,
+"legal": 33,
+"lines22": [
+[
+"b6d4",
+[
+"cp",
+-310
+],
+[
+"b6d4",
+"d1d4",
+"d6d5",
+"c4d5",
+"f6d5",
+"d4d5"
+]
+],
+[
+"b6a5",
+[
+"cp",
+83
+],
+[
+"b6a5",
+"a3b1",
+"a5a2",
+"b1c3",
+"a2a5",
+"c3d5"
+]
+],
+[
+"b6c7",
+[
+"cp",
+110
+],
+[
+"b6c7",
+"b3b4",
+"c7c6",
+"a3b1",
+"a8e8",
+"b1d2"
+]
+]
+],
+"played22": {
+"move": "b6a5",
+"score": [
+"cp",
+83
+],
+"pv": [
+"b6a5",
+"a3b1",
+"a5a2",
+"b1c3",
+"a2a5",
+"c3d5",
+"f6d5",
+"c4d5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181008812",
+"ply": 30,
+"zug": "16.Qb2",
+"spieler": "dlensitu",
+"mert": false,
+"R": 682,
+"cls": "miss",
+"wpA": 25.7,
+"wpB": 55.5,
+"wpAlt": 55.5,
+"best": "a3b1",
+"uci": "d4b2",
+"fen": "r4rk1/1p2bppp/p2p1n2/q7/2BQP3/NP6/P1P2PPP/3R1RK1 w - - 1 16",
+"sac": null,
+"loss": 29.9,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 26.8,
+"wpBest": 57.3,
+"wpAlt22": 57.3,
+"loss22": 30.5,
+"legal": 39,
+"lines22": [
+[
+"a3b1",
+[
+"cp",
+96
+],
+[
+"a3b1",
+"a5a2",
+"b1c3",
+"a2a5",
+"c3d5",
+"f6d5"
+]
+],
+[
+"c4f7",
+[
+"cp",
+-301
+],
+[
+"c4f7",
+"f8f7",
+"a3c4",
+"a5c7",
+"f1e1",
+"a8e8"
+]
+],
+[
+"c4d5",
+[
+"cp",
+-301
+],
+[
+"c4d5",
+"a5a3",
+"d5b7",
+"a8b8",
+"d4a7",
+"a3a5"
+]
+]
+],
+"played22": {
+"move": "d4b2",
+"score": [
+"cp",
+-330
+],
+"pv": [
+"d4b2",
+"d6d5",
+"c4d5",
+"e7a3",
+"b2b1",
+"f6d5",
+"d1d5",
+"a5c3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181008812",
+"ply": 31,
+"zug": "16...b5",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 671,
+"cls": "miss",
+"wpA": 45.5,
+"wpB": 74.2,
+"wpAlt": 74.2,
+"best": "d6d5",
+"uci": "b7b5",
+"fen": "r4rk1/1p2bppp/p2p1n2/q7/2B1P3/NP6/PQP2PPP/3R1RK1 b - - 2 16",
+"sac": null,
+"loss": 28.7,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 46.7,
+"wpBest": 73.5,
+"wpAlt22": 73.5,
+"loss22": 26.8,
+"legal": 40,
+"lines22": [
+[
+"d6d5",
+[
+"cp",
+-337
+],
+[
+"d6d5",
+"c4d5",
+"e7a3",
+"b2b1",
+"f6d5",
+"d1d5"
+]
+],
+[
+"f6e4",
+[
+"cp",
+-11
+],
+[
+"f6e4",
+"a3b1",
+"e7f6",
+"b3b4",
+"f6b2",
+"b4a5"
+]
+],
+[
+"a8c8",
+[
+"cp",
+38
+],
+[
+"a8c8",
+"c4d5",
+"b7b5",
+"a3b1",
+"f6d5",
+"d1d5"
+]
+]
+],
+"played22": {
+"move": "b7b5",
+"score": [
+"cp",
+44
+],
+"pv": [
+"b7b5",
+"b3b4",
+"a5c7",
+"c4d3",
+"d6d5",
+"e4d5",
+"f8d8",
+"c2c4"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181008812",
+"ply": 33,
+"zug": "17...Bd8",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 671,
+"cls": "blunder",
+"wpA": 20.6,
+"wpB": 47.6,
+"wpAlt": 47.6,
+"best": "f6d5",
+"uci": "e7d8",
+"fen": "r4rk1/4bppp/p2p1n2/qp1B4/4P3/NP6/PQP2PPP/3R1RK1 b - - 1 17",
+"sac": null,
+"loss": 27,
+"grund": "vorher",
+"kand": {
+"app": [
+{
+"piece": "r",
+"square": "a8",
+"net": 5,
+"before": true
+}
+],
+"heur": [
+{
+"piece": "r",
+"square": "a8",
+"ungedeckt": true,
+"minAtt": 3
+}
+]
+},
+"d": 20,
+"top": false,
+"wpPlay": 20.4,
+"wpBest": 47.5,
+"wpAlt22": 47.5,
+"loss22": 27.1,
+"legal": 31,
+"lines22": [
+[
+"f6d5",
+[
+"cp",
+33
+],
+[
+"f6d5",
+"d1d5",
+"e7f6",
+"b2c1",
+"a8c8",
+"a3c4"
+]
+],
+[
+"a8c8",
+[
+"cp",
+43
+],
+[
+"a8c8",
+"a3b1",
+"f8e8",
+"c2c3",
+"e7f8",
+"f1e1"
+]
+],
+[
+"a8e8",
+[
+"cp",
+55
+],
+[
+"a8e8",
+"c2c3",
+"e7d8",
+"b3b4",
+"a5c7",
+"b2c2"
+]
+]
+],
+"played22": {
+"move": "e7d8",
+"score": [
+"cp",
+450
+],
+"pv": [
+"e7d8",
+"d5a8",
+"f8e8",
+"b3b4",
+"a5c7",
+"a8d5",
+"e8e5",
+"c2c4"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181008812",
+"ply": 34,
+"zug": "18.c4",
+"spieler": "dlensitu",
+"mert": false,
+"R": 682,
+"cls": "miss",
+"wpA": 53.6,
+"wpB": 79.6,
+"wpAlt": 79.6,
+"best": "d5a8",
+"uci": "c2c4",
+"fen": "r2b1rk1/5ppp/p2p1n2/qp1B4/4P3/NP6/PQP2PPP/3R1RK1 w - - 2 18",
+"sac": null,
+"loss": 26,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 50.8,
+"wpBest": 81.6,
+"wpAlt22": 81.6,
+"loss22": 30.7,
+"legal": 35,
+"lines22": [
+[
+"d5a8",
+[
+"cp",
+487
+],
+[
+"d5a8",
+"f8e8",
+"a8d5",
+"h7h6",
+"b3b4",
+"a5c7"
+]
+],
+[
+"b3b4",
+[
+"cp",
+463
+],
+[
+"b3b4",
+"a5c7",
+"d5a8",
+"f8e8",
+"b2b3",
+"e8e5"
+]
+],
+[
+"a3c4",
+[
+"cp",
+324
+],
+[
+"a3c4",
+"b5c4",
+"d5a8",
+"c4c3",
+"b2c1",
+"d8b6"
+]
+]
+],
+"played22": {
+"move": "c2c4",
+"score": [
+"cp",
+11
+],
+"pv": [
+"c2c4",
+"f6d5",
+"d1d5",
+"d8f6",
+"b2c1",
+"a8c8",
+"f2f3",
+"f8e8"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181008812",
+"ply": 35,
+"zug": "18...Bb6",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 671,
+"cls": "miss",
+"wpA": 24.9,
+"wpB": 46.4,
+"wpAlt": 46.4,
+"best": "f6d5",
+"uci": "d8b6",
+"fen": "r2b1rk1/5ppp/p2p1n2/qp1B4/2P1P3/NP6/PQ3PPP/3R1RK1 b - - 0 18",
+"sac": null,
+"loss": 21.6,
+"grund": "label:miss",
+"kand": {
+"app": [
+{
+"piece": "r",
+"square": "a8",
+"net": 2,
+"before": true
+}
+],
+"heur": [
+{
+"piece": "r",
+"square": "a8",
+"ungedeckt": false,
+"minAtt": 3
+}
+]
+},
+"d": 20,
+"top": false,
+"wpPlay": 20.6,
+"wpBest": 49.4,
+"wpAlt22": 49.4,
+"loss22": 28.8,
+"legal": 28,
+"lines22": [
+[
+"f6d5",
+[
+"cp",
+8
+],
+[
+"f6d5",
+"d1d5",
+"d8f6",
+"b2c1",
+"a8c8",
+"g2g3"
+]
+],
+[
+"a8b8",
+[
+"cp",
+124
+],
+[
+"a8b8",
+"c4b5",
+"a6b5",
+"b3b4",
+"a5a4",
+"d5b3"
+]
+],
+[
+"a8c8",
+[
+"cp",
+157
+],
+[
+"a8c8",
+"b3b4",
+"a5a4",
+"c4b5",
+"a6b5",
+"b2b3"
+]
+]
+],
+"played22": {
+"move": "d8b6",
+"score": [
+"cp",
+445
+],
+"pv": [
+"d8b6",
+"b3b4",
+"a5a4",
+"d5a8",
+"f8a8",
+"d1d6",
+"b6c7",
+"d6d1"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181008812",
+"ply": 53,
+"zug": "27...Rc8",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 671,
+"cls": "blunder",
+"wpA": 25.4,
+"wpB": 48.8,
+"wpAlt": 48.8,
+"best": "b3c3",
+"uci": "d8c8",
+"fen": "3r2k1/b4ppp/8/3P4/2N5/1r6/5PPP/3RR1K1 b - - 4 27",
+"sac": null,
+"loss": 23.4,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 26.2,
+"wpBest": 48.4,
+"wpAlt22": 48.4,
+"loss22": 22.2,
+"legal": 36,
+"lines22": [
+[
+"b3b4",
+[
+"cp",
+21
+],
+[
+"b3b4",
+"d1c1",
+"b4a4",
+"d5d6",
+"a4a2",
+"e1e7"
+]
+],
+[
+"b3c3",
+[
+"cp",
+22
+],
+[
+"b3c3",
+"c4e3",
+"g8f8",
+"g2g4",
+"d8e8",
+"e3f5"
+]
+],
+[
+"g8f8",
+[
+"cp",
+24
+],
+[
+"g8f8",
+"g1f1",
+"b3c3",
+"c4e3",
+"d8e8",
+"e3g4"
+]
+]
+],
+"played22": {
+"move": "d8c8",
+"score": [
+"cp",
+341
+],
+"pv": [
+"d8c8",
+"d5d6",
+"c8d8",
+"d6d7",
+"g8f8",
+"c4d6",
+"b3b8",
+"e1e8"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181008812",
+"ply": 54,
+"zug": "28.Ne5",
+"spieler": "dlensitu",
+"mert": false,
+"R": 682,
+"cls": "miss",
+"wpA": 53.3,
+"wpB": 74.8,
+"wpAlt": 74.8,
+"best": "d5d6",
+"uci": "c4e5",
+"fen": "2r3k1/b4ppp/8/3P4/2N5/1r6/5PPP/3RR1K1 w - - 5 28",
+"sac": null,
+"loss": 21.5,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 54.0,
+"wpBest": 74.5,
+"wpAlt22": 74.5,
+"loss22": 20.6,
+"legal": 29,
+"lines22": [
+[
+"d5d6",
+[
+"cp",
+352
+],
+[
+"d5d6",
+"g8f8",
+"d6d7",
+"c8d8",
+"g1f1",
+"h7h5"
+]
+],
+[
+"g1f1",
+[
+"cp",
+335
+],
+[
+"g1f1",
+"g8f8",
+"d5d6",
+"c8d8",
+"d6d7",
+"h7h5"
+]
+],
+[
+"e1e7",
+[
+"cp",
+67
+],
+[
+"e1e7",
+"h7h6",
+"c4e5",
+"a7b8",
+"e5c6",
+"g8f8"
+]
+]
+],
+"played22": {
+"move": "c4e5",
+"score": [
+"cp",
+52
+],
+"pv": [
+"c4e5",
+"b3b2",
+"e5d3",
+"b2b6",
+"g1f1",
+"g7g6",
+"d1a1",
+"b6b3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181008812",
+"ply": 57,
+"zug": "29...Rxd3",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 671,
+"cls": "blunder",
+"wpA": 0,
+"wpB": 48.9,
+"wpAlt": 48.9,
+"best": "f7f6",
+"uci": "b3d3",
+"fen": "6k1/b4ppp/8/3P4/8/1r1N4/2r2PPP/3RR1K1 b - - 8 29",
+"sac": null,
+"loss": 48.9,
+"grund": "vorher",
+"kand": {
+"app": [
+{
+"piece": "r",
+"square": "d3",
+"net": 1,
+"before": false
+}
+],
+"heur": [
+{
+"piece": "r",
+"square": "d3",
+"ungedeckt": true,
+"minAtt": 5
+}
+]
+},
+"d": 20,
+"top": false,
+"wpPlay": 0.0,
+"wpBest": 48.8,
+"wpAlt22": 48.8,
+"loss22": 48.8,
+"legal": 36,
+"lines22": [
+[
+"g7g6",
+[
+"cp",
+16
+],
+[
+"g7g6",
+"g2g3",
+"g8f8",
+"g1g2",
+"b3b7",
+"e1f1"
+]
+],
+[
+"f7f6",
+[
+"cp",
+19
+],
+[
+"f7f6",
+"e1f1",
+"b3b7",
+"g2g3",
+"g8f7",
+"d1b1"
+]
+],
+[
+"g8f8",
+[
+"cp",
+20
+],
+[
+"g8f8",
+"e1f1",
+"b3b8",
+"g2g3",
+"g7g6",
+"g1g2"
+]
+]
+],
+"played22": {
+"move": "b3d3",
+"score": [
+"mate",
+1
+],
+"pv": [
+"b3d3",
+"e1e8"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181008812",
+"ply": 58,
+"zug": "30.Rxd3",
+"spieler": "dlensitu",
+"mert": false,
+"R": 682,
+"cls": "miss",
+"wpA": 50.5,
+"wpB": 100,
+"wpAlt": 100,
+"best": "e1e8",
+"uci": "d1d3",
+"fen": "6k1/b4ppp/8/3P4/8/3r4/2r2PPP/3RR1K1 w - - 0 30",
+"sac": null,
+"loss": 49.5,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 50.1,
+"wpBest": 100.0,
+"wpAlt22": 100.0,
+"loss22": 49.9,
+"legal": 20,
+"lines22": [
+[
+"e1e8",
+[
+"mate",
+1
+],
+[
+"e1e8"
+]
+],
+[
+"d1d3",
+[
+"cp",
+1
+],
+[
+"d1d3",
+"a7f2",
+"g1f1",
+"f2e1",
+"f1e1",
+"g8f8"
+]
+],
+[
+"d5d6",
+[
+"cp",
+-390
+],
+[
+"d5d6",
+"d3d1",
+"e1d1",
+"c2c8",
+"g2g4",
+"g8f8"
+]
+]
+],
+"played22": {
+"move": "d1d3",
+"score": [
+"cp",
+1
+],
+"pv": [
+"d1d3",
+"a7f2",
+"g1f1",
+"f2e1",
+"f1e1",
+"g8f8",
+"d3d2",
+"c2c5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": false
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181008812",
+"ply": 59,
+"zug": "30...Bxf2+",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 671,
+"cls": "great",
+"wpA": 49.9,
+"wpB": 49.9,
+"wpAlt": 22.8,
+"best": "a7f2",
+"uci": "a7f2",
+"fen": "6k1/b4ppp/8/3P4/8/3R4/2r2PPP/4R1K1 b - - 0 30",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 50.1,
+"wpBest": 50.1,
+"wpAlt22": 23.0,
+"loss22": 0,
+"legal": 26,
+"lines22": [
+[
+"a7f2",
+[
+"cp",
+-1
+],
+[
+"a7f2",
+"g1f1",
+"f2e1",
+"f1e1",
+"g8f8",
+"e1f1"
+]
+],
+[
+"g8f8",
+[
+"cp",
+398
+],
+[
+"g8f8",
+"e1f1",
+"f8e7",
+"d3f3",
+"a7c5",
+"f1d1"
+]
+],
+[
+"f7f6",
+[
+"cp",
+470
+],
+[
+"f7f6",
+"e1f1",
+"c2c7",
+"d5d6",
+"c7d7",
+"f1c1"
+]
+]
+],
+"played22": {
+"move": "a7f2",
+"score": [
+"cp",
+-1
+],
+"pv": [
+"a7f2",
+"g1f1",
+"f2e1",
+"f1e1",
+"g8f8",
+"e1f1",
+"c2c5",
+"d5d6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185181369552",
+"ply": 22,
+"zug": "12.Qe2",
+"spieler": "abdul-karimregales",
+"mert": false,
+"R": 683,
+"cls": "great",
+"wpA": 41.9,
+"wpB": 41.9,
+"wpAlt": 20.7,
+"best": "d2e2",
+"uci": "d2e2",
+"fen": "r2qk2r/ppp3pp/3p1pn1/2b1p3/2B1P3/2NP1nB1/PPPQ1P1P/2KR3R w kq - 0 12",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 41.5,
+"wpBest": 41.5,
+"wpAlt22": 22.1,
+"loss22": 0,
+"legal": 35,
+"lines22": [
+[
+"d2e2",
+[
+"cp",
+-112
+],
+[
+"d2e2",
+"f3d4",
+"e2h5",
+"d8d7",
+"a2a3",
+"b7b5"
+]
+],
+[
+"c4b5",
+[
+"cp",
+-412
+],
+[
+"c4b5",
+"c7c6",
+"d2e2",
+"f3d4",
+"e2h5",
+"d4b5"
+]
+],
+[
+"c4f7",
+[
+"cp",
+-426
+],
+[
+"c4f7",
+"e8f7",
+"d2e2",
+"f3d4",
+"e2f1",
+"d8d7"
+]
+]
+],
+"played22": {
+"move": "d2e2",
+"score": [
+"cp",
+-112
+],
+"pv": [
+"d2e2",
+"f3d4",
+"e2h5",
+"d8d7",
+"a2a3",
+"b7b5",
+"c4d5",
+"a8b8"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185181369552",
+"ply": 47,
+"zug": "24...Bb4",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 688,
+"cls": "mistake",
+"wpA": 29.5,
+"wpB": 40.8,
+"wpAlt": 40.8,
+"best": "c5b6",
+"uci": "c5b4",
+"fen": "1k1r1r2/pp1qN2p/2pp2p1/2b3Q1/3PP3/1B6/PP5P/2KR3R b - - 0 24",
+"sac": null,
+"loss": 11.2,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 30.5,
+"wpBest": 40.2,
+"wpAlt22": 40.2,
+"loss22": 9.8,
+"legal": 33,
+"lines22": [
+[
+"c5b6",
+[
+"cp",
+129
+],
+[
+"c5b6",
+"e7g8",
+"d7g7",
+"e4e5",
+"f8f5",
+"g5g3"
+]
+],
+[
+"c5b4",
+[
+"cp",
+269
+],
+[
+"c5b4",
+"a2a3",
+"b4a3",
+"b2a3",
+"h7h6",
+"g5e3"
+]
+],
+[
+"c5a3",
+[
+"cp",
+371
+],
+[
+"c5a3",
+"b2a3",
+"h7h6",
+"g5g6",
+"d7e7",
+"h1f1"
+]
+]
+],
+"played22": {
+"move": "c5b4",
+"score": [
+"cp",
+269
+],
+"pv": [
+"c5b4",
+"a2a3",
+"b4a3",
+"b2a3",
+"h7h6",
+"g5e3",
+"d7e7",
+"b3c2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181369552",
+"ply": 48,
+"zug": "25.e5",
+"spieler": "abdul-karimregales",
+"mert": false,
+"R": 683,
+"cls": "miss",
+"wpA": 54.3,
+"wpB": 70.9,
+"wpAlt": 70.9,
+"best": "a2a3",
+"uci": "e4e5",
+"fen": "1k1r1r2/pp1qN2p/2pp2p1/6Q1/1b1PP3/1B6/PP5P/2KR3R w - - 1 25",
+"sac": null,
+"loss": 16.6,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 55.3,
+"wpBest": 72.0,
+"wpAlt22": 72.0,
+"loss22": 16.7,
+"legal": 47,
+"lines22": [
+[
+"e7g8",
+[
+"cp",
+310
+],
+[
+"e7g8",
+"f8g8",
+"b3g8",
+"d8g8",
+"a2a3",
+"h7h6"
+]
+],
+[
+"a2a3",
+[
+"cp",
+287
+],
+[
+"a2a3",
+"b4a3",
+"b2a3",
+"d8e8",
+"g5g3",
+"d7e7"
+]
+],
+[
+"e7g6",
+[
+"cp",
+223
+],
+[
+"e7g6",
+"h7g6",
+"a2a3",
+"b4a3",
+"b2a3",
+"f8f3"
+]
+]
+],
+"played22": {
+"move": "e4e5",
+"score": [
+"cp",
+70
+],
+"pv": [
+"e4e5",
+"d6d5",
+"e7c6",
+"d7c6",
+"c1b1",
+"a7a5",
+"a2a4",
+"h7h6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181369552",
+"ply": 49,
+"zug": "25...Rde8",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 688,
+"cls": "miss",
+"wpA": 29.6,
+"wpB": 45.7,
+"wpAlt": 45.7,
+"best": "d6e5",
+"uci": "d8e8",
+"fen": "1k1r1r2/pp1qN2p/2pp2p1/4P1Q1/1b1P4/1B6/PP5P/2KR3R b - - 0 25",
+"sac": null,
+"loss": 16.1,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 28.1,
+"wpBest": 46.1,
+"wpAlt22": 46.1,
+"loss22": 18.0,
+"legal": 37,
+"lines22": [
+[
+"d6e5",
+[
+"cp",
+51
+],
+[
+"d6e5",
+"e7g8",
+"e5d4",
+"c1b1",
+"f8g8",
+"b3g8"
+]
+],
+[
+"d6d5",
+[
+"cp",
+62
+],
+[
+"d6d5",
+"e7c6",
+"d7c6",
+"c1b1",
+"a7a5",
+"a2a4"
+]
+],
+[
+"h7h6",
+[
+"cp",
+102
+],
+[
+"h7h6",
+"e5e6",
+"d7c7",
+"g5g6",
+"c7e7",
+"d4d5"
+]
+]
+],
+"played22": {
+"move": "d8e8",
+"score": [
+"cp",
+306
+],
+"pv": [
+"d8e8",
+"e7g8",
+"f8g8",
+"b3g8",
+"e8g8",
+"c1b1",
+"d6d5",
+"h1f1"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181611092",
+"ply": 12,
+"zug": "7.Bxd7+",
+"spieler": "Bleyss",
+"mert": false,
+"R": 718,
+"cls": "great",
+"wpA": 55.3,
+"wpB": 55.3,
+"wpAlt": 22.2,
+"best": "b5d7",
+"uci": "b5d7",
+"fen": "r2qkbnr/pppb1ppp/3p4/1B6/3nP3/8/PPP2PPP/RNBQ1RK1 w kq - 0 7",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 53.9,
+"wpBest": 53.9,
+"wpAlt22": 24.8,
+"loss22": 0,
+"legal": 38,
+"lines22": [
+[
+"b5d7",
+[
+"cp",
+50
+],
+[
+"b5d7",
+"d8d7",
+"d1d4",
+"g8f6",
+"b1c3",
+"f8e7"
+]
+],
+[
+"c1g5",
+[
+"cp",
+-355
+],
+[
+"c1g5",
+"d8g5",
+"b5d7",
+"e8d7",
+"d1d4",
+"g5e5"
+]
+],
+[
+"b5c4",
+[
+"cp",
+-359
+],
+[
+"b5c4",
+"d4c6",
+"b1c3",
+"g8f6",
+"f2f4",
+"f8e7"
+]
+]
+],
+"played22": {
+"move": "b5d7",
+"score": [
+"cp",
+50
+],
+"pv": [
+"b5d7",
+"d8d7",
+"d1d4",
+"g8f6",
+"b1c3",
+"f8e7",
+"f1d1",
+"d7e6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185181611092",
+"ply": 46,
+"zug": "24.Ne6+",
+"spieler": "Bleyss",
+"mert": false,
+"R": 718,
+"cls": "great",
+"wpA": 78.1,
+"wpB": 78.1,
+"wpAlt": 59.2,
+"best": "d4e6",
+"uci": "d4e6",
+"fen": "3r4/1pkn4/p1p3pp/4bp2/3Np3/2P5/PP3PPP/R2R2K1 w - - 0 24",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 77.7,
+"wpBest": 77.7,
+"wpAlt22": 59.3,
+"loss22": 0,
+"legal": 29,
+"lines22": [
+[
+"d4e6",
+[
+"cp",
+400
+],
+[
+"d4e6",
+"c7c8",
+"e6d8",
+"c8d8",
+"d1d2",
+"e5f4"
+]
+],
+[
+"h2h4",
+[
+"cp",
+120
+],
+[
+"h2h4",
+"d7c5",
+"h4h5",
+"d8g8",
+"h5g6",
+"e5d4"
+]
+],
+[
+"f2f3",
+[
+"cp",
+97
+],
+[
+"f2f3",
+"d8e8",
+"f3e4",
+"f5e4",
+"d1e1",
+"e5d4"
+]
+]
+],
+"played22": {
+"move": "d4e6",
+"score": [
+"cp",
+400
+],
+"pv": [
+"d4e6",
+"c7c8",
+"e6d8",
+"c8d8",
+"d1d2",
+"e5f4",
+"d2e2",
+"f4c7"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185181611092",
+"ply": 48,
+"zug": "25.Nxd8",
+"spieler": "Bleyss",
+"mert": false,
+"R": 718,
+"cls": "great",
+"wpA": 77.8,
+"wpB": 77.8,
+"wpAlt": 66.9,
+"best": "e6d8",
+"uci": "e6d8",
+"fen": "2kr4/1p1n4/p1p1N1pp/4bp2/4p3/2P5/PP3PPP/R2R2K1 w - - 2 25",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 77.9,
+"wpBest": 77.9,
+"wpAlt22": 66.8,
+"loss22": 0,
+"legal": 33,
+"lines22": [
+[
+"e6d8",
+[
+"cp",
+403
+],
+[
+"e6d8",
+"c8d8",
+"f2f3",
+"d8e7",
+"f3e4",
+"f5e4"
+]
+],
+[
+"d1d2",
+[
+"cp",
+224
+],
+[
+"d1d2",
+"d8e8",
+"a1d1",
+"e8e7",
+"e6f8",
+"d7f8"
+]
+],
+[
+"e6d4",
+[
+"cp",
+38
+],
+[
+"e6d4",
+"d8e8",
+"d1d2",
+"e5c7",
+"g1f1",
+"d7e5"
+]
+]
+],
+"played22": {
+"move": "e6d8",
+"score": [
+"cp",
+403
+],
+"pv": [
+"e6d8",
+"c8d8",
+"f2f3",
+"d8e7",
+"f3e4",
+"f5e4",
+"d1e1",
+"d7f6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185181611092",
+"ply": 60,
+"zug": "31.Rh8",
+"spieler": "Bleyss",
+"mert": false,
+"R": 718,
+"cls": "blunder",
+"wpA": 14.8,
+"wpB": 77.4,
+"wpAlt": 77.4,
+"best": "d8d3",
+"uci": "d8h8",
+"fen": "3R4/1p6/pkp3pp/5p2/4p3/1Pbn2P1/P4P1P/3R2K1 w - - 0 31",
+"sac": null,
+"loss": 62.6,
+"grund": "vorher",
+"kand": {
+"app": [
+{
+"piece": "r",
+"square": "h8",
+"net": 5,
+"before": false
+}
+],
+"heur": [
+{
+"piece": "r",
+"square": "h8",
+"ungedeckt": true,
+"minAtt": 3
+}
+]
+},
+"d": 20,
+"top": false,
+"wpPlay": 13.7,
+"wpBest": 78.7,
+"wpAlt22": 78.7,
+"loss22": 65.0,
+"legal": 30,
+"lines22": [
+[
+"d1d3",
+[
+"cp",
+418
+],
+[
+"d1d3",
+"e4d3",
+"d8d3",
+"c3e5",
+"d3d7",
+"c6c5"
+]
+],
+[
+"d8d3",
+[
+"cp",
+414
+],
+[
+"d8d3",
+"e4d3",
+"d1d3",
+"c3e5",
+"d3d7",
+"h6h5"
+]
+],
+[
+"g1f1",
+[
+"cp",
+331
+],
+[
+"g1f1",
+"b6c5",
+"f2f3",
+"c5b4",
+"f3e4",
+"f5e4"
+]
+]
+],
+"played22": {
+"move": "d8h8",
+"score": [
+"cp",
+-588
+],
+"pv": [
+"d8h8",
+"c3h8",
+"f2f3",
+"h8d4",
+"g1f1",
+"c6c5",
+"f1e2",
+"b6c6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185181611092",
+"ply": 61,
+"zug": "31...h5",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 688,
+"cls": "miss",
+"wpA": 28.2,
+"wpB": 84.8,
+"wpAlt": 84.8,
+"best": "c3h8",
+"uci": "h6h5",
+"fen": "7R/1p6/pkp3pp/5p2/4p3/1Pbn2P1/P4P1P/3R2K1 b - - 1 31",
+"sac": null,
+"loss": 56.6,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 28.0,
+"wpBest": 84.6,
+"wpAlt22": 84.6,
+"loss22": 56.5,
+"legal": 30,
+"lines22": [
+[
+"c3h8",
+[
+"cp",
+-555
+],
+[
+"c3h8",
+"g1f1",
+"h8d4",
+"f2f3",
+"b6c5",
+"f3e4"
+]
+],
+[
+"d3f2",
+[
+"cp",
+143
+],
+[
+"d3f2",
+"g1f2",
+"c3h8",
+"d1d6",
+"g6g5",
+"d6h6"
+]
+],
+[
+"b6c5",
+[
+"cp",
+268
+],
+[
+"b6c5",
+"h8h6",
+"d3e5",
+"h6h7",
+"b7b5",
+"h7a7"
+]
+]
+],
+"played22": {
+"move": "h6h5",
+"score": [
+"cp",
+308
+],
+"pv": [
+"h6h5",
+"h8h7",
+"c3d4",
+"g1g2",
+"c6c5",
+"f2f3",
+"d3b4",
+"f3e4"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185230615032",
+"ply": 12,
+"zug": "7.b3",
+"spieler": "Iandaviddc",
+"mert": false,
+"R": 681,
+"cls": "blunder",
+"wpA": 25.4,
+"wpB": 53.8,
+"wpAlt": 53.8,
+"best": "a1b1",
+"uci": "b2b3",
+"fen": "r3kb1r/pp1npppp/1qp2n2/3p4/2PP1Bb1/2N1PN2/PP3PPP/R2QKB1R w KQkq - 1 7",
+"sac": null,
+"loss": 28.4,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 24.6,
+"wpBest": 53.0,
+"wpAlt22": 53.0,
+"loss22": 28.4,
+"legal": 43,
+"lines22": [
+[
+"a1b1",
+[
+"cp",
+39
+],
+[
+"a1b1",
+"d5c4",
+"f1c4",
+"e7e6",
+"e1g1",
+"f8e7"
+]
+],
+[
+"d1d2",
+[
+"cp",
+39
+],
+[
+"d1d2",
+"e7e6",
+"h2h3",
+"g4f3",
+"g2f3",
+"d5c4"
+]
+],
+[
+"d1c2",
+[
+"cp",
+32
+],
+[
+"d1c2",
+"e7e6",
+"f3h4",
+"d5c4",
+"h2h3",
+"g4h5"
+]
+]
+],
+"played22": {
+"move": "b2b3",
+"score": [
+"cp",
+-367
+],
+"pv": [
+"b2b3",
+"e7e5",
+"d4e5",
+"b6a5",
+"f1e2",
+"f6e4",
+"e1g1",
+"e4c3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185230615032",
+"ply": 13,
+"zug": "7...Qb4",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 672,
+"cls": "miss",
+"wpA": 47.3,
+"wpB": 74.5,
+"wpAlt": 74.5,
+"best": "e7e5",
+"uci": "b6b4",
+"fen": "r3kb1r/pp1npppp/1qp2n2/3p4/2PP1Bb1/1PN1PN2/P4PPP/R2QKB1R b KQkq - 0 7",
+"sac": null,
+"loss": 27.2,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 48.5,
+"wpBest": 75.1,
+"wpAlt22": 75.1,
+"loss22": 26.6,
+"legal": 36,
+"lines22": [
+[
+"e7e5",
+[
+"cp",
+-364
+],
+[
+"e7e5",
+"d4e5",
+"b6a5",
+"f1e2",
+"f6e4",
+"e1g1"
+]
+],
+[
+"f6e4",
+[
+"cp",
+-132
+],
+[
+"f6e4",
+"c3e4",
+"d5e4",
+"c4c5",
+"d7c5",
+"d4c5"
+]
+],
+[
+"b6a5",
+[
+"cp",
+-84
+],
+[
+"b6a5",
+"b3b4",
+"a5b4",
+"d1d2",
+"e7e6",
+"a1b1"
+]
+]
+],
+"played22": {
+"move": "b6b4",
+"score": [
+"cp",
+20
+],
+"pv": [
+"b6b4",
+"d1d2",
+"e7e6",
+"f3e5",
+"g4f5",
+"e5d3",
+"b4a5",
+"c4c5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185230615032",
+"ply": 14,
+"zug": "8.Rc1",
+"spieler": "Iandaviddc",
+"mert": false,
+"R": 681,
+"cls": "miss",
+"wpA": 32.7,
+"wpB": 52.7,
+"wpAlt": 52.7,
+"best": "d1d2",
+"uci": "a1c1",
+"fen": "r3kb1r/pp1npppp/2p2n2/3p4/1qPP1Bb1/1PN1PN2/P4PPP/R2QKB1R w KQkq - 1 8",
+"sac": null,
+"loss": 20.1,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 31.7,
+"wpBest": 51.2,
+"wpAlt22": 51.2,
+"loss22": 19.5,
+"legal": 33,
+"lines22": [
+[
+"d1d2",
+[
+"cp",
+16
+],
+[
+"d1d2",
+"e7e6",
+"f1e2",
+"d5c4",
+"b3c4",
+"b4a5"
+]
+],
+[
+"d1c2",
+[
+"cp",
+-130
+],
+[
+"d1c2",
+"f6e4",
+"a1c1",
+"g4f3",
+"g2f3",
+"e4c3"
+]
+],
+[
+"a1c1",
+[
+"cp",
+-252
+],
+[
+"a1c1",
+"e7e5",
+"f4e5",
+"d7e5",
+"d4e5",
+"f6e4"
+]
+]
+],
+"played22": {
+"move": "a1c1",
+"score": [
+"cp",
+-252
+],
+"pv": [
+"a1c1",
+"e7e5",
+"f4e5",
+"d7e5",
+"d4e5",
+"f6e4",
+"d1c2",
+"b4a5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185291494046",
+"ply": 18,
+"zug": "10.Ne2",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 680,
+"cls": "great",
+"wpA": 78.1,
+"wpB": 78.1,
+"wpAlt": 51.2,
+"best": "c3e2",
+"uci": "c3e2",
+"fen": "r3kb1r/1bpp1pp1/ppn1p2p/4P3/3P1q2/2NB1N2/PPP2PPP/R2Q1RK1 w kq - 3 10",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 77.3,
+"wpBest": 77.3,
+"wpAlt22": 52.1,
+"loss22": 0,
+"legal": 36,
+"lines22": [
+[
+"c3e2",
+[
+"cp",
+402
+],
+[
+"c3e2",
+"f4g4",
+"h2h3",
+"g4f3",
+"g2f3",
+"e8c8"
+]
+],
+[
+"g2g3",
+[
+"cp",
+28
+],
+[
+"g2g3",
+"f4g4",
+"d3e2",
+"h6h5",
+"h2h4",
+"f8e7"
+]
+],
+[
+"d3e4",
+[
+"cp",
+0
+],
+[
+"d3e4",
+"e8c8",
+"d1e2",
+"c8b8",
+"f1e1",
+"d7d5"
+]
+]
+],
+"played22": {
+"move": "c3e2",
+"score": [
+"cp",
+402
+],
+"pv": [
+"c3e2",
+"f4g4",
+"h2h3",
+"g4f3",
+"g2f3",
+"e8c8",
+"g1g2",
+"f7f5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185291494046",
+"ply": 20,
+"zug": "11.h3",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 680,
+"cls": "great",
+"wpA": 76.5,
+"wpB": 76.5,
+"wpAlt": 55.2,
+"best": "h2h3",
+"uci": "h2h3",
+"fen": "r3kb1r/1bpp1pp1/ppn1p2p/4P3/3P2q1/3B1N2/PPP1NPPP/R2Q1RK1 w kq - 5 11",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 77.0,
+"wpBest": 77.0,
+"wpAlt22": 55.8,
+"loss22": 0,
+"legal": 33,
+"lines22": [
+[
+"h2h3",
+[
+"cp",
+397
+],
+[
+"h2h3",
+"c6e5",
+"d4e5",
+"g4a4",
+"e2g3",
+"e8c8"
+]
+],
+[
+"d4d5",
+[
+"cp",
+76
+],
+[
+"d4d5",
+"e6d5",
+"f1e1",
+"e8c8",
+"c2c3",
+"d7d6"
+]
+],
+[
+"g1h1",
+[
+"cp",
+9
+],
+[
+"g1h1",
+"c6b4",
+"h2h3",
+"g4h5",
+"e2g3",
+"b7f3"
+]
+]
+],
+"played22": {
+"move": "h2h3",
+"score": [
+"cp",
+397
+],
+"pv": [
+"h2h3",
+"c6e5",
+"d4e5",
+"g4a4",
+"e2g3",
+"e8c8",
+"b2b3",
+"a4a3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185401967428",
+"ply": 25,
+"zug": "13...b5",
+"spieler": "Spyder202025",
+"mert": false,
+"R": 671,
+"cls": "great",
+"wpA": 34.4,
+"wpB": 34.4,
+"wpAlt": 18.2,
+"best": "b7b5",
+"uci": "b7b5",
+"fen": "r2qk2r/1pp2pp1/p1Pp1n1p/8/Q1B1P1b1/5N2/PP3PPP/RN2R1K1 b kq - 0 13",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 35.6,
+"wpBest": 35.6,
+"wpAlt22": 18.0,
+"loss22": 0,
+"legal": 34,
+"lines22": [
+[
+"b7b5",
+[
+"cp",
+196
+],
+[
+"b7b5",
+"c4f7",
+"e8f7",
+"a4b3",
+"g4e6",
+"b3c2"
+]
+],
+[
+"e8g8",
+[
+"cp",
+500
+],
+[
+"e8g8",
+"c6b7",
+"a8b8",
+"b1d2",
+"c7c5",
+"e4e5"
+]
+],
+[
+"b7c6",
+[
+"cp",
+508
+],
+[
+"b7c6",
+"b1d2",
+"e8g8",
+"c4f1",
+"a8b8",
+"a4c2"
+]
+]
+],
+"played22": {
+"move": "b7b5",
+"score": [
+"cp",
+196
+],
+"pv": [
+"b7b5",
+"c4f7",
+"e8f7",
+"a4b3",
+"g4e6",
+"b3c2",
+"h8e8",
+"b1c3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185402098502",
+"ply": 58,
+"zug": "30.Rd8+",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 671,
+"cls": "great",
+"wpA": 100,
+"wpB": 100,
+"wpAlt": 67.5,
+"best": "d6d8",
+"uci": "d6d8",
+"fen": "6k1/5ppp/2NR1n2/1p6/8/1P3P2/1P3KPP/1r6 w - - 3 30",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 100.0,
+"wpBest": 100.0,
+"wpAlt22": 67.0,
+"loss22": 0,
+"legal": 26,
+"lines22": [
+[
+"d6d8",
+[
+"mate",
+2
+],
+[
+"d6d8",
+"f6e8",
+"d8e8"
+]
+],
+[
+"d6d2",
+[
+"cp",
+234
+],
+[
+"d6d2",
+"g7g5",
+"c6a7",
+"b5b4",
+"a7c6",
+"g5g4"
+]
+],
+[
+"f2e3",
+[
+"cp",
+133
+],
+[
+"f2e3",
+"g8f8",
+"d6d2",
+"b1c1",
+"c6a7",
+"b5b4"
+]
+]
+],
+"played22": {
+"move": "d6d8",
+"score": [
+"mate",
+2
+],
+"pv": [
+"d6d8",
+"f6e8",
+"d8e8"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185402188756",
+"ply": 9,
+"zug": "5...Bxf2+",
+"spieler": "sparty300",
+"mert": false,
+"R": 598,
+"cls": "great",
+"wpA": 73,
+"wpB": 73,
+"wpAlt": 50.5,
+"best": "c5f2",
+"uci": "c5f2",
+"fen": "rnbqk2r/pppp1ppp/8/2b1p3/2B1n3/5N2/PPPP1PPP/RNBQR1K1 b kq - 1 5",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": {
+"app": [],
+"heur": [
+{
+"piece": "n",
+"square": "e4",
+"ungedeckt": true,
+"minAtt": 5
+}
+]
+},
+"d": 20,
+"top": true,
+"wpPlay": 74.9,
+"wpBest": 74.9,
+"wpAlt22": 51.7,
+"loss22": 0,
+"legal": 40,
+"lines22": [
+[
+"c5f2",
+[
+"cp",
+-380
+],
+[
+"c5f2",
+"g1h1",
+"f2e1",
+"c4f7",
+"e8f7",
+"f3e5"
+]
+],
+[
+"d7d5",
+[
+"cp",
+-24
+],
+[
+"d7d5",
+"d2d4",
+"d5c4",
+"e1e4",
+"e8g8",
+"e4e5"
+]
+],
+[
+"e4f2",
+[
+"cp",
+7
+],
+[
+"e4f2",
+"e1e5",
+"e8f8",
+"d1e2",
+"f2d3",
+"e5c5"
+]
+]
+],
+"played22": {
+"move": "c5f2",
+"score": [
+"cp",
+-380
+],
+"pv": [
+"c5f2",
+"g1h1",
+"f2e1",
+"c4f7",
+"e8f7",
+"f3e5",
+"f7g8",
+"d1e1"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185597924928",
+"ply": 48,
+"zug": "25.Qg8",
+"spieler": "ismellike",
+"mert": false,
+"R": 651,
+"cls": "blunder",
+"wpA": 23.4,
+"wpB": 86.8,
+"wpAlt": 86.8,
+"best": "d2b3",
+"uci": "d8g8",
+"fen": "3Q4/pkp3b1/2p1q1p1/1p2p2p/4P2P/P2P1P2/1PPNn3/1K1R3R w - - 1 25",
+"sac": null,
+"loss": 63.4,
+"grund": "vorher",
+"kand": {
+"app": [
+{
+"piece": "q",
+"square": "g8",
+"net": 9,
+"before": false
+}
+],
+"heur": [
+{
+"piece": "q",
+"square": "g8",
+"ungedeckt": true,
+"minAtt": 9
+}
+]
+},
+"d": 20,
+"top": false,
+"wpPlay": 22.1,
+"wpBest": 90.3,
+"wpAlt22": 90.3,
+"loss22": 68.1,
+"legal": 35,
+"lines22": [
+[
+"d2b3",
+[
+"cp",
+745
+],
+[
+"d2b3",
+"e6d6",
+"b3a5",
+"b7a6",
+"d8d6",
+"c7d6"
+]
+],
+[
+"c2c4",
+[
+"cp",
+570
+],
+[
+"c2c4",
+"e2d4",
+"c4b5",
+"d4b5",
+"d2c4",
+"g7f6"
+]
+],
+[
+"d8g5",
+[
+"cp",
+550
+],
+[
+"d8g5",
+"e2d4",
+"g5e3",
+"a7a5",
+"c2c3",
+"d4b3"
+]
+]
+],
+"played22": {
+"move": "d8g8",
+"score": [
+"cp",
+-421
+],
+"pv": [
+"d8g8",
+"e6g8",
+"d2b3",
+"e2f4",
+"d3d4",
+"e5d4",
+"h1e1",
+"g7e5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185597924928",
+"ply": 49,
+"zug": "25...Bh6",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 638,
+"cls": "miss",
+"wpA": 8.5,
+"wpB": 76.4,
+"wpAlt": 76.4,
+"best": "e6g8",
+"uci": "g7h6",
+"fen": "6Q1/pkp3b1/2p1q1p1/1p2p2p/4P2P/P2P1P2/1PPNn3/1K1R3R b - - 2 25",
+"sac": null,
+"loss": 67.9,
+"grund": "label:miss",
+"kand": {
+"app": [
+{
+"piece": "q",
+"square": "e6",
+"net": 9,
+"before": true
+}
+],
+"heur": [
+{
+"piece": "q",
+"square": "e6",
+"ungedeckt": true,
+"minAtt": 9
+}
+]
+},
+"d": 20,
+"top": false,
+"wpPlay": 5.6,
+"wpBest": 76.9,
+"wpAlt22": 76.9,
+"loss22": 71.3,
+"legal": 32,
+"lines22": [
+[
+"e6g8",
+[
+"cp",
+-406
+],
+[
+"e6g8",
+"d2b3",
+"e2f4",
+"d3d4",
+"b7b6",
+"b3c5"
+]
+],
+[
+"e2c3",
+[
+"cp",
+-48
+],
+[
+"e2c3",
+"b2c3",
+"e6g8",
+"b1b2",
+"g8f7",
+"d2b3"
+]
+],
+[
+"e6f6",
+[
+"cp",
+596
+],
+[
+"e6f6",
+"h1e1",
+"e2d4",
+"d2b3",
+"d4b3",
+"g8b3"
+]
+]
+],
+"played22": {
+"move": "g7h6",
+"score": [
+"cp",
+952
+],
+"pv": [
+"g7h6",
+"g8e6",
+"e2d4",
+"e6g6",
+"h6d2",
+"d1d2",
+"a7a5",
+"c2c3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185637385194",
+"ply": 32,
+"zug": "17.fxe4",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 646,
+"cls": "great",
+"wpA": 72.6,
+"wpB": 72.6,
+"wpAlt": 56.4,
+"best": "f3e4",
+"uci": "f3e4",
+"fen": "r4rk1/ppq2ppp/2pb4/3p2B1/4p3/2NQ1P1P/PPP3P1/R3R1K1 w - - 1 17",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 75.5,
+"wpBest": 75.5,
+"wpAlt22": 59.6,
+"loss22": 0,
+"legal": 49,
+"lines22": [
+[
+"f3e4",
+[
+"cp",
+377
+],
+[
+"f3e4",
+"d6c5",
+"g5e3",
+"d5d4",
+"e3d4",
+"a8d8"
+]
+],
+[
+"d3e2",
+[
+"cp",
+131
+],
+[
+"d3e2",
+"c7b6",
+"g5e3",
+"b6b2",
+"e3d4",
+"e4f3"
+]
+],
+[
+"d3d2",
+[
+"cp",
+121
+],
+[
+"d3d2",
+"e4f3",
+"g2f3",
+"h7h6",
+"g5h4",
+"f8e8"
+]
+]
+],
+"played22": {
+"move": "f3e4",
+"score": [
+"cp",
+377
+],
+"pv": [
+"f3e4",
+"d6c5",
+"g5e3",
+"d5d4",
+"e3d4",
+"a8d8",
+"d4c5",
+"d8d3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185637385194",
+"ply": 36,
+"zug": "19.Bf2",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 646,
+"cls": "great",
+"wpA": 79.6,
+"wpB": 79.6,
+"wpAlt": 67.4,
+"best": "h4f2",
+"uci": "h4f2",
+"fen": "r4rk1/ppq4p/2pb1p2/3p2p1/4P2B/2NQ3P/PPP3P1/R3R1K1 w - - 0 19",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 78.2,
+"wpBest": 78.2,
+"wpAlt22": 69.9,
+"loss22": 0,
+"legal": 41,
+"lines22": [
+[
+"h4f2",
+[
+"cp",
+429
+],
+[
+"h4f2",
+"a8d8",
+"c3e2",
+"d6e5",
+"a1d1",
+"d5e4"
+]
+],
+[
+"e4e5",
+[
+"cp",
+283
+],
+[
+"e4e5",
+"f6e5",
+"h4g5",
+"e5e4",
+"c3e4",
+"d5e4"
+]
+],
+[
+"h4g5",
+[
+"cp",
+126
+],
+[
+"h4g5",
+"f6g5",
+"e4d5",
+"a8d8",
+"a1d1",
+"d6e5"
+]
+]
+],
+"played22": {
+"move": "h4f2",
+"score": [
+"cp",
+429
+],
+"pv": [
+"h4f2",
+"a8d8",
+"c3e2",
+"d6e5",
+"a1d1",
+"d5e4",
+"d3e4",
+"e5b2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": false,
+"lagewechsel": true
+}
+},
+{
+"u": "185637385194",
+"ply": 54,
+"zug": "28.Re6+",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 646,
+"cls": "great",
+"wpA": 84.5,
+"wpB": 84.5,
+"wpAlt": 58.4,
+"best": "e1e6",
+"uci": "e1e6",
+"fen": "r7/ppq4p/2p3k1/6p1/3Q4/7P/P1P3P1/4R1K1 w - - 1 28",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 87.7,
+"wpBest": 87.7,
+"wpAlt22": 60.9,
+"loss22": 0,
+"legal": 48,
+"lines22": [
+[
+"e1e6",
+[
+"cp",
+660
+],
+[
+"e1e6",
+"g6f7",
+"d4f6",
+"f7g8",
+"e6e7",
+"c7e7"
+]
+],
+[
+"g1h1",
+[
+"cp",
+149
+],
+[
+"g1h1",
+"a8f8",
+"e1e6",
+"g6f7",
+"e6f6",
+"f7g8"
+]
+],
+[
+"e1e3",
+[
+"cp",
+112
+],
+[
+"e1e3",
+"c7f4",
+"e3e4",
+"f4f6",
+"d4e3",
+"f6f5"
+]
+]
+],
+"played22": {
+"move": "e1e6",
+"score": [
+"cp",
+660
+],
+"pv": [
+"e1e6",
+"g6f7",
+"d4f6",
+"f7g8",
+"e6e7",
+"c7e7",
+"f6e7",
+"b7b6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185637385194",
+"ply": 56,
+"zug": "29.Qf6+",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 646,
+"cls": "great",
+"wpA": 84.7,
+"wpB": 84.7,
+"wpAlt": 65.8,
+"best": "d4f6",
+"uci": "d4f6",
+"fen": "r7/ppq2k1p/2p1R3/6p1/3Q4/7P/P1P3P1/6K1 w - - 3 29",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 87.5,
+"wpBest": 87.5,
+"wpAlt22": 60.1,
+"loss22": 0,
+"legal": 48,
+"lines22": [
+[
+"d4f6",
+[
+"cp",
+652
+],
+[
+"d4f6",
+"f7g8",
+"e6e7",
+"c7e7",
+"f6e7",
+"b7b6"
+]
+],
+[
+"d4e4",
+[
+"cp",
+138
+],
+[
+"d4e4",
+"f7f8",
+"e4f5",
+"f8g8",
+"f5g5",
+"c7g7"
+]
+],
+[
+"d4c4",
+[
+"cp",
+120
+],
+[
+"d4c4",
+"b7b5",
+"c4b3",
+"f7g7",
+"b3c3",
+"g7g8"
+]
+]
+],
+"played22": {
+"move": "d4f6",
+"score": [
+"cp",
+652
+],
+"pv": [
+"d4f6",
+"f7g8",
+"e6e7",
+"c7e7",
+"f6e7",
+"b7b6",
+"e7g5",
+"g8f7"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185637661674",
+"ply": 48,
+"zug": "25.Bxb7+",
+"spieler": "Eryk89",
+"mert": false,
+"R": 656,
+"cls": "great",
+"wpA": 77.3,
+"wpB": 77.3,
+"wpAlt": 61.1,
+"best": "g2b7",
+"uci": "g2b7",
+"fen": "2kr4/pp1b2pp/5p2/2N5/2n2bP1/2BR3P/PPP1r1B1/1K5R w - - 3 25",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 81.3,
+"wpBest": 81.3,
+"wpAlt22": 62.7,
+"loss22": 0,
+"legal": 42,
+"lines22": [
+[
+"g2b7",
+[
+"cp",
+489
+],
+[
+"g2b7",
+"c8c7",
+"b7a6",
+"d7c6",
+"a6c4",
+"d8d3"
+]
+],
+[
+"g2f3",
+[
+"cp",
+173
+],
+[
+"g2f3",
+"c4d2",
+"d3d2",
+"e2d2",
+"f3b7",
+"c8b8"
+]
+],
+[
+"c5b7",
+[
+"cp",
+139
+],
+[
+"c5b7",
+"d8e8",
+"g2f3",
+"e2f2",
+"b7c5",
+"c4d2"
+]
+]
+],
+"played22": {
+"move": "g2b7",
+"score": [
+"cp",
+489
+],
+"pv": [
+"g2b7",
+"c8c7",
+"b7a6",
+"d7c6",
+"a6c4",
+"d8d3",
+"c4d3",
+"c6h1"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185637999736",
+"ply": 45,
+"zug": "23...Rxa2",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 619,
+"cls": "blunder",
+"wpA": 24.9,
+"wpB": 56.3,
+"wpAlt": 56.3,
+"best": "a3c5",
+"uci": "b2a2",
+"fen": "6k1/p2b2pp/5p2/4p3/2PpQ1P1/q2P1N1P/Pr3P2/5RK1 b - - 2 23",
+"sac": null,
+"loss": 31.4,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 19.5,
+"wpBest": 58.0,
+"wpAlt22": 58.0,
+"loss22": 38.5,
+"legal": 42,
+"lines22": [
+[
+"a3c5",
+[
+"cp",
+-110
+],
+[
+"a3c5",
+"f3h4",
+"c5c6",
+"e4c6",
+"d7c6",
+"f2f4"
+]
+],
+[
+"a3a6",
+[
+"cp",
+-71
+],
+[
+"a3a6",
+"e4d5",
+"a6e6",
+"d5a8",
+"g8f7",
+"f3h4"
+]
+],
+[
+"a3d6",
+[
+"cp",
+-65
+],
+[
+"a3d6",
+"e4a8",
+"b2b8",
+"a8a7",
+"d7c6",
+"c4c5"
+]
+]
+],
+"played22": {
+"move": "b2a2",
+"score": [
+"cp",
+485
+],
+"pv": [
+"b2a2",
+"e4d5",
+"g8f8",
+"d5d7",
+"a3e7",
+"d7d5",
+"a2b2",
+"f1a1"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185637999736",
+"ply": 46,
+"zug": "24.g5",
+"spieler": "kristoff0022",
+"mert": false,
+"R": 613,
+"cls": "miss",
+"wpA": 43.1,
+"wpB": 75,
+"wpAlt": 75,
+"best": "e4d5",
+"uci": "g4g5",
+"fen": "6k1/p2b2pp/5p2/4p3/2PpQ1P1/q2P1N1P/r4P2/5RK1 w - - 0 24",
+"sac": null,
+"loss": 32,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 41.1,
+"wpBest": 80.7,
+"wpAlt22": 80.7,
+"loss22": 39.6,
+"legal": 31,
+"lines22": [
+[
+"e4d5",
+[
+"cp",
+491
+],
+[
+"e4d5",
+"g8f8",
+"d5d7",
+"a3e7",
+"d7c8",
+"e7e8"
+]
+],
+[
+"f3e5",
+[
+"cp",
+206
+],
+[
+"f3e5",
+"d7e8",
+"e5f3",
+"e8g6",
+"e4d5",
+"g6f7"
+]
+],
+[
+"f3g5",
+[
+"cp",
+84
+],
+[
+"f3g5",
+"f6g5",
+"e4d5",
+"g8f8",
+"d5d7",
+"a3e7"
+]
+]
+],
+"played22": {
+"move": "g4g5",
+"score": [
+"cp",
+-124
+],
+"pv": [
+"g4g5",
+"a3a6",
+"g5f6",
+"g7f6",
+"e4h4",
+"a6e6",
+"h4h6",
+"e6e7"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185638212564",
+"ply": 19,
+"zug": "10...bxc4",
+"spieler": "RicFlair20",
+"mert": false,
+"R": 639,
+"cls": "great",
+"wpA": 73.8,
+"wpB": 73.8,
+"wpAlt": 48.8,
+"best": "b5c4",
+"uci": "b5c4",
+"fen": "r2qkb1r/2p2ppp/p2p1n2/1p2p3/2BnP3/2NPB2P/PPP2PP1/R2Q1RK1 b kq - 1 10",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 73.9,
+"wpBest": 73.9,
+"wpAlt22": 46.5,
+"loss22": 0,
+"legal": 34,
+"lines22": [
+[
+"b5c4",
+[
+"cp",
+-351
+],
+[
+"b5c4",
+"f2f4",
+"f8e7",
+"d3c4",
+"d4c6",
+"f4f5"
+]
+],
+[
+"f8e7",
+[
+"cp",
+47
+],
+[
+"f8e7",
+"c4b3",
+"d4b3",
+"a2b3",
+"e8g8",
+"f2f4"
+]
+],
+[
+"g7g6",
+[
+"cp",
+52
+],
+[
+"g7g6",
+"c4b3",
+"f8g7",
+"e3d4",
+"e5d4",
+"c3e2"
+]
+]
+],
+"played22": {
+"move": "b5c4",
+"score": [
+"cp",
+-351
+],
+"pv": [
+"b5c4",
+"f2f4",
+"f8e7",
+"d3c4",
+"d4c6",
+"f4f5",
+"a6a5",
+"a2a3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185647523440",
+"ply": 26,
+"zug": "14.Bxa6",
+"spieler": "Heredite",
+"mert": false,
+"R": 621,
+"cls": "great",
+"wpA": 75.1,
+"wpB": 75.1,
+"wpAlt": 51.8,
+"best": "f1a6",
+"uci": "f1a6",
+"fen": "r1br4/pp2kpp1/n1p1p2p/2P1P3/3Np3/4P3/PP3PPP/R3KB1R w KQ - 1 14",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 75.6,
+"wpBest": 75.6,
+"wpAlt22": 51.8,
+"loss22": 0,
+"legal": 31,
+"lines22": [
+[
+"f1a6",
+[
+"cp",
+386
+],
+[
+"f1a6",
+"d8d5",
+"a6e2",
+"d5c5",
+"f2f4",
+"e4f3"
+]
+],
+[
+"a1c1",
+[
+"cp",
+25
+],
+[
+"a1c1",
+"a6b8",
+"f2f4",
+"e4f3",
+"g2f3",
+"g7g5"
+]
+],
+[
+"d4b3",
+[
+"cp",
+-51
+],
+[
+"d4b3",
+"d8d5",
+"f1a6",
+"b7a6",
+"a1c1",
+"a8b8"
+]
+]
+],
+"played22": {
+"move": "f1a6",
+"score": [
+"cp",
+386
+],
+"pv": [
+"f1a6",
+"d8d5",
+"a6e2",
+"d5c5",
+"f2f4",
+"e4f3",
+"d4f3",
+"g7g5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185647523440",
+"ply": 44,
+"zug": "23.Rf1",
+"spieler": "Heredite",
+"mert": false,
+"R": 621,
+"cls": "mistake",
+"wpA": 49.3,
+"wpB": 68.5,
+"wpAlt": 68.5,
+"best": "d4e2",
+"uci": "d1f1",
+"fen": "r2r4/pb3k2/p1p1p3/2P1Pp2/3Np1p1/1P2P1P1/P2R2KP/3R4 w - - 2 23",
+"sac": null,
+"loss": 19.2,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 48.6,
+"wpBest": 69.7,
+"wpAlt22": 69.7,
+"loss22": 21.1,
+"legal": 28,
+"lines22": [
+[
+"d4c2",
+[
+"cp",
+285
+],
+[
+"d4c2",
+"d8d5",
+"d2d5",
+"c6d5",
+"c2d4",
+"a8c8"
+]
+],
+[
+"d4e2",
+[
+"cp",
+265
+],
+[
+"d4e2",
+"d8d5",
+"d2d5",
+"c6d5",
+"e2d4",
+"a8h8"
+]
+],
+[
+"h2h3",
+[
+"cp",
+190
+],
+[
+"h2h3",
+"g4h3",
+"g2h3",
+"d8d5",
+"d4e2",
+"a8e8"
+]
+]
+],
+"played22": {
+"move": "d1f1",
+"score": [
+"cp",
+-19
+],
+"pv": [
+"d1f1",
+"d8d5",
+"f1h1",
+"a8h8",
+"h1d1",
+"h8d8",
+"d2c2",
+"a6a5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185647523440",
+"ply": 45,
+"zug": "23...Rh8",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 603,
+"cls": "miss",
+"wpA": 29.8,
+"wpB": 50.7,
+"wpAlt": 50.7,
+"best": "d8d5",
+"uci": "d8h8",
+"fen": "r2r4/pb3k2/p1p1p3/2P1Pp2/3Np1p1/1P2P1P1/P2R2KP/5R2 b - - 3 23",
+"sac": null,
+"loss": 20.9,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 28.4,
+"wpBest": 50.2,
+"wpAlt22": 50.2,
+"loss22": 21.8,
+"legal": 21,
+"lines22": [
+[
+"d8d5",
+[
+"cp",
+-3
+],
+[
+"d8d5",
+"f1h1",
+"d5e5",
+"h2h3",
+"a8h8",
+"h3g4"
+]
+],
+[
+"a6a5",
+[
+"cp",
+64
+],
+[
+"a6a5",
+"f1d1",
+"a8c8",
+"h2h3",
+"g4h3",
+"g2h3"
+]
+],
+[
+"a8b8",
+[
+"cp",
+141
+],
+[
+"a8b8",
+"f1d1",
+"d8d5",
+"d4e2",
+"b8e8",
+"b3b4"
+]
+]
+],
+"played22": {
+"move": "d8h8",
+"score": [
+"cp",
+320
+],
+"pv": [
+"d8h8",
+"d4e2",
+"h8d8",
+"d2d6",
+"a6a5",
+"f1d1",
+"d8e8",
+"d6d7"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185647523440",
+"ply": 46,
+"zug": "24.Rdf2",
+"spieler": "Heredite",
+"mert": false,
+"R": 621,
+"cls": "miss",
+"wpA": 51.2,
+"wpB": 70.5,
+"wpAlt": 70.5,
+"best": "d4e2",
+"uci": "d2f2",
+"fen": "r6r/pb3k2/p1p1p3/2P1Pp2/3Np1p1/1P2P1P1/P2R2KP/5R2 w - - 4 24",
+"sac": null,
+"loss": 19.3,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 51.1,
+"wpBest": 71.1,
+"wpAlt22": 71.1,
+"loss22": 20.0,
+"legal": 32,
+"lines22": [
+[
+"d4e2",
+[
+"cp",
+307
+],
+[
+"d4e2",
+"h8d8",
+"d2d6",
+"a6a5",
+"f1d1",
+"f7e7"
+]
+],
+[
+"f1d1",
+[
+"cp",
+244
+],
+[
+"f1d1",
+"a8d8",
+"d4e2",
+"d8d5",
+"d2d5",
+"e6d5"
+]
+],
+[
+"d4c2",
+[
+"cp",
+233
+],
+[
+"d4c2",
+"a8d8",
+"d2d6",
+"d8d6",
+"c5d6",
+"c6c5"
+]
+]
+],
+"played22": {
+"move": "d2f2",
+"score": [
+"cp",
+15
+],
+"pv": [
+"d2f2",
+"a8d8",
+"h2h4",
+"d8d5",
+"b3b4",
+"d5e5",
+"d4b3",
+"e5d5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185647523440",
+"ply": 55,
+"zug": "28...Ke7",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 603,
+"cls": "mistake",
+"wpA": 29.8,
+"wpB": 43.2,
+"wpAlt": 43.2,
+"best": "h8d8",
+"uci": "f7e7",
+"fen": "7r/pb3kr1/p1p1p3/2P1Pp2/3NR3/1P2P1Pp/P6K/5R2 b - - 0 28",
+"sac": null,
+"loss": 13.4,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 27.1,
+"wpBest": 43.1,
+"wpAlt22": 43.1,
+"loss22": 16.0,
+"legal": 26,
+"lines22": [
+[
+"h8d8",
+[
+"cp",
+96
+],
+[
+"h8d8",
+"g3g4",
+"b7c8",
+"g4f5",
+"g7g2",
+"h2h1"
+]
+],
+[
+"h8g8",
+[
+"cp",
+149
+],
+[
+"h8g8",
+"e4h4",
+"g7g3",
+"h4h7",
+"g3g7",
+"h7g7"
+]
+],
+[
+"a6a5",
+[
+"cp",
+176
+],
+[
+"a6a5",
+"e4h4",
+"h8d8",
+"g3g4",
+"b7c8",
+"g4f5"
+]
+]
+],
+"played22": {
+"move": "f7e7",
+"score": [
+"cp",
+343
+],
+"pv": [
+"f7e7",
+"e4h4",
+"h8g8",
+"h4h3",
+"e7f7",
+"h2g2",
+"b7c8",
+"f1h1"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185647523440",
+"ply": 56,
+"zug": "29.Ref4",
+"spieler": "Heredite",
+"mert": false,
+"R": 621,
+"cls": "miss",
+"wpA": 58.3,
+"wpB": 70.4,
+"wpAlt": 70.4,
+"best": "e4h4",
+"uci": "e4f4",
+"fen": "7r/pb2k1r1/p1p1p3/2P1Pp2/3NR3/1P2P1Pp/P6K/5R2 w - - 1 29",
+"sac": null,
+"loss": 12.1,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 59.0,
+"wpBest": 72.1,
+"wpAlt22": 72.1,
+"loss22": 13.2,
+"legal": 27,
+"lines22": [
+[
+"e4h4",
+[
+"cp",
+325
+],
+[
+"e4h4",
+"h8g8",
+"h4h3",
+"e7f7",
+"h2g2",
+"a6a5"
+]
+],
+[
+"e4f4",
+[
+"cp",
+124
+],
+[
+"e4f4",
+"h8d8",
+"f1c1",
+"d8d5",
+"d4f3",
+"d5d3"
+]
+],
+[
+"f1f5",
+[
+"cp",
+-262
+],
+[
+"f1f5",
+"e6f5",
+"d4f5",
+"e7f7",
+"e5e6",
+"f7f6"
+]
+]
+],
+"played22": {
+"move": "e4f4",
+"score": [
+"cp",
+124
+],
+"pv": [
+"e4f4",
+"h8d8",
+"f1c1",
+"d8d5",
+"d4f3",
+"d5d3",
+"c1e1",
+"d3d5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185798804076",
+"ply": 38,
+"zug": "20.Qxf7+",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 1057,
+"cls": "great",
+"wpA": 100,
+"wpB": 100,
+"wpAlt": 57.4,
+"best": "c4f7",
+"uci": "c4f7",
+"fen": "2rr2k1/pp2bp1p/1q4p1/4P1N1/2QP1Pb1/7P/PB4P1/R4RK1 w - - 1 20",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": {
+"app": [],
+"heur": [
+{
+"piece": "b",
+"square": "b2",
+"ungedeckt": true,
+"minAtt": 9
+}
+]
+},
+"d": 20,
+"top": true,
+"wpPlay": 100.0,
+"wpBest": 100.0,
+"wpAlt22": 56.3,
+"loss22": 0,
+"legal": 45,
+"lines22": [
+[
+"c4f7",
+[
+"mate",
+2
+],
+[
+"c4f7",
+"g8h8",
+"f7h7"
+]
+],
+[
+"c4b3",
+[
+"cp",
+66
+],
+[
+"c4b3",
+"b6b3",
+"a2b3",
+"g4e2",
+"f1c1",
+"c8c1"
+]
+],
+[
+"c4d3",
+[
+"cp",
+-140
+],
+[
+"c4d3",
+"b6b2",
+"h3g4",
+"e7g5",
+"f4g5",
+"b2d4"
+]
+]
+],
+"played22": {
+"move": "c4f7",
+"score": [
+"mate",
+2
+],
+"pv": [
+"c4f7",
+"g8h8",
+"f7h7"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185809482322",
+"ply": 31,
+"zug": "16...Bf8",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 1057,
+"cls": "great",
+"wpA": 44,
+"wpB": 44,
+"wpAlt": 19.3,
+"best": "e7f8",
+"uci": "e7f8",
+"fen": "2kr3r/pppqbp2/2np1P2/3Np2p/6p1/1B1P2P1/PPP3PP/R2Q1RK1 b - - 0 16",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 43.9,
+"wpBest": 43.9,
+"wpAlt22": 19.5,
+"loss22": 0,
+"legal": 24,
+"lines22": [
+[
+"e7f8",
+[
+"cp",
+64
+],
+[
+"e7f8",
+"c2c3",
+"c8b8",
+"b3a4",
+"d7e6",
+"d1b3"
+]
+],
+[
+"d8f8",
+[
+"cp",
+372
+],
+[
+"d8f8",
+"f6e7",
+"c6e7",
+"d5f6",
+"d7d8",
+"d3d4"
+]
+],
+[
+"d8e8",
+[
+"cp",
+407
+],
+[
+"d8e8",
+"f6e7",
+"f7f5",
+"c2c3",
+"c8b8",
+"d5f6"
+]
+]
+],
+"played22": {
+"move": "e7f8",
+"score": [
+"cp",
+64
+],
+"pv": [
+"e7f8",
+"c2c3",
+"c8b8",
+"b3a4",
+"d7e6",
+"d1b3",
+"c6a5",
+"b3b5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185809482322",
+"ply": 50,
+"zug": "26.Bb3",
+"spieler": "daymon_xx",
+"mert": false,
+"R": 1063,
+"cls": "blunder",
+"wpA": 35,
+"wpB": 77.6,
+"wpAlt": 77.6,
+"best": "b4c6",
+"uci": "a4b3",
+"fen": "2kr3r/pp1q1p2/2p2P2/3p2bp/BN1Pn1p1/3Q2P1/PPR3PP/5RK1 w - - 6 26",
+"sac": null,
+"loss": 42.6,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 37.6,
+"wpBest": 84.2,
+"wpAlt22": 84.2,
+"loss22": 46.6,
+"legal": 40,
+"lines22": [
+[
+"b4c6",
+[
+"cp",
+437
+],
+[
+"b4c6",
+"b7c6",
+"a4c6",
+"d7c7",
+"c6d5",
+"d8d5"
+]
+],
+[
+"h2h4",
+[
+"cp",
+370
+],
+[
+"h2h4",
+"g5f6",
+"b4c6",
+"d7d6",
+"d3b3",
+"d8d7"
+]
+],
+[
+"f1e1",
+[
+"cp",
+293
+],
+[
+"f1e1",
+"c8b8",
+"b4c6",
+"b7c6",
+"a4c6",
+"d7c7"
+]
+]
+],
+"played22": {
+"move": "a4b3",
+"score": [
+"cp",
+-132
+],
+"pv": [
+"a4b3",
+"c8b8",
+"b3a4",
+"d8c8",
+"b4d5",
+"d7d5",
+"a4b3",
+"d5d6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185809482322",
+"ply": 51,
+"zug": "26...Bxf6",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 1057,
+"cls": "miss",
+"wpA": 23.4,
+"wpB": 65,
+"wpAlt": 65,
+"best": "c8b8",
+"uci": "g5f6",
+"fen": "2kr3r/pp1q1p2/2p2P2/3p2bp/1N1Pn1p1/1B1Q2P1/PPR3PP/5RK1 b - - 7 26",
+"sac": null,
+"loss": 41.6,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 21.5,
+"wpBest": 62.9,
+"wpAlt22": 62.9,
+"loss22": 41.4,
+"legal": 36,
+"lines22": [
+[
+"c8b8",
+[
+"cp",
+-138
+],
+[
+"c8b8",
+"b3a4",
+"d8c8",
+"b4d5",
+"d7d5",
+"a4b3"
+]
+],
+[
+"e4f6",
+[
+"cp",
+49
+],
+[
+"e4f6",
+"b3a4",
+"d7e6",
+"g1h1",
+"d8d6",
+"a4c6"
+]
+],
+[
+"d7d6",
+[
+"cp",
+51
+],
+[
+"d7d6",
+"b4d5",
+"c8b8",
+"d3e4",
+"c6d5",
+"e4e5"
+]
+]
+],
+"played22": {
+"move": "g5f6",
+"score": [
+"cp",
+339
+],
+"pv": [
+"g5f6",
+"b4d5",
+"f6g7",
+"d3e4",
+"h8e8",
+"e4d3",
+"f7f5",
+"g1h1"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185809482322",
+"ply": 52,
+"zug": "27.Nxd5",
+"spieler": "daymon_xx",
+"mert": false,
+"R": 1063,
+"cls": "great",
+"wpA": 76.7,
+"wpB": 76.7,
+"wpAlt": 65.2,
+"best": "b4d5",
+"uci": "b4d5",
+"fen": "2kr3r/pp1q1p2/2p2b2/3p3p/1N1Pn1p1/1B1Q2P1/PPR3PP/5RK1 w - - 0 27",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": {
+"app": [],
+"heur": [
+{
+"piece": "n",
+"square": "d5",
+"ungedeckt": false,
+"minAtt": 1
+}
+]
+},
+"d": 20,
+"top": true,
+"wpPlay": 79.3,
+"wpBest": 79.3,
+"wpAlt22": 70.3,
+"loss22": 0,
+"legal": 39,
+"lines22": [
+[
+"b4d5",
+[
+"cp",
+350
+],
+[
+"b4d5",
+"f6g7",
+"d3e4",
+"d8e8",
+"e4d3",
+"f7f5"
+]
+],
+[
+"b3d5",
+[
+"cp",
+225
+],
+[
+"b3d5",
+"c8b8",
+"d5e4",
+"f6d4",
+"g1h1",
+"h8h6"
+]
+],
+[
+"f1c1",
+[
+"cp",
+0
+],
+[
+"f1c1",
+"c8b8",
+"c2c6",
+"b7c6",
+"c1c6",
+"d7b7"
+]
+]
+],
+"played22": {
+"move": "b4d5",
+"score": [
+"cp",
+350
+],
+"pv": [
+"b4d5",
+"f6g7",
+"d3e4",
+"d8e8",
+"e4d3",
+"f7f5",
+"g1h1",
+"c8b8"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185809952338",
+"ply": 43,
+"zug": "22...Red5",
+"spieler": "gregct",
+"mert": false,
+"R": 1075,
+"cls": "blunder",
+"wpA": 61.3,
+"wpB": 82.2,
+"wpAlt": 82.2,
+"best": "c5d3",
+"uci": "e5d5",
+"fen": "3r2k1/pp3ppp/2p1p3/2n1r1bP/6P1/2PB1N2/PPK5/3R3R b - - 2 22",
+"sac": null,
+"loss": 20.9,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 65.7,
+"wpBest": 86.8,
+"wpAlt22": 86.8,
+"loss22": 21.1,
+"legal": 40,
+"lines22": [
+[
+"c5d3",
+[
+"cp",
+-488
+],
+[
+"c5d3",
+"d1d3",
+"e5e2",
+"c2d1",
+"e2b2",
+"d3d8"
+]
+],
+[
+"e5d5",
+[
+"cp",
+-168
+],
+[
+"e5d5",
+"d3h7",
+"g8h7",
+"f3g5",
+"h7g8",
+"d1d5"
+]
+],
+[
+"c5d7",
+[
+"cp",
+-27
+],
+[
+"c5d7",
+"f3e5",
+"d7e5",
+"d3e2",
+"d8c8",
+"d1d4"
+]
+]
+],
+"played22": {
+"move": "e5d5",
+"score": [
+"cp",
+-168
+],
+"pv": [
+"e5d5",
+"d3h7",
+"g8h7",
+"f3g5",
+"h7g8",
+"d1d5",
+"c6d5",
+"g5f3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185809952338",
+"ply": 44,
+"zug": "23.Nxg5",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 1049,
+"cls": "miss",
+"wpA": 21.5,
+"wpB": 37.2,
+"wpAlt": 37.2,
+"best": "d3h7",
+"uci": "f3g5",
+"fen": "3r2k1/pp3ppp/2p1p3/2nr2bP/6P1/2PB1N2/PPK5/3R3R w - - 3 23",
+"sac": null,
+"loss": 15.7,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 19.7,
+"wpBest": 37.2,
+"wpAlt22": 37.2,
+"loss22": 17.5,
+"legal": 37,
+"lines22": [
+[
+"d3h7",
+[
+"cp",
+-138
+],
+[
+"d3h7",
+"g8h7",
+"f3g5",
+"h7g8",
+"d1d5",
+"d8d5"
+]
+],
+[
+"d3e2",
+[
+"cp",
+-338
+],
+[
+"d3e2",
+"d5d1",
+"e2d1",
+"g5f4",
+"d1e2",
+"g7g5"
+]
+],
+[
+"f3g5",
+[
+"cp",
+-370
+],
+[
+"f3g5",
+"c5d3",
+"g5f3",
+"d3f2",
+"d1d5",
+"c6d5"
+]
+]
+],
+"played22": {
+"move": "f3g5",
+"score": [
+"cp",
+-370
+],
+"pv": [
+"f3g5",
+"c5d3",
+"g5f3",
+"d3f2",
+"d1d5",
+"c6d5",
+"h1g1",
+"h7h6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185856126460",
+"ply": 40,
+"zug": "21.Nd4",
+"spieler": "TLBYNATOR",
+"mert": false,
+"R": 1030,
+"cls": "great",
+"wpA": 36.7,
+"wpB": 36.7,
+"wpAlt": 23.5,
+"best": "f3d4",
+"uci": "f3d4",
+"fen": "r4rk1/2q2bbp/p5p1/3p1p2/Q3p3/2P1PNN1/PP4PP/2R2RK1 w - - 0 21",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 35.7,
+"wpBest": 35.7,
+"wpAlt22": 23.3,
+"loss22": 0,
+"legal": 41,
+"lines22": [
+[
+"f3d4",
+[
+"cp",
+-156
+],
+[
+"f3d4",
+"g7e5",
+"g1h1",
+"c7d6",
+"a4c6",
+"d6b8"
+]
+],
+[
+"f3e1",
+[
+"cp",
+-317
+],
+[
+"f3e1",
+"d5d4",
+"e3d4",
+"g7h6",
+"c1d1",
+"f7c4"
+]
+],
+[
+"f3h4",
+[
+"cp",
+-336
+],
+[
+"f3h4",
+"g7f6",
+"g3f5",
+"g6f5",
+"h4f5",
+"f7e6"
+]
+]
+],
+"played22": {
+"move": "f3d4",
+"score": [
+"cp",
+-156
+],
+"pv": [
+"f3d4",
+"g7e5",
+"g1h1",
+"c7d6",
+"a4c6",
+"d6b8",
+"c1b1",
+"a6a5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185931931954",
+"ply": 24,
+"zug": "13.Nc3",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 1049,
+"cls": "great",
+"wpA": 45.2,
+"wpB": 45.2,
+"wpAlt": 18.3,
+"best": "a4c3",
+"uci": "a4c3",
+"fen": "r1b1k2r/3pnppp/p1q1p2n/1pp1P3/N7/1B1P1N1P/PPP2PP1/R2Q1RK1 w kq - 0 13",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 46.1,
+"wpBest": 46.1,
+"wpAlt22": 20.5,
+"loss22": 0,
+"legal": 29,
+"lines22": [
+[
+"a4c3",
+[
+"cp",
+-41
+],
+[
+"a4c3",
+"h6f5",
+"a2a4",
+"c8b7",
+"c3e4",
+"e8g8"
+]
+],
+[
+"c2c4",
+[
+"cp",
+-357
+],
+[
+"c2c4",
+"b5a4",
+"b3a4",
+"c6b6",
+"d3d4",
+"c5d4"
+]
+],
+[
+"a4c5",
+[
+"cp",
+-369
+],
+[
+"a4c5",
+"c6c5",
+"d3d4",
+"c5b6",
+"f3g5",
+"c8b7"
+]
+]
+],
+"played22": {
+"move": "a4c3",
+"score": [
+"cp",
+-41
+],
+"pv": [
+"a4c3",
+"h6f5",
+"a2a4",
+"c8b7",
+"c3e4",
+"e8g8",
+"c2c3",
+"e7g6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185983073494",
+"ply": 77,
+"zug": "39...b6",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 595,
+"cls": "blunder",
+"wpA": 61.8,
+"wpB": 88.9,
+"wpAlt": 88.9,
+"best": "c3e3",
+"uci": "b7b6",
+"fen": "8/pp3p2/2p4p/6pk/1K3p2/1Pr5/PR6/8 b - - 2 39",
+"sac": null,
+"loss": 27.2,
+"grund": "vorher",
+"kand": {
+"app": [
+{
+"piece": "r",
+"square": "c3",
+"net": 5,
+"before": true
+}
+],
+"heur": [
+{
+"piece": "r",
+"square": "c3",
+"ungedeckt": true,
+"minAtt": 100
+}
+]
+},
+"d": 20,
+"top": false,
+"wpPlay": 68.0,
+"wpBest": 90.0,
+"wpAlt22": 90.0,
+"loss22": 22.0,
+"legal": 22,
+"lines22": [
+[
+"c3e3",
+[
+"cp",
+-763
+],
+[
+"c3e3",
+"b4c4",
+"f4f3",
+"c4d4",
+"e3e2",
+"b2b1"
+]
+],
+[
+"c3c1",
+[
+"cp",
+-754
+],
+[
+"c3c1",
+"b4a4",
+"f4f3",
+"b3b4",
+"c1e1",
+"b4b5"
+]
+],
+[
+"c3d3",
+[
+"cp",
+-741
+],
+[
+"c3d3",
+"b4c4",
+"d3e3",
+"b3b4",
+"f4f3",
+"b4b5"
+]
+]
+],
+"played22": {
+"move": "b7b6",
+"score": [
+"cp",
+-262
+],
+"pv": [
+"b7b6",
+"b4c3",
+"g5g4",
+"c3d2",
+"g4g3",
+"d2e1",
+"h5g4",
+"b2d2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983073494",
+"ply": 78,
+"zug": "40.Rd2",
+"spieler": "cancelled31",
+"mert": false,
+"R": 625,
+"cls": "miss",
+"wpA": 10.6,
+"wpB": 38,
+"wpAlt": 38,
+"best": "b4c3",
+"uci": "b2d2",
+"fen": "8/p4p2/1pp4p/6pk/1K3p2/1Pr5/PR6/8 w - - 0 40",
+"sac": null,
+"loss": 27.3,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 10.0,
+"wpBest": 25.5,
+"wpAlt22": 25.5,
+"loss22": 15.4,
+"legal": 12,
+"lines22": [
+[
+"b2h2",
+[
+"cp",
+-366
+],
+[
+"b2h2",
+"c3h3",
+"h2h3",
+"h5g4",
+"h3h6",
+"g4f3"
+]
+],
+[
+"b4c3",
+[
+"cp",
+-481
+],
+[
+"b4c3",
+"g5g4",
+"c3d2",
+"g4g3",
+"d2e2",
+"h5g4"
+]
+],
+[
+"a2a4",
+[
+"cp",
+-745
+],
+[
+"a2a4",
+"c3e3",
+"b4c4",
+"f4f3",
+"b3b4",
+"e3e2"
+]
+]
+],
+"played22": {
+"move": "b2d2",
+"score": [
+"cp",
+-748
+],
+"pv": [
+"b2d2",
+"c3e3",
+"a2a4",
+"h5g4",
+"a4a5",
+"f4f3",
+"a5b6",
+"a7b6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983073494",
+"ply": 79,
+"zug": "40...c5+",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 595,
+"cls": "miss",
+"wpA": 64.8,
+"wpB": 88.9,
+"wpAlt": 88.9,
+"best": "c3e3",
+"uci": "c6c5",
+"fen": "8/p4p2/1pp4p/6pk/1K3p2/1Pr5/P2R4/8 b - - 1 40",
+"sac": null,
+"loss": 24.2,
+"grund": "label:miss",
+"kand": {
+"app": [
+{
+"piece": "r",
+"square": "c3",
+"net": 5,
+"before": true
+}
+],
+"heur": [
+{
+"piece": "r",
+"square": "c3",
+"ungedeckt": true,
+"minAtt": 100
+}
+]
+},
+"d": 20,
+"top": false,
+"wpPlay": 62.5,
+"wpBest": 90.3,
+"wpAlt22": 90.3,
+"loss22": 27.8,
+"legal": 21,
+"lines22": [
+[
+"c3e3",
+[
+"cp",
+-775
+],
+[
+"c3e3",
+"b4c4",
+"h5g4",
+"a2a4",
+"f4f3",
+"a4a5"
+]
+],
+[
+"c3c5",
+[
+"cp",
+-767
+],
+[
+"c3c5",
+"d2h2",
+"h5g4",
+"h2h6",
+"f4f3",
+"h6h7"
+]
+],
+[
+"c3c1",
+[
+"cp",
+-756
+],
+[
+"c3c1",
+"a2a4",
+"h5g4",
+"b4a3",
+"c1e1",
+"a4a5"
+]
+]
+],
+"played22": {
+"move": "c6c5",
+"score": [
+"cp",
+-178
+],
+"pv": [
+"c6c5",
+"b4c3",
+"h5g4",
+"c3d3",
+"g4f3",
+"d2d1",
+"f3f2",
+"d1d2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983073494",
+"ply": 80,
+"zug": "41.Kb5",
+"spieler": "cancelled31",
+"mert": false,
+"R": 625,
+"cls": "miss",
+"wpA": 12,
+"wpB": 34.9,
+"wpAlt": 34.9,
+"best": "b4c3",
+"uci": "b4b5",
+"fen": "8/p4p2/1p5p/2p3pk/1K3p2/1Pr5/P2R4/8 w - - 0 41",
+"sac": null,
+"loss": 22.9,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 10.2,
+"wpBest": 34.0,
+"wpAlt22": 34.0,
+"loss22": 23.8,
+"legal": 4,
+"lines22": [
+[
+"b4c3",
+[
+"cp",
+-226
+],
+[
+"b4c3",
+"h5g4",
+"c3d3",
+"g4f3",
+"d2d1",
+"f3f2"
+]
+],
+[
+"b4b5",
+[
+"cp",
+-741
+],
+[
+"b4b5",
+"h5g4",
+"b5a6",
+"f4f3",
+"a6a7",
+"f7f5"
+]
+],
+[
+"b4a4",
+[
+"cp",
+-771
+],
+[
+"b4a4",
+"f4f3",
+"b3b4",
+"c3e3",
+"d2h2",
+"h5g4"
+]
+]
+],
+"played22": {
+"move": "b4b5",
+"score": [
+"cp",
+-741
+],
+"pv": [
+"b4b5",
+"h5g4",
+"b5a6",
+"f4f3",
+"a6a7",
+"f7f5",
+"d2d1",
+"f3f2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983306532",
+"ply": 42,
+"zug": "22.Rdh1",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 595,
+"cls": "blunder",
+"wpA": 57.3,
+"wpB": 80.6,
+"wpAlt": 80.6,
+"best": "e6f4",
+"uci": "d1h1",
+"fen": "r4bkr/pq4pp/1p1pN3/1B1Pp1Q1/5nP1/2P5/PP3P1R/2KR4 w - - 5 22",
+"sac": null,
+"loss": 23.3,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 56.8,
+"wpBest": 80.6,
+"wpAlt22": 80.6,
+"loss22": 23.8,
+"legal": 50,
+"lines22": [
+[
+"e6f4",
+[
+"cp",
+495
+],
+[
+"e6f4",
+"e5f4",
+"b5c6",
+"b7f7",
+"c6a8",
+"g7g6"
+]
+],
+[
+"b5c6",
+[
+"cp",
+379
+],
+[
+"b5c6",
+"f4e6",
+"g5f5",
+"b7e7",
+"d5e6",
+"a8d8"
+]
+],
+[
+"g5f5",
+[
+"cp",
+186
+],
+[
+"g5f5",
+"g7g6",
+"f5c2",
+"f4e6",
+"d5e6",
+"b7f3"
+]
+]
+],
+"played22": {
+"move": "d1h1",
+"score": [
+"cp",
+95
+],
+"pv": [
+"d1h1",
+"b7f7",
+"g5f5",
+"f7f5",
+"g4f5",
+"f8e7",
+"b5d7",
+"h7h6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983306532",
+"ply": 43,
+"zug": "22...h6",
+"spieler": "Evanisop",
+"mert": false,
+"R": 608,
+"cls": "miss",
+"wpA": 24.9,
+"wpB": 42.7,
+"wpAlt": 42.7,
+"best": "b7f7",
+"uci": "h7h6",
+"fen": "r4bkr/pq4pp/1p1pN3/1B1Pp1Q1/5nP1/2P5/PP3P1R/2K4R b - - 6 22",
+"sac": null,
+"loss": 17.8,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 19.5,
+"wpBest": 42.2,
+"wpAlt22": 42.2,
+"loss22": 22.6,
+"legal": 29,
+"lines22": [
+[
+"b7f7",
+[
+"cp",
+109
+],
+[
+"b7f7",
+"g5f5",
+"f7f5",
+"g4f5",
+"f8e7",
+"b5d7"
+]
+],
+[
+"b7e7",
+[
+"cp",
+216
+],
+[
+"b7e7",
+"g5f5",
+"g7g6",
+"f5e4",
+"f8g7",
+"g4g5"
+]
+],
+[
+"f4e6",
+[
+"cp",
+220
+],
+[
+"f4e6",
+"d5e6",
+"f8e7",
+"g5e3",
+"h7h6",
+"b5d3"
+]
+]
+],
+"played22": {
+"move": "h7h6",
+"score": [
+"cp",
+488
+],
+"pv": [
+"h7h6",
+"b5c6",
+"b7f7",
+"c6a8",
+"f4d3",
+"c1b1",
+"d3f2",
+"h2f2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983306532",
+"ply": 44,
+"zug": "23.Rxh6",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 595,
+"cls": "miss",
+"wpA": 59.9,
+"wpB": 74.9,
+"wpAlt": 74.9,
+"best": "b5c6",
+"uci": "h2h6",
+"fen": "r4bkr/pq4p1/1p1pN2p/1B1Pp1Q1/5nP1/2P5/PP3P1R/2K4R w - - 0 23",
+"sac": null,
+"loss": 15.1,
+"grund": "label:miss",
+"kand": {
+"app": [],
+"heur": [
+{
+"piece": "r",
+"square": "h6",
+"ungedeckt": false,
+"minAtt": 1
+}
+]
+},
+"d": 20,
+"top": false,
+"wpPlay": 61.1,
+"wpBest": 80.1,
+"wpAlt22": 80.1,
+"loss22": 19.0,
+"legal": 46,
+"lines22": [
+[
+"b5c6",
+[
+"cp",
+485
+],
+[
+"b5c6",
+"b7c8",
+"g5f5",
+"a8b8",
+"g4g5",
+"g7g6"
+]
+],
+[
+"g5f5",
+[
+"cp",
+190
+],
+[
+"g5f5",
+"b7f7",
+"e6f4",
+"f7f5",
+"g4f5",
+"e5f4"
+]
+],
+[
+"h2h6",
+[
+"cp",
+157
+],
+[
+"h2h6",
+"h8h6",
+"h1h6",
+"b7e7",
+"h6h2",
+"f4e6"
+]
+]
+],
+"played22": {
+"move": "h2h6",
+"score": [
+"cp",
+157
+],
+"pv": [
+"h2h6",
+"h8h6",
+"h1h6",
+"b7e7",
+"h6h2",
+"f4e6",
+"g5e7",
+"f8e7"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983416636",
+"ply": 27,
+"zug": "14...Bg5",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 586,
+"cls": "blunder",
+"wpA": 52.3,
+"wpB": 73.1,
+"wpAlt": 73.1,
+"best": "e7h4",
+"uci": "e7g5",
+"fen": "r4rk1/ppp1bppp/2qp2b1/4p2n/2PnP3/PPN2P1P/1B1PN1P1/RB1QK2R b KQ - 2 14",
+"sac": null,
+"loss": 20.8,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 51.2,
+"wpBest": 74.6,
+"wpAlt22": 74.6,
+"loss22": 23.4,
+"legal": 43,
+"lines22": [
+[
+"e7h4",
+[
+"cp",
+-378
+],
+[
+"e7h4",
+"e1f1",
+"f7f5",
+"e4f5",
+"g6f5",
+"b1f5"
+]
+],
+[
+"d4e2",
+[
+"cp",
+-325
+],
+[
+"d4e2",
+"c3e2",
+"e7h4",
+"e1f1",
+"f7f5",
+"e4f5"
+]
+],
+[
+"f7f5",
+[
+"cp",
+-286
+],
+[
+"f7f5",
+"e1g1",
+"d4e2",
+"d1e2",
+"h5g3",
+"e2f2"
+]
+]
+],
+"played22": {
+"move": "e7g5",
+"score": [
+"cp",
+-17
+],
+"pv": [
+"e7g5",
+"h3h4",
+"g5h6",
+"e2d4",
+"e5d4",
+"c3e2",
+"a8e8",
+"e1g1"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983416636",
+"ply": 28,
+"zug": "15.g4",
+"spieler": "KeneGod",
+"mert": false,
+"R": 580,
+"cls": "miss",
+"wpA": 26.8,
+"wpB": 47.7,
+"wpAlt": 47.7,
+"best": "h3h4",
+"uci": "g2g4",
+"fen": "r4rk1/ppp2ppp/2qp2b1/4p1bn/2PnP3/PPN2P1P/1B1PN1P1/RB1QK2R w KQ - 3 15",
+"sac": null,
+"loss": 21,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 27.9,
+"wpBest": 49.4,
+"wpAlt22": 49.4,
+"loss22": 21.5,
+"legal": 30,
+"lines22": [
+[
+"h3h4",
+[
+"cp",
+-9
+],
+[
+"h3h4",
+"g5h6",
+"e2d4",
+"e5d4",
+"c3e2",
+"f7f5"
+]
+],
+[
+"e1g1",
+[
+"cp",
+-72
+],
+[
+"e1g1",
+"c6b6",
+"g1h2",
+"b6b3",
+"e2d4",
+"b3d1"
+]
+],
+[
+"d2d3",
+[
+"cp",
+-213
+],
+[
+"d2d3",
+"d4e2",
+"c3e2",
+"g5h4",
+"e1d2",
+"f7f5"
+]
+]
+],
+"played22": {
+"move": "g2g4",
+"score": [
+"cp",
+-334
+],
+"pv": [
+"g2g4",
+"d4f3",
+"e1f2",
+"f3d2",
+"g4h5",
+"c6b6",
+"f2g2",
+"g6h5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983416636",
+"ply": 29,
+"zug": "15...Nf4",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 586,
+"cls": "miss",
+"wpA": 48.8,
+"wpB": 73.3,
+"wpAlt": 73.3,
+"best": "f7f5",
+"uci": "h5f4",
+"fen": "r4rk1/ppp2ppp/2qp2b1/4p1bn/2PnP1P1/PPN2P1P/1B1PN3/RB1QK2R b KQ - 0 15",
+"sac": null,
+"loss": 24.5,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 50.7,
+"wpBest": 74.3,
+"wpAlt22": 74.3,
+"loss22": 23.5,
+"legal": 47,
+"lines22": [
+[
+"f7f5",
+[
+"cp",
+-371
+],
+[
+"f7f5",
+"e1g1",
+"f5g4",
+"e2d4",
+"e5d4",
+"c3d5"
+]
+],
+[
+"g5h4",
+[
+"cp",
+-341
+],
+[
+"g5h4",
+"e1f1",
+"d4e2",
+"c3e2",
+"f7f5",
+"g4h5"
+]
+],
+[
+"d4f3",
+[
+"cp",
+-325
+],
+[
+"d4f3",
+"e1f2",
+"f3d2",
+"g4h5",
+"c6b6",
+"f2g2"
+]
+]
+],
+"played22": {
+"move": "h5f4",
+"score": [
+"cp",
+-10
+],
+"pv": [
+"h5f4",
+"e2f4",
+"g5h4",
+"e1f1",
+"e5f4",
+"c3d5",
+"d4e6",
+"a3a4"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983416636",
+"ply": 30,
+"zug": "16.h4",
+"spieler": "KeneGod",
+"mert": false,
+"R": 580,
+"cls": "miss",
+"wpA": 29.4,
+"wpB": 51.2,
+"wpAlt": 51.2,
+"best": "e2f4",
+"uci": "h3h4",
+"fen": "r4rk1/ppp2ppp/2qp2b1/4p1b1/2PnPnP1/PPN2P1P/1B1PN3/RB1QK2R w KQ - 1 16",
+"sac": null,
+"loss": 21.8,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 29.5,
+"wpBest": 51.8,
+"wpAlt22": 51.8,
+"loss22": 22.3,
+"legal": 27,
+"lines22": [
+[
+"e2f4",
+[
+"cp",
+26
+],
+[
+"e2f4",
+"g5h4",
+"e1f1",
+"e5f4",
+"c3d5",
+"d4e6"
+]
+],
+[
+"e2d4",
+[
+"cp",
+-105
+],
+[
+"e2d4",
+"e5d4",
+"c3d5",
+"f4d5",
+"c4d5",
+"g5h4"
+]
+],
+[
+"e1g1",
+[
+"cp",
+-174
+],
+[
+"e1g1",
+"f4h3",
+"g1g2",
+"d4e2",
+"c3e2",
+"h3f4"
+]
+]
+],
+"played22": {
+"move": "h3h4",
+"score": [
+"cp",
+-306
+],
+"pv": [
+"h3h4",
+"d4f3",
+"e1f1",
+"f3h4",
+"e2f4",
+"e5f4",
+"d2d4",
+"a8e8"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983416636",
+"ply": 31,
+"zug": "16...Nfxe2",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 586,
+"cls": "miss",
+"wpA": 57.4,
+"wpB": 70.7,
+"wpAlt": 70.7,
+"best": "d4f3",
+"uci": "f4e2",
+"fen": "r4rk1/ppp2ppp/2qp2b1/4p1b1/2PnPnPP/PPN2P2/1B1PN3/RB1QK2R b KQ - 0 16",
+"sac": null,
+"loss": 13.2,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 59.2,
+"wpBest": 71.2,
+"wpAlt22": 71.2,
+"loss22": 12.0,
+"legal": 50,
+"lines22": [
+[
+"d4f3",
+[
+"cp",
+-317
+],
+[
+"d4f3",
+"e1f2",
+"f3h4",
+"c3d5",
+"f4d5",
+"c4d5"
+]
+],
+[
+"g5h4",
+[
+"cp",
+-193
+],
+[
+"g5h4",
+"h1h4",
+"d4f3",
+"e1f2",
+"f3h4",
+"e2f4"
+]
+],
+[
+"d4e2",
+[
+"cp",
+-148
+],
+[
+"d4e2",
+"c3e2",
+"g5h4",
+"e1f1",
+"h4g5",
+"e2f4"
+]
+]
+],
+"played22": {
+"move": "f4e2",
+"score": [
+"cp",
+-131
+],
+"pv": [
+"f4e2",
+"h4g5",
+"e2c3",
+"d2c3",
+"d4e6",
+"b2c1",
+"f7f6",
+"g5f6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983416636",
+"ply": 33,
+"zug": "17...Bf4",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 586,
+"cls": "blunder",
+"wpA": 24.6,
+"wpB": 79.4,
+"wpAlt": 79.4,
+"best": "d4f3",
+"uci": "g5f4",
+"fen": "r4rk1/ppp2ppp/2qp2b1/4p1b1/2PnP1PP/PP3P2/1B1PN3/RB1QK2R b KQ - 0 17",
+"sac": null,
+"loss": 54.8,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 23.8,
+"wpBest": 80.6,
+"wpAlt22": 80.6,
+"loss22": 56.7,
+"legal": 46,
+"lines22": [
+[
+"d4f3",
+[
+"cp",
+-498
+],
+[
+"d4f3",
+"e1f2",
+"f3h4",
+"e2g3",
+"f7f5",
+"g4f5"
+]
+],
+[
+"g5h4",
+[
+"cp",
+-237
+],
+[
+"g5h4",
+"e1f1",
+"d4f3",
+"e2g1",
+"f3g1",
+"h1h4"
+]
+],
+[
+"d6d5",
+[
+"cp",
+264
+],
+[
+"d6d5",
+"e2d4",
+"e5d4",
+"c4d5",
+"c6d6",
+"h4g5"
+]
+]
+],
+"played22": {
+"move": "g5f4",
+"score": [
+"cp",
+407
+],
+"pv": [
+"g5f4",
+"e2f4",
+"a8e8",
+"b2d4",
+"e5d4",
+"e1f2",
+"d6d5",
+"f4d5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983416636",
+"ply": 34,
+"zug": "18.Nxd4",
+"spieler": "KeneGod",
+"mert": false,
+"R": 580,
+"cls": "miss",
+"wpA": 63,
+"wpB": 75.3,
+"wpAlt": 75.3,
+"best": "e2f4",
+"uci": "e2d4",
+"fen": "r4rk1/ppp2ppp/2qp2b1/4p3/2PnPbPP/PP3P2/1B1PN3/RB1QK2R w KQ - 1 18",
+"sac": null,
+"loss": 12.3,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 65.0,
+"wpBest": 75.9,
+"wpAlt22": 75.9,
+"loss22": 10.9,
+"legal": 28,
+"lines22": [
+[
+"e2f4",
+[
+"cp",
+404
+],
+[
+"e2f4",
+"a8e8",
+"b2d4",
+"e5f4",
+"d2d3",
+"d6d5"
+]
+],
+[
+"b2d4",
+[
+"cp",
+357
+],
+[
+"b2d4",
+"f7f5",
+"e2f4",
+"f5g4",
+"f4g6",
+"h7g6"
+]
+],
+[
+"e2d4",
+[
+"cp",
+218
+],
+[
+"e2d4",
+"e5d4",
+"h4h5",
+"f7f5",
+"g4f5",
+"f4g3"
+]
+]
+],
+"played22": {
+"move": "e2d4",
+"score": [
+"cp",
+218
+],
+"pv": [
+"e2d4",
+"e5d4",
+"h4h5",
+"f7f5",
+"g4f5",
+"f4g3",
+"e1f1",
+"g6f7"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983524442",
+"ply": 20,
+"zug": "11.exd4",
+"spieler": "GBPlayzz",
+"mert": false,
+"R": 578,
+"cls": "mistake",
+"wpA": 56.2,
+"wpB": 68.8,
+"wpAlt": 68.8,
+"best": "c3d4",
+"uci": "e3d4",
+"fen": "r2qk2r/pp1b1ppp/n3pn2/3P4/3p4/2BBPN2/PP3PPP/R2Q1RK1 w kq - 0 11",
+"sac": null,
+"loss": 12.6,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 56.4,
+"wpBest": 71.0,
+"wpAlt22": 71.0,
+"loss22": 14.6,
+"legal": 45,
+"lines22": [
+[
+"c3d4",
+[
+"cp",
+315
+],
+[
+"c3d4",
+"a6c7",
+"d5d6",
+"c7b5",
+"d4e5",
+"d7c6"
+]
+],
+[
+"d5e6",
+[
+"cp",
+156
+],
+[
+"d5e6",
+"d4c3",
+"e6d7",
+"f6d7",
+"d3a6",
+"c3b2"
+]
+],
+[
+"f3d4",
+[
+"cp",
+137
+],
+[
+"f3d4",
+"f6d5",
+"d1g4",
+"d8f6",
+"a1c1",
+"e8g8"
+]
+]
+],
+"played22": {
+"move": "e3d4",
+"score": [
+"cp",
+91
+],
+"pv": [
+"e3d4",
+"f6d5",
+"f3e5",
+"e8g8",
+"d1b3",
+"a6c7",
+"b3b7",
+"d7b5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983524442",
+"ply": 21,
+"zug": "11...exd5",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 594,
+"cls": "miss",
+"wpA": 27.1,
+"wpB": 43.7,
+"wpAlt": 43.7,
+"best": "f6d5",
+"uci": "e6d5",
+"fen": "r2qk2r/pp1b1ppp/n3pn2/3P4/3P4/2BB1N2/PP3PPP/R2Q1RK1 b kq - 0 11",
+"sac": null,
+"loss": 16.6,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 27.3,
+"wpBest": 43.4,
+"wpAlt22": 43.4,
+"loss22": 16.1,
+"legal": 34,
+"lines22": [
+[
+"f6d5",
+[
+"cp",
+93
+],
+[
+"f6d5",
+"f3e5",
+"e8g8",
+"d1b3",
+"a6c7",
+"b3b7"
+]
+],
+[
+"e8g8",
+[
+"cp",
+205
+],
+[
+"e8g8",
+"d3a6",
+"b7a6",
+"c3b4",
+"f8e8",
+"d5d6"
+]
+],
+[
+"a6c7",
+[
+"cp",
+266
+],
+[
+"a6c7",
+"d5e6",
+"c7e6",
+"c3b4",
+"a7a5",
+"b4d6"
+]
+]
+],
+"played22": {
+"move": "e6d5",
+"score": [
+"cp",
+341
+],
+"pv": [
+"e6d5",
+"d3a6",
+"b7a6",
+"c3b4",
+"f6e4",
+"f3e5",
+"d8b6",
+"b4a3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983524442",
+"ply": 29,
+"zug": "15...Ng4",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 594,
+"cls": "mistake",
+"wpA": 21.5,
+"wpB": 41.3,
+"wpAlt": 41.3,
+"best": "f6e4",
+"uci": "f6g4",
+"fen": "r2q1rk1/p4ppp/Q3bn2/3p4/3P4/2B2N2/PP3PPP/R3R1K1 b - - 0 15",
+"sac": null,
+"loss": 19.8,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 20.9,
+"wpBest": 42.3,
+"wpAlt22": 42.3,
+"loss22": 21.4,
+"legal": 27,
+"lines22": [
+[
+"f6e4",
+[
+"cp",
+108
+],
+[
+"f6e4",
+"c3b4",
+"d8c8",
+"a6a3",
+"f8e8",
+"a1c1"
+]
+],
+[
+"h7h6",
+[
+"cp",
+128
+],
+[
+"h7h6",
+"f3e5",
+"f6g4",
+"a2a3",
+"g4e5",
+"e1e5"
+]
+],
+[
+"f8e8",
+[
+"cp",
+129
+],
+[
+"f8e8",
+"c3a5",
+"d8b8",
+"b2b3",
+"f6e4",
+"a1c1"
+]
+]
+],
+"played22": {
+"move": "f6g4",
+"score": [
+"cp",
+464
+],
+"pv": [
+"f6g4",
+"e1e6",
+"a8c8",
+"e6e1",
+"g4f6",
+"c3d2",
+"h7h6",
+"a1c1"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983524442",
+"ply": 30,
+"zug": "16.Qd3",
+"spieler": "GBPlayzz",
+"mert": false,
+"R": 578,
+"cls": "miss",
+"wpA": 60.3,
+"wpB": 78.3,
+"wpAlt": 78.3,
+"best": "e1e6",
+"uci": "a6d3",
+"fen": "r2q1rk1/p4ppp/Q3b3/3p4/3P2n1/2B2N2/PP3PPP/R3R1K1 w - - 1 16",
+"sac": null,
+"loss": 18,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 60.9,
+"wpBest": 79.4,
+"wpAlt22": 79.4,
+"loss22": 18.5,
+"legal": 43,
+"lines22": [
+[
+"e1e6",
+[
+"cp",
+476
+],
+[
+"e1e6",
+"h7h6",
+"e6e5",
+"g4f6",
+"a1e1",
+"d8d7"
+]
+],
+[
+"c3a5",
+[
+"cp",
+189
+],
+[
+"c3a5",
+"d8c8",
+"a6c8",
+"f8c8",
+"a1c1",
+"g4h6"
+]
+],
+[
+"a1c1",
+[
+"cp",
+186
+],
+[
+"a1c1",
+"d8c8",
+"a6c8",
+"f8c8",
+"c3a5",
+"c8c1"
+]
+]
+],
+"played22": {
+"move": "a6d3",
+"score": [
+"cp",
+156
+],
+"pv": [
+"a6d3",
+"d8b8",
+"h2h3",
+"g4f6",
+"f3d2",
+"b8d6",
+"d2b3",
+"f6e4"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983648810",
+"ply": 12,
+"zug": "7.d5",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 602,
+"cls": "great",
+"wpA": 76.5,
+"wpB": 76.5,
+"wpAlt": 58.2,
+"best": "d4d5",
+"uci": "d4d5",
+"fen": "r3kb1r/ppp1qppp/2npbn2/4p3/2BPP3/2P2N2/PP3PPP/RNBQ1RK1 w kq - 3 7",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 75.1,
+"wpBest": 75.1,
+"wpAlt22": 59.4,
+"loss22": 0,
+"legal": 38,
+"lines22": [
+[
+"d4d5",
+[
+"cp",
+382
+],
+[
+"d4d5",
+"f6e4",
+"d5e6",
+"f7e6",
+"c4b5",
+"e7d7"
+]
+],
+[
+"c4d3",
+[
+"cp",
+132
+],
+[
+"c4d3",
+"e5d4",
+"c3d4",
+"d6d5",
+"e4e5",
+"f6d7"
+]
+],
+[
+"d1b3",
+[
+"cp",
+125
+],
+[
+"d1b3",
+"c6d8",
+"b1d2",
+"e6c8",
+"c4d3",
+"g7g6"
+]
+]
+],
+"played22": {
+"move": "d4d5",
+"score": [
+"cp",
+382
+],
+"pv": [
+"d4d5",
+"f6e4",
+"d5e6",
+"f7e6",
+"c4b5",
+"e7d7",
+"b1d2",
+"e4f6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185983648810",
+"ply": 23,
+"zug": "12...exf3",
+"spieler": "Tuananh123456789067",
+"mert": false,
+"R": 584,
+"cls": "great",
+"wpA": 48.1,
+"wpB": 48.1,
+"wpAlt": 26.3,
+"best": "e4f3",
+"uci": "e4f3",
+"fen": "1k1r1b1r/p1p1qppp/B1p1bn2/4p3/4p3/N1P1BN2/PP2QPPP/R4RK1 b - - 1 12",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 47.4,
+"wpBest": 47.4,
+"wpAlt22": 24.0,
+"loss22": 0,
+"legal": 38,
+"lines22": [
+[
+"e4f3",
+[
+"cp",
+36
+],
+[
+"e4f3",
+"e2f3",
+"e5e4",
+"f3e2",
+"f6g4",
+"a3c2"
+]
+],
+[
+"f6g4",
+[
+"cp",
+404
+],
+[
+"f6g4",
+"f3g5",
+"d8d3",
+"a6d3",
+"e4d3",
+"e2d3"
+]
+],
+[
+"h7h5",
+[
+"cp",
+421
+],
+[
+"h7h5",
+"f3g5",
+"f6g4",
+"g5e6",
+"d8d3",
+"a1d1"
+]
+]
+],
+"played22": {
+"move": "e4f3",
+"score": [
+"cp",
+36
+],
+"pv": [
+"e4f3",
+"e2f3",
+"e5e4",
+"f3e2",
+"f6g4",
+"a3c2",
+"e7d6",
+"g2g3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185983648810",
+"ply": 26,
+"zug": "14.Qxc6",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 602,
+"cls": "great",
+"wpA": 90.5,
+"wpB": 90.5,
+"wpAlt": 60.9,
+"best": "f3c6",
+"uci": "f3c6",
+"fen": "1k1r1b1r/p1p1qppp/B1p2n2/4p3/6b1/N1P1BQ2/PP3PPP/R4RK1 w - - 1 14",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 90.8,
+"wpBest": 90.8,
+"wpAlt22": 55.7,
+"loss22": 0,
+"legal": 45,
+"lines22": [
+[
+"f3c6",
+[
+"cp",
+793
+],
+[
+"f3c6",
+"g4c8",
+"a3b5",
+"c8a6",
+"e3a7",
+"b8c8"
+]
+],
+[
+"e3a7",
+[
+"cp",
+79
+],
+[
+"e3a7",
+"b8a7",
+"f3c6",
+"d8b8",
+"a3b5",
+"b8b5"
+]
+],
+[
+"f3g3",
+[
+"cp",
+14
+],
+[
+"f3g3",
+"g4c8",
+"a6c8",
+"b8c8",
+"g3f3",
+"e7e6"
+]
+]
+],
+"played22": {
+"move": "f3c6",
+"score": [
+"cp",
+793
+],
+"pv": [
+"f3c6",
+"g4c8",
+"a3b5",
+"c8a6",
+"e3a7",
+"b8c8",
+"c6a6",
+"c8d7"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185983773114",
+"ply": 8,
+"zug": "5.Re1",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 593,
+"cls": "blunder",
+"wpA": 27,
+"wpB": 56.7,
+"wpAlt": 56.7,
+"best": "b1c3",
+"uci": "f1e1",
+"fen": "rnbqk2r/pppp1ppp/8/2b1p3/2B1n3/5N2/PPPP1PPP/RNBQ1RK1 w kq - 2 5",
+"sac": null,
+"loss": 29.7,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 25.5,
+"wpBest": 54.4,
+"wpAlt22": 54.4,
+"loss22": 28.9,
+"legal": 30,
+"lines22": [
+[
+"b1c3",
+[
+"cp",
+62
+],
+[
+"b1c3",
+"e4c3",
+"d2c3",
+"e8g8",
+"f3e5",
+"d7d6"
+]
+],
+[
+"d2d4",
+[
+"cp",
+39
+],
+[
+"d2d4",
+"d7d5",
+"d4c5",
+"d5c4",
+"d1e2",
+"e4c5"
+]
+],
+[
+"d2d3",
+[
+"cp",
+27
+],
+[
+"d2d3",
+"e4f6",
+"f3e5",
+"e8g8",
+"d3d4",
+"c5e7"
+]
+]
+],
+"played22": {
+"move": "f1e1",
+"score": [
+"cp",
+-373
+],
+"pv": [
+"f1e1",
+"c5f2",
+"g1h1",
+"f2e1",
+"d1e1",
+"d7d5",
+"b1c3",
+"d5c4"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983773114",
+"ply": 9,
+"zug": "5...Nf6",
+"spieler": "liyo2016",
+"mert": false,
+"R": 587,
+"cls": "miss",
+"wpA": 38.4,
+"wpB": 72.9,
+"wpAlt": 72.9,
+"best": "c5f2",
+"uci": "e4f6",
+"fen": "rnbqk2r/pppp1ppp/8/2b1p3/2B1n3/5N2/PPPP1PPP/RNBQR1K1 b kq - 3 5",
+"sac": null,
+"loss": 34.5,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 37.8,
+"wpBest": 75.8,
+"wpAlt22": 75.8,
+"loss22": 38.0,
+"legal": 40,
+"lines22": [
+[
+"c5f2",
+[
+"cp",
+-400
+],
+[
+"c5f2",
+"g1h1",
+"f2e1",
+"d1e1",
+"d7d5",
+"b1c3"
+]
+],
+[
+"d7d5",
+[
+"cp",
+-16
+],
+[
+"d7d5",
+"d2d4",
+"d5c4",
+"e1e4",
+"e8g8",
+"e4e5"
+]
+],
+[
+"e4f2",
+[
+"cp",
+0
+],
+[
+"e4f2",
+"e1e5",
+"e8f8",
+"d1f1",
+"f2h3",
+"g1h1"
+]
+]
+],
+"played22": {
+"move": "e4f6",
+"score": [
+"cp",
+174
+],
+"pv": [
+"e4f6",
+"d2d4",
+"d7d5",
+"c4b3",
+"c5b6",
+"b1c3",
+"c7c6",
+"d4e5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983773114",
+"ply": 16,
+"zug": "9.Re2",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 593,
+"cls": "mistake",
+"wpA": 27.7,
+"wpB": 40.8,
+"wpAlt": 40.8,
+"best": "e5e1",
+"uci": "e5e2",
+"fen": "rnbq1rk1/ppp1bppp/3p1n2/4R1N1/2B5/5Q2/PPPP1PPP/RNB3K1 w - - 0 9",
+"sac": null,
+"loss": 13.1,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 28.4,
+"wpBest": 34.0,
+"wpAlt22": 34.0,
+"loss22": 5.6,
+"legal": 58,
+"lines22": [
+[
+"e5e1",
+[
+"cp",
+-231
+],
+[
+"e5e1",
+"d6d5",
+"c4f1",
+"b8c6",
+"c2c3",
+"h7h6"
+]
+],
+[
+"g5f7",
+[
+"cp",
+-270
+],
+[
+"g5f7",
+"f8f7",
+"c4f7",
+"g8f7",
+"e5e1",
+"b8c6"
+]
+],
+[
+"c4f7",
+[
+"cp",
+-274
+],
+[
+"c4f7",
+"f8f7",
+"g5f7",
+"g8f7",
+"e5e1",
+"b8c6"
+]
+]
+],
+"played22": {
+"move": "e5e2",
+"score": [
+"cp",
+-322
+],
+"pv": [
+"e5e2",
+"d6d5",
+"c4b3",
+"c8g4",
+"f3e3",
+"g4e2",
+"e3e2",
+"c7c5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983773114",
+"ply": 17,
+"zug": "9...Bg4",
+"spieler": "liyo2016",
+"mert": false,
+"R": 587,
+"cls": "miss",
+"wpA": 59.9,
+"wpB": 72.2,
+"wpAlt": 72.2,
+"best": "d6d5",
+"uci": "c8g4",
+"fen": "rnbq1rk1/ppp1bppp/3p1n2/6N1/2B5/5Q2/PPPPRPPP/RNB3K1 b - - 1 9",
+"sac": null,
+"loss": 12.3,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 59.0,
+"wpBest": 70.9,
+"wpAlt22": 70.9,
+"loss22": 11.8,
+"legal": 28,
+"lines22": [
+[
+"d6d5",
+[
+"cp",
+-311
+],
+[
+"d6d5",
+"c4b3",
+"c8g4",
+"f3e3",
+"g4e2",
+"e3e2"
+]
+],
+[
+"b8c6",
+[
+"cp",
+-270
+],
+[
+"b8c6",
+"f3c3",
+"c8g4",
+"e2e1",
+"d6d5",
+"c4b5"
+]
+],
+[
+"h7h6",
+[
+"cp",
+-215
+],
+[
+"h7h6",
+"g5e4",
+"b8c6",
+"e2e1",
+"c6e5",
+"f3e2"
+]
+]
+],
+"played22": {
+"move": "c8g4",
+"score": [
+"cp",
+-128
+],
+"pv": [
+"c8g4",
+"f3b7",
+"b8d7",
+"f2f3",
+"d7c5",
+"b7b4",
+"d6d5",
+"f3g4"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185983884544",
+"ply": 27,
+"zug": "14...Nc4",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 601,
+"cls": "great",
+"wpA": 83.9,
+"wpB": 83.9,
+"wpAlt": 47.8,
+"best": "a5c4",
+"uci": "a5c4",
+"fen": "2kr3r/ppp1n1p1/4ppp1/n2P4/1q1P2P1/2N4P/PPPQ1PB1/2KR3R b - - 0 14",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 86.2,
+"wpBest": 86.2,
+"wpAlt22": 49.8,
+"loss22": 0,
+"legal": 43,
+"lines22": [
+[
+"a5c4",
+[
+"cp",
+-636
+],
+[
+"a5c4",
+"c3a4",
+"c4d2",
+"b2b3",
+"b4d4",
+"c2c3"
+]
+],
+[
+"e7d5",
+[
+"cp",
+3
+],
+[
+"e7d5",
+"a2a3",
+"b4c4",
+"g2d5",
+"e6d5",
+"h3h4"
+]
+],
+[
+"e6d5",
+[
+"cp",
+34
+],
+[
+"e6d5",
+"b2b3",
+"d8d6",
+"d1e1",
+"a5c6",
+"c1b2"
+]
+]
+],
+"played22": {
+"move": "a5c4",
+"score": [
+"cp",
+-636
+],
+"pv": [
+"a5c4",
+"c3a4",
+"c4d2",
+"b2b3",
+"b4d4",
+"c2c3",
+"d4f2",
+"d1d2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185983961210",
+"ply": 35,
+"zug": "18...Bxf7",
+"spieler": "zxc4505",
+"mert": false,
+"R": 606,
+"cls": "great",
+"wpA": 77.8,
+"wpB": 77.8,
+"wpAlt": 18.2,
+"best": "e6f7",
+"uci": "e6f7",
+"fen": "r2qr3/pp3Q1p/3pbNpk/2p5/2B5/8/PPP2PPP/R4RK1 b - - 0 18",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 80.3,
+"wpBest": 80.3,
+"wpAlt22": 18.0,
+"loss22": 0,
+"legal": 29,
+"lines22": [
+[
+"e6f7",
+[
+"cp",
+-486
+],
+[
+"e6f7",
+"c4f7",
+"d8f6",
+"f7e8",
+"a8e8",
+"c2c3"
+]
+],
+[
+"e8e7",
+[
+"cp",
+524
+],
+[
+"e8e7",
+"f6g8",
+"d8g8",
+"f7e7",
+"e6c4",
+"f1e1"
+]
+],
+[
+"e6c4",
+[
+"cp",
+619
+],
+[
+"e6c4",
+"f7h7",
+"h6g5",
+"f6e8",
+"d8e8",
+"a1e1"
+]
+]
+],
+"played22": {
+"move": "e6f7",
+"score": [
+"cp",
+-486
+],
+"pv": [
+"e6f7",
+"c4f7",
+"d8f6",
+"f7e8",
+"a8e8",
+"c2c3",
+"f6e6",
+"h2h3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185998869578",
+"ply": 21,
+"zug": "11...Nb4",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 1040,
+"cls": "blunder",
+"wpA": 15.2,
+"wpB": 48.7,
+"wpAlt": 48.7,
+"best": "g7g5",
+"uci": "c6b4",
+"fen": "r3kb1r/pppq2pp/2np1p2/3Q4/4P2B/2N5/PPP2PPP/R3K2R b KQkq - 2 11",
+"sac": null,
+"loss": 33.5,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 15.1,
+"wpBest": 49.0,
+"wpAlt22": 49.0,
+"loss22": 33.8,
+"legal": 32,
+"lines22": [
+[
+"g7g5",
+[
+"cp",
+11
+],
+[
+"g7g5",
+"h4g3",
+"h7h5",
+"h2h4",
+"e8c8",
+"e1c1"
+]
+],
+[
+"e8c8",
+[
+"cp",
+16
+],
+[
+"e8c8",
+"e1c1",
+"g7g5",
+"h4g3",
+"h7h5",
+"h2h4"
+]
+],
+[
+"h7h5",
+[
+"cp",
+33
+],
+[
+"h7h5",
+"f2f3",
+"e8c8",
+"e1c1",
+"d8e8",
+"h2h3"
+]
+]
+],
+"played22": {
+"move": "c6b4",
+"score": [
+"cp",
+456
+],
+"pv": [
+"c6b4",
+"d5b7",
+"b4c2",
+"e1d2",
+"c2b4",
+"b7a8",
+"e8f7",
+"a8b7"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185998869578",
+"ply": 22,
+"zug": "12.Qb3",
+"spieler": "GambitoDasCanela",
+"mert": false,
+"R": 1035,
+"cls": "miss",
+"wpA": 59,
+"wpB": 84.8,
+"wpAlt": 84.8,
+"best": "d5b7",
+"uci": "d5b3",
+"fen": "r3kb1r/pppq2pp/3p1p2/3Q4/1n2P2B/2N5/PPP2PPP/R3K2R w KQkq - 3 12",
+"sac": null,
+"loss": 25.8,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 62.0,
+"wpBest": 82.3,
+"wpAlt22": 82.3,
+"loss22": 20.3,
+"legal": 47,
+"lines22": [
+[
+"d5b7",
+[
+"cp",
+408
+],
+[
+"d5b7",
+"b4c2",
+"e1d2",
+"c2b4",
+"a2a3",
+"b4c6"
+]
+],
+[
+"d5b3",
+[
+"cp",
+130
+],
+[
+"d5b3",
+"b4c6",
+"b3b7",
+"a8b8",
+"b7a6",
+"b8b6"
+]
+],
+[
+"d5d2",
+[
+"cp",
+55
+],
+[
+"d5d2",
+"g7g5",
+"h4g3",
+"e8c8",
+"e1c1",
+"f8g7"
+]
+]
+],
+"played22": {
+"move": "d5b3",
+"score": [
+"cp",
+130
+],
+"pv": [
+"d5b3",
+"b4c6",
+"b3b7",
+"a8b8",
+"b7a6",
+"b8b6",
+"a6e2",
+"b6b2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185999063082",
+"ply": 32,
+"zug": "17.Nec3",
+"spieler": "Respectively102",
+"mert": false,
+"R": 1037,
+"cls": "blunder",
+"wpA": 55.5,
+"wpB": 91.4,
+"wpAlt": 91.4,
+"best": "d5f6",
+"uci": "e2c3",
+"fen": "r2qk3/ppp1nrp1/3p1b1p/3NpP1Q/4P3/3P4/PPP1N2P/R3K1R1 w Qq - 4 17",
+"sac": null,
+"loss": 35.9,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 54.8,
+"wpBest": 91.8,
+"wpAlt22": 91.8,
+"loss22": 37.0,
+"legal": 46,
+"lines22": [
+[
+"d5f6",
+[
+"cp",
+639
+],
+[
+"d5f6",
+"g7f6",
+"g1g7",
+"e7g6",
+"h5g6",
+"d8e7"
+]
+],
+[
+"e2f4",
+[
+"cp",
+216
+],
+[
+"e2f4",
+"e7d5",
+"f4d5",
+"e8f8",
+"e1e2",
+"c7c6"
+]
+],
+[
+"e2c3",
+[
+"cp",
+51
+],
+[
+"e2c3",
+"e7g8",
+"g1g6",
+"c7c6",
+"d5f6",
+"g8f6"
+]
+]
+],
+"played22": {
+"move": "e2c3",
+"score": [
+"cp",
+51
+],
+"pv": [
+"e2c3",
+"e7g8",
+"g1g6",
+"c7c6",
+"d5f6",
+"g8f6",
+"h5e2",
+"d8c7"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185999063082",
+"ply": 33,
+"zug": "17...c6",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 1032,
+"cls": "miss",
+"wpA": 9.1,
+"wpB": 44.5,
+"wpAlt": 44.5,
+"best": "e7g8",
+"uci": "c7c6",
+"fen": "r2qk3/ppp1nrp1/3p1b1p/3NpP1Q/4P3/2NP4/PPP4P/R3K1R1 b Qq - 5 17",
+"sac": null,
+"loss": 35.4,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 5.3,
+"wpBest": 45.1,
+"wpAlt22": 45.1,
+"loss22": 39.8,
+"legal": 23,
+"lines22": [
+[
+"e7g8",
+[
+"cp",
+52
+],
+[
+"e7g8",
+"e1c1",
+"f6g5",
+"c1b1",
+"c7c6",
+"h2h4"
+]
+],
+[
+"e7d5",
+[
+"cp",
+191
+],
+[
+"e7d5",
+"c3d5",
+"e8f8",
+"e1e2",
+"c7c6",
+"d5f6"
+]
+],
+[
+"e8f8",
+[
+"cp",
+224
+],
+[
+"e8f8",
+"d5f6",
+"f7f6",
+"h5g4",
+"g7g6",
+"e1c1"
+]
+]
+],
+"played22": {
+"move": "c7c6",
+"score": [
+"cp",
+763
+],
+"pv": [
+"c7c6",
+"d5f6",
+"g7f6",
+"g1g7",
+"e7g6",
+"h5g6",
+"d8e7",
+"g7g8"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185999063082",
+"ply": 34,
+"zug": "18.Nxf6+",
+"spieler": "Respectively102",
+"mert": false,
+"R": 1037,
+"cls": "great",
+"wpA": 91,
+"wpB": 91,
+"wpAlt": 54.1,
+"best": "d5f6",
+"uci": "d5f6",
+"fen": "r2qk3/pp2nrp1/2pp1b1p/3NpP1Q/4P3/2NP4/PPP4P/R3K1R1 w Qq - 0 18",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 93.5,
+"wpBest": 93.5,
+"wpAlt22": 52.9,
+"loss22": 0,
+"legal": 46,
+"lines22": [
+[
+"d5f6",
+[
+"cp",
+707
+],
+[
+"d5f6",
+"e8f8",
+"f6h7",
+"f8g8",
+"h5h6",
+"g8h8"
+]
+],
+[
+"d5e7",
+[
+"cp",
+31
+],
+[
+"d5e7",
+"d8e7",
+"e1c1",
+"e8c8",
+"h5f3",
+"f6g5"
+]
+],
+[
+"d5e3",
+[
+"cp",
+-61
+],
+[
+"d5e3",
+"d8b6",
+"c3d1",
+"e7g8",
+"h2h4",
+"d6d5"
+]
+]
+],
+"played22": {
+"move": "d5f6",
+"score": [
+"cp",
+707
+],
+"pv": [
+"d5f6",
+"e8f8",
+"f6h7",
+"f8g8",
+"h5h6",
+"g8h8",
+"h7g5",
+"g7h6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185999063082",
+"ply": 36,
+"zug": "19.Qxh6",
+"spieler": "Respectively102",
+"mert": false,
+"R": 1037,
+"cls": "blunder",
+"wpA": 67.5,
+"wpB": 91.2,
+"wpAlt": 91.2,
+"best": "g1g7",
+"uci": "h5h6",
+"fen": "r2qk3/pp2nr2/2pp1p1p/4pP1Q/4P3/2NP4/PPP4P/R3K1R1 w Qq - 0 19",
+"sac": null,
+"loss": 23.7,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 68.9,
+"wpBest": 94.6,
+"wpAlt22": 94.6,
+"loss22": 25.7,
+"legal": 41,
+"lines22": [
+[
+"g1g7",
+[
+"cp",
+758
+],
+[
+"g1g7",
+"e7g6",
+"h5g6",
+"d8e7",
+"g7g8",
+"e8d7"
+]
+],
+[
+"e1c1",
+[
+"cp",
+561
+],
+[
+"e1c1",
+"d8c7",
+"g1g7",
+"e7f5",
+"e4f5",
+"e8f8"
+]
+],
+[
+"g1g3",
+[
+"cp",
+521
+],
+[
+"g1g3",
+"d8d7",
+"e1c1",
+"e7f5",
+"e4f5",
+"e8c8"
+]
+]
+],
+"played22": {
+"move": "h5h6",
+"score": [
+"cp",
+211
+],
+"pv": [
+"h5h6",
+"e8d7",
+"h6h5",
+"d8f8",
+"e1c1",
+"d7c7",
+"h2h4",
+"a8d8"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185999063082",
+"ply": 37,
+"zug": "19...d5",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 1032,
+"cls": "miss",
+"wpA": 13.8,
+"wpB": 32.6,
+"wpAlt": 32.6,
+"best": "e8d7",
+"uci": "d6d5",
+"fen": "r2qk3/pp2nr2/2pp1p1Q/4pP2/4P3/2NP4/PPP4P/R3K1R1 b Qq - 0 19",
+"sac": null,
+"loss": 18.8,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 10.1,
+"wpBest": 31.6,
+"wpAlt22": 31.6,
+"loss22": 21.5,
+"legal": 23,
+"lines22": [
+[
+"e8d7",
+[
+"cp",
+205
+],
+[
+"e8d7",
+"h6h5",
+"d8f8",
+"e1c1",
+"f7g7",
+"c1b1"
+]
+],
+[
+"d8b6",
+[
+"cp",
+265
+],
+[
+"d8b6",
+"e1c1",
+"e8d7",
+"h2h4",
+"a8f8",
+"h4h5"
+]
+],
+[
+"f7f8",
+[
+"cp",
+333
+],
+[
+"f7f8",
+"e1c1",
+"d8d7",
+"h6h5",
+"e8d8",
+"g1g7"
+]
+]
+],
+"played22": {
+"move": "d6d5",
+"score": [
+"cp",
+580
+],
+"pv": [
+"d6d5",
+"h6h5",
+"d8d6",
+"g1g7",
+"e8d7",
+"h5f7",
+"d5d4",
+"c3a4"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185999063082",
+"ply": 48,
+"zug": "25.Qh5+",
+"spieler": "Respectively102",
+"mert": false,
+"R": 1037,
+"cls": "great",
+"wpA": 86.9,
+"wpB": 86.9,
+"wpAlt": 67.5,
+"best": "h8h5",
+"uci": "h8h5",
+"fen": "r3kr1Q/p3n3/2p2p2/q1N1pP2/1p1pP3/P2P4/1PP4P/2KR2R1 w q - 2 25",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": {
+"app": [],
+"heur": [
+{
+"piece": "n",
+"square": "c5",
+"ungedeckt": true,
+"minAtt": 9
+}
+]
+},
+"d": 20,
+"top": true,
+"wpPlay": 91.7,
+"wpBest": 91.7,
+"wpAlt22": 68.0,
+"loss22": 0,
+"legal": 37,
+"lines22": [
+[
+"h8h5",
+[
+"cp",
+635
+],
+[
+"h8h5",
+"f8f7",
+"g1g7",
+"a5c5",
+"h5f7",
+"e8d7"
+]
+],
+[
+"c5b3",
+[
+"cp",
+200
+],
+[
+"c5b3",
+"f8h8",
+"b3a5",
+"b4a3",
+"b2a3",
+"e8f7"
+]
+],
+[
+"h8f8",
+[
+"cp",
+-158
+],
+[
+"h8f8",
+"e8f8",
+"a3b4",
+"a5a1",
+"c1d2",
+"a1b2"
+]
+]
+],
+"played22": {
+"move": "h8h5",
+"score": [
+"cp",
+635
+],
+"pv": [
+"h8h5",
+"f8f7",
+"g1g7",
+"a5c5",
+"h5f7",
+"e8d7",
+"f7e6",
+"d7c7"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "185999338136",
+"ply": 9,
+"zug": "5...e6",
+"spieler": "Wadesr",
+"mert": false,
+"R": 1019,
+"cls": "mistake",
+"wpA": 28,
+"wpB": 44.1,
+"wpAlt": 44.1,
+"best": "c7c6",
+"uci": "e7e6",
+"fen": "rnbqk2r/ppppppbp/6p1/3nP3/2BP4/5N2/PPP2PPP/RNBQK2R b KQkq - 2 5",
+"sac": null,
+"loss": 16.2,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 30.3,
+"wpBest": 43.4,
+"wpAlt22": 43.4,
+"loss22": 13.1,
+"legal": 29,
+"lines22": [
+[
+"c7c6",
+[
+"cp",
+71
+],
+[
+"c7c6",
+"e1g1",
+"e8g8",
+"c1g5",
+"d7d6",
+"e5d6"
+]
+],
+[
+"d5b6",
+[
+"cp",
+73
+],
+[
+"d5b6",
+"c4b3",
+"d7d6",
+"a2a4",
+"d6e5",
+"a4a5"
+]
+],
+[
+"d5b4",
+[
+"cp",
+135
+],
+[
+"d5b4",
+"c2c3",
+"b4c6",
+"h2h4",
+"d7d5",
+"c4e2"
+]
+]
+],
+"played22": {
+"move": "e7e6",
+"score": [
+"cp",
+223
+],
+"pv": [
+"e7e6",
+"c4d5",
+"e6d5",
+"c1g5",
+"f7f6",
+"e5f6",
+"g7f6",
+"d1e2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185999338136",
+"ply": 10,
+"zug": "6.Bd2",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 1040,
+"cls": "miss",
+"wpA": 58.6,
+"wpB": 72.3,
+"wpAlt": 72.3,
+"best": "c4d5",
+"uci": "c1d2",
+"fen": "rnbqk2r/pppp1pbp/4p1p1/3nP3/2BP4/5N2/PPP2PPP/RNBQK2R w KQkq - 0 6",
+"sac": null,
+"loss": 13.6,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 57.8,
+"wpBest": 69.4,
+"wpAlt22": 69.4,
+"loss22": 11.6,
+"legal": 37,
+"lines22": [
+[
+"c4d5",
+[
+"cp",
+216
+],
+[
+"c4d5",
+"e6d5",
+"c1g5",
+"f7f6",
+"e5f6",
+"g7f6"
+]
+],
+[
+"e1g1",
+[
+"cp",
+120
+],
+[
+"e1g1",
+"h7h6",
+"c4d5",
+"e6d5",
+"b1c3",
+"c7c6"
+]
+],
+[
+"c1g5",
+[
+"cp",
+109
+],
+[
+"c1g5",
+"d5e7",
+"h2h4",
+"h7h6",
+"g5f4",
+"d7d5"
+]
+]
+],
+"played22": {
+"move": "c1d2",
+"score": [
+"cp",
+83
+],
+"pv": [
+"c1d2",
+"d7d6",
+"e1g1",
+"d6e5",
+"d4e5",
+"b7b6",
+"f1e1",
+"c8b7"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185999338136",
+"ply": 11,
+"zug": "6...a6",
+"spieler": "Wadesr",
+"mert": false,
+"R": 1019,
+"cls": "miss",
+"wpA": 27.4,
+"wpB": 41.5,
+"wpAlt": 41.5,
+"best": "d7d6",
+"uci": "a7a6",
+"fen": "rnbqk2r/pppp1pbp/4p1p1/3nP3/2BP4/5N2/PPPB1PPP/RN1QK2R b KQkq - 1 6",
+"sac": null,
+"loss": 14.1,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 26.8,
+"wpBest": 42.4,
+"wpAlt22": 42.4,
+"loss22": 15.6,
+"legal": 34,
+"lines22": [
+[
+"d7d6",
+[
+"cp",
+82
+],
+[
+"d7d6",
+"e1g1",
+"d6e5",
+"d4e5",
+"b7b6",
+"f1e1"
+]
+],
+[
+"h7h6",
+[
+"cp",
+100
+],
+[
+"h7h6",
+"d1e2",
+"d7d6",
+"h2h4",
+"b8c6",
+"b1c3"
+]
+],
+[
+"b8c6",
+[
+"cp",
+101
+],
+[
+"b8c6",
+"b1c3",
+"d5c3",
+"d2c3",
+"b7b6",
+"d1e2"
+]
+]
+],
+"played22": {
+"move": "a7a6",
+"score": [
+"cp",
+269
+],
+"pv": [
+"a7a6",
+"c4d5",
+"e6d5",
+"d2g5",
+"f7f6",
+"e5f6",
+"g7f6",
+"d1e2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185999338136",
+"ply": 12,
+"zug": "7.Nc3",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 1040,
+"cls": "miss",
+"wpA": 57.9,
+"wpB": 72.9,
+"wpAlt": 72.9,
+"best": "c4d5",
+"uci": "b1c3",
+"fen": "rnbqk2r/1ppp1pbp/p3p1p1/3nP3/2BP4/5N2/PPPB1PPP/RN1QK2R w KQkq - 0 7",
+"sac": null,
+"loss": 15,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 58.2,
+"wpBest": 74.5,
+"wpAlt22": 74.5,
+"loss22": 16.2,
+"legal": 36,
+"lines22": [
+[
+"c4d5",
+[
+"cp",
+283
+],
+[
+"c4d5",
+"e6d5",
+"d2g5",
+"f7f6",
+"e5f6",
+"g7f6"
+]
+],
+[
+"d1e2",
+[
+"cp",
+117
+],
+[
+"d1e2",
+"h7h6",
+"c4d5",
+"e6d5",
+"b1c3",
+"e8g8"
+]
+],
+[
+"e1g1",
+[
+"cp",
+111
+],
+[
+"e1g1",
+"e8g8",
+"c4d5",
+"e6d5",
+"b1c3",
+"c7c6"
+]
+]
+],
+"played22": {
+"move": "b1c3",
+"score": [
+"cp",
+88
+],
+"pv": [
+"b1c3",
+"d5c3",
+"d2c3",
+"b7b5",
+"c4d3",
+"c8b7",
+"h2h4",
+"h7h5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185999338136",
+"ply": 17,
+"zug": "9...c6",
+"spieler": "Wadesr",
+"mert": false,
+"R": 1019,
+"cls": "mistake",
+"wpA": 12.8,
+"wpB": 29.7,
+"wpAlt": 29.7,
+"best": "h7h6",
+"uci": "c7c6",
+"fen": "rnbqk2r/2pp1pbp/p5p1/1p1NP3/3P4/5N2/PPPB1PPP/R2QK2R b KQkq - 0 9",
+"sac": null,
+"loss": 16.9,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 12.1,
+"wpBest": 28.8,
+"wpAlt22": 28.8,
+"loss22": 16.7,
+"legal": 25,
+"lines22": [
+[
+"h7h6",
+[
+"cp",
+242
+],
+[
+"h7h6",
+"d5f6",
+"e8f8",
+"e1g1",
+"d7d6",
+"f1e1"
+]
+],
+[
+"c7c5",
+[
+"cp",
+418
+],
+[
+"c7c5",
+"e1g1",
+"h7h6",
+"d5f6",
+"g7f6",
+"e5f6"
+]
+],
+[
+"c8b7",
+[
+"cp",
+427
+],
+[
+"c8b7",
+"d2g5",
+"b7d5",
+"g5d8",
+"e8d8",
+"a2a4"
+]
+]
+],
+"played22": {
+"move": "c7c6",
+"score": [
+"cp",
+529
+],
+"pv": [
+"c7c6",
+"d2g5",
+"d8g5",
+"d5c7",
+"e8d8",
+"f3g5",
+"d8c7",
+"e1g1"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185999338136",
+"ply": 18,
+"zug": "10.Nf6+",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 1040,
+"cls": "miss",
+"wpA": 69.6,
+"wpB": 87.5,
+"wpAlt": 87.5,
+"best": "d2g5",
+"uci": "d5f6",
+"fen": "rnbqk2r/3p1pbp/p1p3p1/1p1NP3/3P4/5N2/PPPB1PPP/R2QK2R w KQkq - 0 10",
+"sac": null,
+"loss": 17.8,
+"grund": "label:miss",
+"kand": {
+"app": [
+{
+"piece": "n",
+"square": "f6",
+"net": 1,
+"before": true
+}
+],
+"heur": []
+},
+"d": 20,
+"top": false,
+"wpPlay": 73.8,
+"wpBest": 87.5,
+"wpAlt22": 87.5,
+"loss22": 13.7,
+"legal": 40,
+"lines22": [
+[
+"d2g5",
+[
+"cp",
+515
+],
+[
+"d2g5",
+"c6d5",
+"g5d8",
+"e8d8",
+"f3g5",
+"d8c7"
+]
+],
+[
+"d5f6",
+[
+"cp",
+274
+],
+[
+"d5f6",
+"g7f6",
+"e5f6",
+"e8g8",
+"e1g1",
+"d7d6"
+]
+],
+[
+"d5c3",
+[
+"cp",
+203
+],
+[
+"d5c3",
+"e8g8",
+"d2g5",
+"f7f6",
+"e5f6",
+"f8e8"
+]
+]
+],
+"played22": {
+"move": "d5f6",
+"score": [
+"cp",
+274
+],
+"pv": [
+"d5f6",
+"g7f6",
+"e5f6",
+"e8g8",
+"e1g1",
+"d7d6",
+"d2g5",
+"c8e6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185999654486",
+"ply": 24,
+"zug": "13.e3",
+"spieler": "Wadesr",
+"mert": false,
+"R": 1027,
+"cls": "blunder",
+"wpA": 23.7,
+"wpB": 46.8,
+"wpAlt": 46.8,
+"best": "g2g3",
+"uci": "e2e3",
+"fen": "Q1bq1rk1/p1pn1pp1/1p1p3p/4b3/1P6/2P5/P3PPPP/RN2KB1R w KQ - 1 13",
+"sac": null,
+"loss": 23.1,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 17.9,
+"wpBest": 47.7,
+"wpAlt22": 47.7,
+"loss22": 29.8,
+"legal": 25,
+"lines22": [
+[
+"g2g3",
+[
+"cp",
+-24
+],
+[
+"g2g3",
+"c7c5",
+"b4b5",
+"d7f6",
+"f1g2",
+"d8e7"
+]
+],
+[
+"a8c6",
+[
+"cp",
+-102
+],
+[
+"a8c6",
+"d8f6",
+"c6f3",
+"f6e6",
+"b1d2",
+"c7c5"
+]
+],
+[
+"a8f3",
+[
+"cp",
+-150
+],
+[
+"a8f3",
+"c7c5",
+"a2a3",
+"d7f6",
+"b1d2",
+"f8e8"
+]
+]
+],
+"played22": {
+"move": "e2e3",
+"score": [
+"cp",
+-405
+],
+"pv": [
+"e2e3",
+"d8f6",
+"b1d2",
+"e5c3",
+"a1d1",
+"c3b4",
+"a8e4",
+"f6b2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185999654486",
+"ply": 25,
+"zug": "13...Nf6",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 1032,
+"cls": "miss",
+"wpA": 58.9,
+"wpB": 76.3,
+"wpAlt": 76.3,
+"best": "d8f6",
+"uci": "d7f6",
+"fen": "Q1bq1rk1/p1pn1pp1/1p1p3p/4b3/1P6/2P1P3/P4PPP/RN2KB1R b KQ - 0 13",
+"sac": null,
+"loss": 17.4,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 58.7,
+"wpBest": 79.8,
+"wpAlt22": 79.8,
+"loss22": 21.2,
+"legal": 30,
+"lines22": [
+[
+"d8f6",
+[
+"cp",
+-365
+],
+[
+"d8f6",
+"b1d2",
+"e5c3",
+"a1d1",
+"c3d2",
+"d1d2"
+]
+],
+[
+"c7c5",
+[
+"cp",
+-208
+],
+[
+"c7c5",
+"f1d3",
+"c5b4",
+"a8e4",
+"f8e8",
+"e4b4"
+]
+],
+[
+"d7f6",
+[
+"cp",
+-93
+],
+[
+"d7f6",
+"f1e2",
+"d6d5",
+"a8a7",
+"d8d6",
+"a7a4"
+]
+]
+],
+"played22": {
+"move": "d7f6",
+"score": [
+"cp",
+-93
+],
+"pv": [
+"d7f6",
+"f1e2",
+"d6d5",
+"a8a7",
+"d8d6",
+"a7a4",
+"f6e4",
+"a4c2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "185999654486",
+"ply": 58,
+"zug": "30.Qxd5",
+"spieler": "Wadesr",
+"mert": false,
+"R": 1027,
+"cls": "great",
+"wpA": 74.8,
+"wpB": 74.8,
+"wpAlt": 60,
+"best": "a8d5",
+"uci": "a8d5",
+"fen": "Q7/2p2ppk/1p1b1q1p/3p4/1P3P2/1KP4P/P3r1P1/2R2R2 w - - 5 30",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 77.9,
+"wpBest": 77.9,
+"wpAlt22": 67.3,
+"loss22": 0,
+"legal": 36,
+"lines22": [
+[
+"a8d5",
+[
+"cp",
+336
+],
+[
+"a8d5",
+"f6e7",
+"f1d1",
+"e7e8",
+"c1c2",
+"e2e4"
+]
+],
+[
+"f1e1",
+[
+"cp",
+192
+],
+[
+"f1e1",
+"e2g2",
+"a8d5",
+"g2g3",
+"d5e4",
+"g7g6"
+]
+],
+[
+"f1d1",
+[
+"cp",
+53
+],
+[
+"f1d1",
+"d6f4",
+"c1c2",
+"e2e5",
+"a8b7",
+"f4g5"
+]
+]
+],
+"played22": {
+"move": "a8d5",
+"score": [
+"cp",
+336
+],
+"pv": [
+"a8d5",
+"f6e7",
+"f1d1",
+"e7e8",
+"c1c2",
+"e2e4",
+"c2d2",
+"g7g6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "186000059536",
+"ply": 10,
+"zug": "6.d4",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 1024,
+"cls": "great",
+"wpA": 71.9,
+"wpB": 71.9,
+"wpAlt": 53.2,
+"best": "d2d4",
+"uci": "d2d4",
+"fen": "r1bqk2r/1ppp1ppp/p1n2n2/2b1p3/2B1P3/2P2N2/PP1P1PPP/RNBQ1RK1 w kq - 0 6",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 69.8,
+"wpBest": 69.8,
+"wpAlt22": 55.4,
+"loss22": 0,
+"legal": 31,
+"lines22": [
+[
+"d2d4",
+[
+"cp",
+223
+],
+[
+"d2d4",
+"c5a7",
+"d4e5",
+"f6g4",
+"c1g5",
+"f7f6"
+]
+],
+[
+"f1e1",
+[
+"cp",
+58
+],
+[
+"f1e1",
+"d7d6",
+"d2d4",
+"c5b6",
+"h2h3",
+"e8g8"
+]
+],
+[
+"c4b3",
+[
+"cp",
+35
+],
+[
+"c4b3",
+"d7d6",
+"d2d4",
+"c5a7",
+"h2h3",
+"e8g8"
+]
+]
+],
+"played22": {
+"move": "d2d4",
+"score": [
+"cp",
+223
+],
+"pv": [
+"d2d4",
+"c5a7",
+"d4e5",
+"f6g4",
+"c1g5",
+"f7f6",
+"e5f6",
+"g7f6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": false
+}
+},
+{
+"u": "186000059536",
+"ply": 37,
+"zug": "19...Rxd1",
+"spieler": "chandureddy16",
+"mert": false,
+"R": 1024,
+"cls": "great",
+"wpA": 53.9,
+"wpB": 53.9,
+"wpAlt": 17.6,
+"best": "d8d1",
+"uci": "d8d1",
+"fen": "2kr3r/1pp3pp/p1n1pn2/2P5/8/4BN2/PP3PPP/3Q1RK1 b - - 0 19",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 53.2,
+"wpBest": 53.2,
+"wpAlt22": 16.5,
+"loss22": 0,
+"legal": 36,
+"lines22": [
+[
+"d8d1",
+[
+"cp",
+-34
+],
+[
+"d8d1",
+"f1d1",
+"e6e5",
+"g1f1",
+"h8d8",
+"d1c1"
+]
+],
+[
+"h7h6",
+[
+"cp",
+432
+],
+[
+"h7h6",
+"d1b1",
+"g7g5",
+"f1d1",
+"g5g4",
+"f3e1"
+]
+],
+[
+"d8d7",
+[
+"cp",
+435
+],
+[
+"d8d7",
+"d1a4",
+"h7h6",
+"b2b4",
+"c8b8",
+"b4b5"
+]
+]
+],
+"played22": {
+"move": "d8d1",
+"score": [
+"cp",
+-34
+],
+"pv": [
+"d8d1",
+"f1d1",
+"e6e5",
+"g1f1",
+"h8d8",
+"d1c1",
+"c8d7",
+"c1c3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "186000059536",
+"ply": 45,
+"zug": "23...Nxe3+",
+"spieler": "chandureddy16",
+"mert": false,
+"R": 1024,
+"cls": "great",
+"wpA": 84.3,
+"wpB": 84.3,
+"wpAlt": 63.1,
+"best": "d5e3",
+"uci": "d5e3",
+"fen": "2kr4/1pp3pp/p3pn2/2Pn4/3N4/P3B3/1P3PPP/3R1K2 b - - 4 23",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 84.5,
+"wpBest": 84.5,
+"wpAlt22": 62.0,
+"loss22": 0,
+"legal": 29,
+"lines22": [
+[
+"d5e3",
+[
+"cp",
+-452
+],
+[
+"d5e3",
+"f2e3",
+"e6e5",
+"f1e2",
+"e5d4",
+"e3d4"
+]
+],
+[
+"e6e5",
+[
+"cp",
+-130
+],
+[
+"e6e5",
+"d4c2",
+"d5e3",
+"c2e3",
+"d8d1",
+"e3d1"
+]
+],
+[
+"f6e4",
+[
+"cp",
+-4
+],
+[
+"f6e4",
+"d1c1",
+"d5e3",
+"f2e3",
+"d8f8",
+"f1e2"
+]
+]
+],
+"played22": {
+"move": "d5e3",
+"score": [
+"cp",
+-452
+],
+"pv": [
+"d5e3",
+"f2e3",
+"e6e5",
+"f1e2",
+"e5d4",
+"e3d4",
+"d8d5",
+"h2h3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "186000059536",
+"ply": 47,
+"zug": "24...e5",
+"spieler": "chandureddy16",
+"mert": false,
+"R": 1024,
+"cls": "great",
+"wpA": 83.4,
+"wpB": 83.4,
+"wpAlt": 53.8,
+"best": "e6e5",
+"uci": "e6e5",
+"fen": "2kr4/1pp3pp/p3pn2/2P5/3N4/P3P3/1P4PP/3R1K2 b - - 0 24",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 84.7,
+"wpBest": 84.7,
+"wpAlt22": 51.4,
+"loss22": 0,
+"legal": 26,
+"lines22": [
+[
+"e6e5",
+[
+"cp",
+-457
+],
+[
+"e6e5",
+"f1e2",
+"e5d4",
+"e3d4",
+"d8d5",
+"e2d3"
+]
+],
+[
+"f6e4",
+[
+"cp",
+-15
+],
+[
+"f6e4",
+"d1c1",
+"e6e5",
+"d4f3",
+"d8d5",
+"c1c4"
+]
+],
+[
+"a6a5",
+[
+"cp",
+-13
+],
+[
+"a6a5",
+"f1e1",
+"e6e5",
+"d4e6",
+"d8d1",
+"e1d1"
+]
+]
+],
+"played22": {
+"move": "e6e5",
+"score": [
+"cp",
+-457
+],
+"pv": [
+"e6e5",
+"f1e2",
+"e5d4",
+"e3d4",
+"d8d5",
+"e2d3",
+"d5f5",
+"d1e1"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "186000059536",
+"ply": 49,
+"zug": "25...exd4",
+"spieler": "chandureddy16",
+"mert": false,
+"R": 1024,
+"cls": "great",
+"wpA": 85.7,
+"wpB": 85.7,
+"wpAlt": 51.7,
+"best": "e5d4",
+"uci": "e5d4",
+"fen": "2kr4/1pp3pp/p4n2/2P1p3/3N4/P3P3/1P2K1PP/3R4 b - - 1 25",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 84.7,
+"wpBest": 84.7,
+"wpAlt22": 51.4,
+"loss22": 0,
+"legal": 27,
+"lines22": [
+[
+"e5d4",
+[
+"cp",
+-457
+],
+[
+"e5d4",
+"e3d4",
+"d8d5",
+"e2d3",
+"d5f5",
+"d1e1"
+]
+],
+[
+"a6a5",
+[
+"cp",
+-15
+],
+[
+"a6a5",
+"d4f3",
+"d8d1",
+"e2d1",
+"e5e4",
+"f3e5"
+]
+],
+[
+"f6e4",
+[
+"cp",
+-12
+],
+[
+"f6e4",
+"d4e6",
+"d8d1",
+"e2d1",
+"c8d7",
+"e6g7"
+]
+]
+],
+"played22": {
+"move": "e5d4",
+"score": [
+"cp",
+-457
+],
+"pv": [
+"e5d4",
+"e3d4",
+"d8d5",
+"e2d3",
+"d5f5",
+"d1e1",
+"c8d8",
+"e1e2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "186001603352",
+"ply": 39,
+"zug": "20...Qb3",
+"spieler": "Matheus301124",
+"mert": false,
+"R": 635,
+"cls": "great",
+"wpA": 47.5,
+"wpB": 47.5,
+"wpAlt": 23.6,
+"best": "a2b3",
+"uci": "a2b3",
+"fen": "1r3rk1/2p2pp1/3p1b1p/4p3/1pN1P3/2PP1Q1P/qP3PP1/R4RK1 b - - 1 20",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 47.6,
+"wpBest": 47.6,
+"wpAlt22": 22.8,
+"loss22": 0,
+"legal": 35,
+"lines22": [
+[
+"a2b3",
+[
+"cp",
+32
+],
+[
+"a2b3",
+"c3b4",
+"b3b4",
+"a1a7",
+"b8b7",
+"a7a6"
+]
+],
+[
+"a2a1",
+[
+"cp",
+413
+],
+[
+"a2a1",
+"f1a1",
+"b4c3",
+"b2c3",
+"b8b3",
+"g2g3"
+]
+],
+[
+"a2a8",
+[
+"cp",
+450
+],
+[
+"a2a8",
+"a1a8",
+"b8a8",
+"c3b4",
+"f8b8",
+"g1h1"
+]
+]
+],
+"played22": {
+"move": "a2b3",
+"score": [
+"cp",
+32
+],
+"pv": [
+"a2b3",
+"c3b4",
+"b3b4",
+"a1a7",
+"b8b7",
+"a7a6",
+"f6d8",
+"f1a1"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "186069495252",
+"ply": 38,
+"zug": "20.Qg3+",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 594,
+"cls": "great",
+"wpA": 85.1,
+"wpB": 85.1,
+"wpAlt": 65.5,
+"best": "f3g3",
+"uci": "f3g3",
+"fen": "r2q1rk1/3nbp2/p4n1p/4pN2/1P6/1Bp2Q1P/P4PP1/R3R1K1 w - - 0 20",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 87.5,
+"wpBest": 87.5,
+"wpAlt22": 76.3,
+"loss22": 0,
+"legal": 49,
+"lines22": [
+[
+"f3g3",
+[
+"cp",
+678
+],
+[
+"f3g3",
+"f6g4",
+"g3g4",
+"e7g5",
+"f5h6",
+"g8g7"
+]
+],
+[
+"f3e3",
+[
+"cp",
+408
+],
+[
+"f3e3",
+"f6e8",
+"e3h6",
+"e7g5",
+"h6g6",
+"g8h8"
+]
+],
+[
+"f3c3",
+[
+"cp",
+249
+],
+[
+"f3c3",
+"g8h7",
+"a1d1",
+"f8g8",
+"e1e5",
+"e7f8"
+]
+]
+],
+"played22": {
+"move": "f3g3",
+"score": [
+"cp",
+678
+],
+"pv": [
+"f3g3",
+"f6g4",
+"g3g4",
+"e7g5",
+"f5h6",
+"g8g7",
+"h6f5",
+"g7g6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": false
+}
+},
+{
+"u": "186069569048",
+"ply": 35,
+"zug": "18...Qxh2+",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 601,
+"cls": "great",
+"wpA": 75.1,
+"wpB": 75.1,
+"wpAlt": 53.2,
+"best": "e5h2",
+"uci": "e5h2",
+"fen": "3r2k1/2p2ppp/p1pb4/4q3/8/2P1B3/PP3PPP/R3Q1K1 b - - 0 18",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 76.4,
+"wpBest": 76.4,
+"wpAlt22": 55.2,
+"loss22": 0,
+"legal": 39,
+"lines22": [
+[
+"e5h2",
+[
+"cp",
+-407
+],
+[
+"e5h2",
+"g1f1",
+"h2h1",
+"f1e2",
+"h1g2",
+"e1d1"
+]
+],
+[
+"d8b8",
+[
+"cp",
+-73
+],
+[
+"d8b8",
+"f2f4",
+"e5f5",
+"e1d2",
+"h7h5",
+"b2b4"
+]
+],
+[
+"h7h5",
+[
+"cp",
+-38
+],
+[
+"h7h5",
+"g2g3",
+"h5h4",
+"e3f4",
+"e5f5",
+"a1d1"
+]
+]
+],
+"played22": {
+"move": "e5h2",
+"score": [
+"cp",
+-407
+],
+"pv": [
+"e5h2",
+"g1f1",
+"h2h1",
+"f1e2",
+"h1g2",
+"e1d1",
+"g2g4",
+"e2e1"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "186069569048",
+"ply": 48,
+"zug": "25.f4",
+"spieler": "inioluwanim",
+"mert": false,
+"R": 526,
+"cls": "blunder",
+"wpA": 20.7,
+"wpB": 49.6,
+"wpAlt": 49.6,
+"best": "a1h1",
+"uci": "f2f4",
+"fen": "4rk2/2p2ppp/p1pb4/8/8/2P1B1P1/PP2KP2/R7 w - - 1 25",
+"sac": null,
+"loss": 28.9,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 19.9,
+"wpBest": 50.0,
+"wpAlt22": 50.0,
+"loss22": 30.1,
+"legal": 21,
+"lines22": [
+[
+"a1h1",
+[
+"cp",
+0
+],
+[
+"a1h1",
+"h7h6",
+"h1h4",
+"d6c5",
+"h4c4",
+"c5e3"
+]
+],
+[
+"b2b3",
+[
+"cp",
+-24
+],
+[
+"b2b3",
+"g7g6",
+"a1h1",
+"h7h5",
+"h1h4",
+"f8e7"
+]
+],
+[
+"e2d3",
+[
+"cp",
+-29
+],
+[
+"e2d3",
+"h7h5",
+"a1h1",
+"e8e5",
+"f2f4",
+"e5d5"
+]
+]
+],
+"played22": {
+"move": "f2f4",
+"score": [
+"cp",
+-510
+],
+"pv": [
+"f2f4",
+"d6c5",
+"e2d3",
+"e8e3",
+"d3c4",
+"c5d6",
+"a1g1",
+"f7f5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "186069569048",
+"ply": 49,
+"zug": "25...f5",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 601,
+"cls": "miss",
+"wpA": 53.5,
+"wpB": 80.5,
+"wpAlt": 80.5,
+"best": "d6c5",
+"uci": "f7f5",
+"fen": "4rk2/2p2ppp/p1pb4/8/5P2/2P1B1P1/PP2K3/R7 b - - 0 25",
+"sac": null,
+"loss": 27,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 53.3,
+"wpBest": 80.9,
+"wpAlt22": 80.9,
+"loss22": 27.6,
+"legal": 25,
+"lines22": [
+[
+"d6c5",
+[
+"cp",
+-501
+],
+[
+"d6c5",
+"b2b4",
+"e8e3",
+"e2d2",
+"c5b6",
+"g3g4"
+]
+],
+[
+"h7h5",
+[
+"cp",
+-59
+],
+[
+"h7h5",
+"e2f3",
+"a6a5",
+"c3c4",
+"g7g6",
+"a1d1"
+]
+],
+[
+"a6a5",
+[
+"cp",
+-56
+],
+[
+"a6a5",
+"e2f3",
+"h7h5",
+"c3c4",
+"g7g6",
+"a1d1"
+]
+]
+],
+"played22": {
+"move": "f7f5",
+"score": [
+"cp",
+-46
+],
+"pv": [
+"f7f5",
+"e2f3",
+"f8f7",
+"a1d1",
+"h7h6",
+"b2b3",
+"e8e6",
+"d1d3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "186069868192",
+"ply": 21,
+"zug": "11...Bxb3",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 617,
+"cls": "blunder",
+"wpA": 31.9,
+"wpB": 53.7,
+"wpAlt": 53.7,
+"best": "g7h6",
+"uci": "e6b3",
+"fen": "r3k2r/1ppqn1bp/p1npbppB/4p3/4P3/1BNP1N1P/PPPQ1PP1/R3K2R b KQkq - 1 11",
+"sac": null,
+"loss": 21.8,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 30.6,
+"wpBest": 52.4,
+"wpAlt22": 52.4,
+"loss22": 21.8,
+"legal": 39,
+"lines22": [
+[
+"g7h6",
+[
+"cp",
+-33
+],
+[
+"g7h6",
+"d2h6",
+"e8c8",
+"e1c1",
+"e6b3",
+"a2b3"
+]
+],
+[
+"g7f8",
+[
+"cp",
+2
+],
+[
+"g7f8",
+"h6f8",
+"h8f8",
+"c3d5",
+"e8c8",
+"c2c4"
+]
+],
+[
+"e8g8",
+[
+"cp",
+38
+],
+[
+"e8g8",
+"h6g7",
+"g8g7",
+"d3d4",
+"e6b3",
+"a2b3"
+]
+]
+],
+"played22": {
+"move": "e6b3",
+"score": [
+"cp",
+280
+],
+"pv": [
+"e6b3",
+"h6g7",
+"h8g8",
+"g7f6",
+"b3e6",
+"f3g5",
+"c6d4",
+"g5h7"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "186069868192",
+"ply": 22,
+"zug": "12.axb3",
+"spieler": "cartol1984",
+"mert": false,
+"R": 670,
+"cls": "miss",
+"wpA": 47.5,
+"wpB": 68.7,
+"wpAlt": 68.7,
+"best": "h6g7",
+"uci": "a2b3",
+"fen": "r3k2r/1ppqn1bp/p1np1ppB/4p3/4P3/1bNP1N1P/PPPQ1PP1/R3K2R w KQkq - 0 12",
+"sac": null,
+"loss": 21.2,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 46.3,
+"wpBest": 70.0,
+"wpAlt22": 70.0,
+"loss22": 23.7,
+"legal": 41,
+"lines22": [
+[
+"h6g7",
+[
+"cp",
+280
+],
+[
+"h6g7",
+"h8g8",
+"g7f6",
+"b3e6",
+"f3g5",
+"c6d4"
+]
+],
+[
+"a2b3",
+[
+"cp",
+-49
+],
+[
+"a2b3",
+"g7h6",
+"d2h6",
+"e8c8",
+"e1c1",
+"d6d5"
+]
+],
+[
+"c2b3",
+[
+"cp",
+-87
+],
+[
+"c2b3",
+"g7h6",
+"d2h6",
+"e8c8",
+"e1c1",
+"d6d5"
+]
+]
+],
+"played22": {
+"move": "a2b3",
+"score": [
+"cp",
+-49
+],
+"pv": [
+"a2b3",
+"g7h6",
+"d2h6",
+"e8c8",
+"e1c1",
+"d6d5",
+"e4d5",
+"e7d5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "186069868192",
+"ply": 49,
+"zug": "25...Kd7",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 617,
+"cls": "blunder",
+"wpA": 25.6,
+"wpB": 68.5,
+"wpAlt": 68.5,
+"best": "d6e4",
+"uci": "c8d7",
+"fen": "2k5/1pp3rp/p2n1pp1/4p3/2P1P3/1P3N1P/1P1R1PP1/1K6 b - - 0 25",
+"sac": null,
+"loss": 42.9,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 25.8,
+"wpBest": 70.8,
+"wpAlt22": 70.8,
+"loss22": 45.0,
+"legal": 22,
+"lines22": [
+[
+"d6e4",
+[
+"cp",
+-304
+],
+[
+"d6e4",
+"d2e2",
+"e4c5",
+"b1c2",
+"g7d7",
+"e2e3"
+]
+],
+[
+"g6g5",
+[
+"cp",
+-111
+],
+[
+"g6g5",
+"d2e2",
+"g5g4",
+"f3e1",
+"g4h3",
+"g2h3"
+]
+],
+[
+"a6a5",
+[
+"cp",
+-68
+],
+[
+"a6a5",
+"d2e2",
+"g7d7",
+"b1c2",
+"b7b6",
+"f3e1"
+]
+]
+],
+"played22": {
+"move": "c8d7",
+"score": [
+"cp",
+362
+],
+"pv": [
+"c8d7",
+"c4c5",
+"d7e6",
+"c5d6",
+"c7d6",
+"f3g1",
+"g7d7",
+"g1e2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "186069868192",
+"ply": 50,
+"zug": "26.Ne1",
+"spieler": "cartol1984",
+"mert": false,
+"R": 670,
+"cls": "miss",
+"wpA": 46.1,
+"wpB": 75.1,
+"wpAlt": 75.1,
+"best": "c4c5",
+"uci": "f3e1",
+"fen": "8/1ppk2rp/p2n1pp1/4p3/2P1P3/1P3N1P/1P1R1PP1/1K6 w - - 1 26",
+"sac": null,
+"loss": 29,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 47.7,
+"wpBest": 74.7,
+"wpAlt22": 74.7,
+"loss22": 27.0,
+"legal": 23,
+"lines22": [
+[
+"c4c5",
+[
+"cp",
+358
+],
+[
+"c4c5",
+"d7e6",
+"c5d6",
+"c7d6",
+"b1c2",
+"f6f5"
+]
+],
+[
+"f3e1",
+[
+"cp",
+-30
+],
+[
+"f3e1",
+"d7e6",
+"f2f3",
+"f6f5",
+"e4f5",
+"g6f5"
+]
+],
+[
+"b1c2",
+[
+"cp",
+-36
+],
+[
+"b1c2",
+"d7e6",
+"d2e2",
+"a6a5",
+"f3e1",
+"h7h5"
+]
+]
+],
+"played22": {
+"move": "f3e1",
+"score": [
+"cp",
+-30
+],
+"pv": [
+"f3e1",
+"d7e6",
+"f2f3",
+"f6f5",
+"e4f5",
+"g6f5",
+"e1d3",
+"e6f6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "186069868192",
+"ply": 73,
+"zug": "37...Nxe2",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 617,
+"cls": "great",
+"wpA": 80.1,
+"wpB": 80.1,
+"wpAlt": 68.8,
+"best": "d4e2",
+"uci": "d4e2",
+"fen": "8/1p2r2p/p7/2p5/2Pnpk2/1P5P/1P1KR1P1/5N2 b - - 9 37",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 82.4,
+"wpBest": 82.4,
+"wpAlt22": 70.0,
+"loss22": 0,
+"legal": 24,
+"lines22": [
+[
+"d4e2",
+[
+"cp",
+-528
+],
+[
+"d4e2",
+"f1e3",
+"f4g3",
+"d2e2",
+"e7f7",
+"e3d5"
+]
+],
+[
+"e7d7",
+[
+"cp",
+-290
+],
+[
+"e7d7",
+"e2f2",
+"f4e5",
+"d2e1",
+"d4b3",
+"g2g4"
+]
+],
+[
+"f4e5",
+[
+"cp",
+-281
+],
+[
+"f4e5",
+"e2f2",
+"e7d7",
+"d2e1",
+"d4b3",
+"g2g4"
+]
+]
+],
+"played22": {
+"move": "d4e2",
+"score": [
+"cp",
+-528
+],
+"pv": [
+"d4e2",
+"f1e3",
+"f4g3",
+"d2e2",
+"e7f7",
+"e3d5",
+"g3g2",
+"e2e3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "186070034314",
+"ply": 45,
+"zug": "23...Raf8",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 625,
+"cls": "great",
+"wpA": 33.5,
+"wpB": 33.5,
+"wpAlt": 23.5,
+"best": "a8f8",
+"uci": "a8f8",
+"fen": "r7/p1pk4/2pPp3/7Q/5r1p/7b/PPP5/3R3K b - - 3 23",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 26.2,
+"wpBest": 26.2,
+"wpAlt22": 23.0,
+"loss22": 0,
+"legal": 31,
+"lines22": [
+[
+"a8f8",
+[
+"cp",
+352
+],
+[
+"a8f8",
+"h5a5",
+"c7d6",
+"a5a7",
+"d7e8",
+"a7b8"
+]
+],
+[
+"f4f1",
+[
+"cp",
+411
+],
+[
+"f4f1",
+"d1f1",
+"h3f1",
+"h5f7",
+"d7d6",
+"f7f1"
+]
+],
+[
+"h3g2",
+[
+"cp",
+472
+],
+[
+"h3g2",
+"h1g2",
+"a8f8",
+"h5e5",
+"h4h3",
+"g2h3"
+]
+]
+],
+"played22": {
+"move": "a8f8",
+"score": [
+"cp",
+352
+],
+"pv": [
+"a8f8",
+"h5a5",
+"c7d6",
+"a5a7",
+"d7e8",
+"a7b8",
+"e8f7",
+"b8d6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "186070316870",
+"ply": 36,
+"zug": "19.axb4",
+"spieler": "arackavas",
+"mert": false,
+"R": 665,
+"cls": "great",
+"wpA": 49.8,
+"wpB": 49.8,
+"wpAlt": 21.8,
+"best": "a3b4",
+"uci": "a3b4",
+"fen": "8/p2k2pp/4pp2/5b2/1nrP1B2/P1n1PN2/1r3PPP/R4RK1 w - - 0 19",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 49.4,
+"wpBest": 49.4,
+"wpAlt22": 20.8,
+"loss22": 0,
+"legal": 30,
+"lines22": [
+[
+"a3b4",
+[
+"cp",
+-8
+],
+[
+"a3b4",
+"d7c6",
+"a1a7",
+"g7g5",
+"f4b8",
+"c3e2"
+]
+],
+[
+"g2g4",
+[
+"cp",
+-444
+],
+[
+"g2g4",
+"f5g4",
+"a3b4",
+"g4f3",
+"a1a7",
+"d7c6"
+]
+],
+[
+"f3d2",
+[
+"cp",
+-487
+],
+[
+"f3d2",
+"b2d2",
+"a3b4",
+"d2a2",
+"a1a2",
+"c3a2"
+]
+]
+],
+"played22": {
+"move": "a3b4",
+"score": [
+"cp",
+-8
+],
+"pv": [
+"a3b4",
+"d7c6",
+"a1a7",
+"g7g5",
+"f4b8",
+"c3e2",
+"g1h1",
+"c4b4"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "186250470540",
+"ply": 26,
+"zug": "14.Bxe8",
+"spieler": "Pe3ival",
+"mert": false,
+"R": 623,
+"cls": "great",
+"wpA": 54.5,
+"wpB": 54.5,
+"wpAlt": 25.9,
+"best": "c6e8",
+"uci": "c6e8",
+"fen": "r2qr1k1/ppp2ppp/1nBb4/5b2/8/P3pNB1/1P1N1PPP/R2QK2R w KQ - 0 14",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 55.6,
+"wpBest": 55.6,
+"wpAlt22": 27.0,
+"loss22": 0,
+"legal": 41,
+"lines22": [
+[
+"c6e8",
+[
+"cp",
+77
+],
+[
+"c6e8",
+"e3d2",
+"e1f1",
+"d8e8",
+"d1d2",
+"a8d8"
+]
+],
+[
+"d2e4",
+[
+"cp",
+-339
+],
+[
+"d2e4",
+"e3e2",
+"d1d2",
+"b7c6",
+"e4d6",
+"c7d6"
+]
+],
+[
+"d2b3",
+[
+"cp",
+-386
+],
+[
+"d2b3",
+"b7c6",
+"g3d6",
+"c7d6",
+"b3d4",
+"f5e4"
+]
+]
+],
+"played22": {
+"move": "c6e8",
+"score": [
+"cp",
+77
+],
+"pv": [
+"c6e8",
+"e3d2",
+"e1f1",
+"d8e8",
+"d1d2",
+"a8d8",
+"a1e1",
+"e8b5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "186356099444",
+"ply": 36,
+"zug": "19.Qc5+",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 619,
+"cls": "blunder",
+"wpA": 6.8,
+"wpB": 100,
+"wpAlt": 100,
+"best": "c6d6",
+"uci": "c6c5",
+"fen": "r1b4r/p3kppp/2Q1p3/3pP3/8/5N2/P2NB1qP/3K2b1 w - - 1 19",
+"sac": null,
+"loss": 93.2,
+"grund": "vorher",
+"kand": {
+"app": [
+{
+"piece": "q",
+"square": "c5",
+"net": 9,
+"before": false
+}
+],
+"heur": [
+{
+"piece": "q",
+"square": "c5",
+"ungedeckt": true,
+"minAtt": 3
+}
+]
+},
+"d": 20,
+"top": false,
+"wpPlay": 4.2,
+"wpBest": 100.0,
+"wpAlt22": 100.0,
+"loss22": 95.8,
+"legal": 40,
+"lines22": [
+[
+"c6d6",
+[
+"mate",
+5
+],
+[
+"c6d6",
+"e7e8",
+"e2b5",
+"c8d7",
+"b5d7",
+"e8d8"
+]
+],
+[
+"e2f1",
+[
+"cp",
+189
+],
+[
+"e2f1",
+"h8d8",
+"f1g2",
+"c8d7",
+"c6d6",
+"e7e8"
+]
+],
+[
+"f3h4",
+[
+"cp",
+-260
+],
+[
+"f3h4",
+"g2e2",
+"d1e2",
+"c8d7",
+"c6d6",
+"e7e8"
+]
+]
+],
+"played22": {
+"move": "c6c5",
+"score": [
+"cp",
+-1070
+],
+"pv": [
+"c6c5",
+"g1c5",
+"f3e1",
+"g2g6",
+"e1d3",
+"g6g1",
+"d2f1",
+"c8d7"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": false
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "186356099444",
+"ply": 37,
+"zug": "19...Kd8",
+"spieler": "Mabelgray",
+"mert": false,
+"R": 653,
+"cls": "miss",
+"wpA": 0,
+"wpB": 93.6,
+"wpAlt": 93.6,
+"best": "g1c5",
+"uci": "e7d8",
+"fen": "r1b4r/p3kppp/4p3/2QpP3/8/5N2/P2NB1qP/3K2b1 b - - 2 19",
+"sac": null,
+"loss": 93.6,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 0.0,
+"wpBest": 95.6,
+"wpAlt22": 95.6,
+"loss22": 95.6,
+"legal": 4,
+"lines22": [
+[
+"g1c5",
+[
+"cp",
+-1031
+],
+[
+"g1c5",
+"f3e1",
+"g2f2",
+"e1d3",
+"f2g1",
+"d2f1"
+]
+],
+[
+"e7e8",
+[
+"cp",
+0
+],
+[
+"e7e8",
+"c5c6",
+"c8d7",
+"c6a8",
+"e8e7",
+"a8h8"
+]
+],
+[
+"e7d8",
+[
+"mate",
+6
+],
+[
+"e7d8",
+"c5d6",
+"c8d7",
+"e2b5",
+"g2f1",
+"d2f1"
+]
+]
+],
+"played22": {
+"move": "e7d8",
+"score": [
+"mate",
+6
+],
+"pv": [
+"e7d8",
+"c5d6",
+"c8d7",
+"e2b5",
+"g2f1",
+"d2f1",
+"d8e8",
+"b5d7"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": false
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "186356099444",
+"ply": 38,
+"zug": "20.Nxg1",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 619,
+"cls": "miss",
+"wpA": 22.2,
+"wpB": 100,
+"wpAlt": 100,
+"best": "c5d6",
+"uci": "f3g1",
+"fen": "r1bk3r/p4ppp/4p3/2QpP3/8/5N2/P2NB1qP/3K2b1 w - - 3 20",
+"sac": null,
+"loss": 77.8,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 23.3,
+"wpBest": 100.0,
+"wpAlt22": 100.0,
+"loss22": 76.7,
+"legal": 43,
+"lines22": [
+[
+"c5d6",
+[
+"mate",
+6
+],
+[
+"c5d6",
+"c8d7",
+"e2b5",
+"g2f3",
+"d2f3",
+"d8e8"
+]
+],
+[
+"c5c6",
+[
+"cp",
+-305
+],
+[
+"c5c6",
+"g1c5",
+"d2b3",
+"g2g6",
+"b3c5",
+"g6b1"
+]
+],
+[
+"f3g1",
+[
+"cp",
+-408
+],
+[
+"f3g1",
+"c8d7",
+"g1f3",
+"a8c8",
+"c5a7",
+"d8e8"
+]
+]
+],
+"played22": {
+"move": "f3g1",
+"score": [
+"cp",
+-408
+],
+"pv": [
+"f3g1",
+"c8d7",
+"g1f3",
+"a8c8",
+"c5a7",
+"d8e8",
+"a7a6",
+"g2f2"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": false
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "186895585580",
+"ply": 21,
+"zug": "11...Qf6",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 595,
+"cls": "great",
+"wpA": 82.6,
+"wpB": 82.6,
+"wpAlt": 61.8,
+"best": "d8f6",
+"uci": "d8f6",
+"fen": "r2qk2r/pppn1ppp/2np4/8/4PBPb/3P3P/PPP3B1/RN1Q1K1R b kq - 0 11",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 78.9,
+"wpBest": 78.9,
+"wpAlt22": 63.7,
+"loss22": 0,
+"legal": 41,
+"lines22": [
+[
+"d8f6",
+[
+"cp",
+-459
+],
+[
+"d8f6",
+"d1d2",
+"h4g5",
+"b1c3",
+"g5f4",
+"d2f2"
+]
+],
+[
+"c6b4",
+[
+"cp",
+-196
+],
+[
+"c6b4",
+"b1c3",
+"d8f6",
+"d1f3",
+"d7e5",
+"g4g5"
+]
+],
+[
+"d6d5",
+[
+"cp",
+-151
+],
+[
+"d6d5",
+"d1c1",
+"e8g8",
+"b1c3",
+"d5d4",
+"c3e2"
+]
+]
+],
+"played22": {
+"move": "d8f6",
+"score": [
+"cp",
+-459
+],
+"pv": [
+"d8f6",
+"d1d2",
+"h4g5",
+"b1c3",
+"g5f4",
+"d2f2",
+"f4e3",
+"f2f6"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+},
+{
+"u": "186895585580",
+"ply": 25,
+"zug": "13...Qxg5",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 595,
+"cls": "mistake",
+"wpA": 55.3,
+"wpB": 73.5,
+"wpAlt": 73.5,
+"best": "f6b2",
+"uci": "f6g5",
+"fen": "r3k2r/pppn1ppp/2np1q2/6B1/4P1P1/3P1Q1P/PPP3B1/RN3K1R b kq - 0 13",
+"sac": null,
+"loss": 18.2,
+"grund": "vorher",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 53.8,
+"wpBest": 71.8,
+"wpAlt22": 71.8,
+"loss22": 18.0,
+"legal": 43,
+"lines22": [
+[
+"f6b2",
+[
+"cp",
+-325
+],
+[
+"f6b2",
+"f3e2",
+"b2a1",
+"f1f2",
+"h7h6",
+"g5e3"
+]
+],
+[
+"f6g5",
+[
+"cp",
+-53
+],
+[
+"f6g5",
+"b1c3",
+"c6d4",
+"f3f2",
+"d4e6",
+"f1g1"
+]
+],
+[
+"f6e5",
+[
+"cp",
+405
+],
+[
+"f6e5",
+"g5c1",
+"h7h5",
+"b1c3",
+"h5g4",
+"h3g4"
+]
+]
+],
+"played22": {
+"move": "f6g5",
+"score": [
+"cp",
+-53
+],
+"pv": [
+"f6g5",
+"b1c3",
+"c6d4",
+"f3f2",
+"d4e6",
+"f1g1",
+"h7h5",
+"a1f1"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "186895585580",
+"ply": 26,
+"zug": "14.Kg1",
+"spieler": "m4cers",
+"mert": false,
+"R": 767,
+"cls": "miss",
+"wpA": 25,
+"wpB": 46.8,
+"wpAlt": 46.8,
+"best": "b1c3",
+"uci": "f1g1",
+"fen": "r3k2r/pppn1ppp/2np4/6q1/4P1P1/3P1Q1P/PPP3B1/RN3K1R w kq - 0 14",
+"sac": null,
+"loss": 21.7,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 27.3,
+"wpBest": 45.8,
+"wpAlt22": 45.8,
+"loss22": 18.5,
+"legal": 27,
+"lines22": [
+[
+"b1c3",
+[
+"cp",
+-52
+],
+[
+"b1c3",
+"g5e5",
+"f3f5",
+"c6d4",
+"f5e5",
+"d6e5"
+]
+],
+[
+"b1a3",
+[
+"cp",
+-133
+],
+[
+"b1a3",
+"h7h5",
+"f3f5",
+"g5e7",
+"c2c3",
+"g7g6"
+]
+],
+[
+"f3f2",
+[
+"cp",
+-231
+],
+[
+"f3f2",
+"g5c1",
+"f2e1",
+"c1c2",
+"e1c3",
+"c2a4"
+]
+]
+],
+"played22": {
+"move": "f1g1",
+"score": [
+"cp",
+-304
+],
+"pv": [
+"f1g1",
+"g5c1",
+"g1h2",
+"c1b2",
+"b1d2",
+"b2c2",
+"f3e3",
+"c2c5"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "186895585580",
+"ply": 27,
+"zug": "14...Nd4",
+"spieler": "MertAbi69",
+"mert": true,
+"R": 595,
+"cls": "miss",
+"wpA": 61,
+"wpB": 72.7,
+"wpAlt": 72.7,
+"best": "g5c1",
+"uci": "c6d4",
+"fen": "r3k2r/pppn1ppp/2np4/6q1/4P1P1/3P1Q1P/PPP3B1/RN4KR b kq - 1 14",
+"sac": null,
+"loss": 11.6,
+"grund": "label:miss",
+"kand": null,
+"d": 20,
+"top": false,
+"wpPlay": 59.9,
+"wpBest": 70.0,
+"wpAlt22": 70.0,
+"loss22": 10.2,
+"legal": 51,
+"lines22": [
+[
+"g5c1",
+[
+"cp",
+-295
+],
+[
+"g5c1",
+"g1h2",
+"c1b2",
+"b1d2",
+"b2c2",
+"f3e3"
+]
+],
+[
+"d7e5",
+[
+"cp",
+-179
+],
+[
+"d7e5",
+"f3f2",
+"g5c1",
+"g1h2",
+"c1b2",
+"b1d2"
+]
+],
+[
+"h7h5",
+[
+"cp",
+-171
+],
+[
+"h7h5",
+"b1c3",
+"c6d4",
+"f3f2",
+"h5g4",
+"h3g4"
+]
+]
+],
+"played22": {
+"move": "c6d4",
+"score": [
+"cp",
+-139
+],
+"pv": [
+"c6d4",
+"f3f2",
+"g5c1",
+"g1h2",
+"c1b2",
+"b1a3",
+"d7e5",
+"a1b1"
+]
+},
+"brill_bedingungen": {
+"grundklasse": false,
+"danach_ge_45": true,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": false,
+"abstand": false,
+"lagewechsel": false
+}
+},
+{
+"u": "186895585580",
+"ply": 28,
+"zug": "15.Qf2",
+"spieler": "m4cers",
+"mert": false,
+"R": 767,
+"cls": "great",
+"wpA": 37.7,
+"wpB": 37.7,
+"wpAlt": 24.9,
+"best": "f3f2",
+"uci": "f3f2",
+"fen": "r3k2r/pppn1ppp/3p4/6q1/3nP1P1/3P1Q1P/PPP3B1/RN4KR w kq - 2 15",
+"sac": null,
+"loss": 0,
+"grund": "label:great",
+"kand": null,
+"d": 20,
+"top": true,
+"wpPlay": 37.9,
+"wpBest": 37.9,
+"wpAlt22": 21.9,
+"loss22": 0,
+"legal": 26,
+"lines22": [
+[
+"f3f2",
+[
+"cp",
+-153
+],
+[
+"f3f2",
+"g5c1",
+"g1h2",
+"c1b2",
+"b1a3",
+"d7e5"
+]
+],
+[
+"f3d1",
+[
+"cp",
+-395
+],
+[
+"f3d1",
+"g5c5",
+"g1h2",
+"d4c2",
+"d3d4",
+"c2d4"
+]
+],
+[
+"f3f1",
+[
+"cp",
+-452
+],
+[
+"f3f1",
+"d4c2",
+"b1a3",
+"c2a1",
+"f1f5",
+"g5f5"
+]
+]
+],
+"played22": {
+"move": "f3f2",
+"score": [
+"cp",
+-153
+],
+"pv": [
+"f3f2",
+"g5c1",
+"g1h2",
+"c1b2",
+"b1a3",
+"d7e5",
+"a1b1",
+"b2a3"
+]
+},
+"brill_bedingungen": {
+"grundklasse": true,
+"danach_ge_45": false,
+"nicht_ohnehin_gewonnen": true
+},
+"great_bedingungen": {
+"top": true,
+"abstand": true,
+"lagewechsel": true
+}
+}
+]

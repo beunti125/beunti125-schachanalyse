@@ -1,0 +1,233 @@
+{
+ "hinweis": "Prüffälle Fehler-Einstufung/Fehlertyp aus echten Partien von MertAbi69 (Format wie faelle.json). Lauf: Inhalt nach faelle.json übernehmen oder run.mjs mit dieser Datei. kategorie kontrolle_* = App heute richtig; vorschlag_* = Erwartung nach Vorschlag [A], nicht aus der Spezifikation.",
+ "faelle": [
+  {
+   "id": "echt_hung_6Be3",
+   "kategorie": "fehlertyp_hung_fenster",
+   "pgn": "1. e4 e6 2. Nf3 d5 3. e5 c5 4. c3 Qb6 5. d4 Nc6 6. Be3",
+   "elo": {
+    "w": 619,
+    "b": 653
+   },
+   "time_control": "120+1",
+   "zug": "6.Be3",
+   "erwartet": [
+    "inaccuracy",
+    "mistake",
+    "blunder"
+   ],
+   "fehlertyp": "hung",
+   "begruendung": "6.Be3 gibt die Deckung von b2 auf: 6...Qxb2 7.Qb3 Qxa1 – der Turm a1 geht verloren (SF d20: Material 0→−5, bester Zug a3). App: „Stellungsfehler“, weil der Turmverlust erst im 5. Halbzug der Variante liegt (Fenster 4 Halbzüge).",
+   "quelle": [
+    "chess.com 186356099444, Halbzug 10",
+    "Stockfish d20 MultiPV 3 / d22 (team/echte_auswertung.mjs)"
+   ]
+  },
+  {
+   "id": "echt_hung_17bxc6",
+   "kategorie": "fehlertyp_hung_b0",
+   "pgn": "1. e4 e6 2. Nf3 d5 3. e5 c5 4. c3 Qb6 5. d4 Nc6 6. Be3 Qxb2 7. Nbd2 Qxc3 8. Rc1 Qa3 9. dxc5 Nh6 10. Rc2 Nf5 11. Qe2 Nxe3 12. fxe3 Bxc5 13. Qb5 Qxe3+ 14. Be2 Qf2+ 15. Kd1 Qxg2 16. Rg1 Bxg1 17. Rxc6 bxc6",
+   "elo": {
+    "w": 619,
+    "b": 653
+   },
+   "time_control": "120+1",
+   "zug": "17...bxc6",
+   "erwartet": [
+    "blunder"
+   ],
+   "fehlertyp": "hung",
+   "begruendung": "17...bxc6 schlägt zwar eine Figur, erlaubt aber 18.Qxc6+ mit Gabel und Qxa8+, danach Qxh8 (SF d20: Patzer, Verlust 0,30 EP; bester Zug O-O). App: „Stellungsfehler“, weil die Bilanz an b0 (vor dem Schlagzug) gemessen wird und das 4-Halbzug-Fenster vor Qxh8 endet.",
+   "quelle": [
+    "chess.com 186356099444, Halbzug 33",
+    "Stockfish d20 MultiPV 3 / d22 (team/echte_auswertung.mjs)"
+   ]
+  },
+  {
+   "id": "echt_hung_16Kd1",
+   "kategorie": "fehlertyp_hung_fenster",
+   "pgn": "1. d4 d5 2. Nf3 Nc6 3. Bf4 Bf5 4. e3 e6 5. Be2 Bd6 6. Bg3 Nf6 7. a3 O-O 8. Nbd2 Re8 9. c4 e5 10. cxd5 Nxd5 11. Bc4 Nb6 12. Bb5 exd4 13. Bxc6 dxe3 14. Bxe8 exd2+ 15. Qxd2 Qxe8+ 16. Kd1",
+   "elo": {
+    "w": 623,
+    "b": 627
+   },
+   "time_control": "120+1",
+   "zug": "16.Kd1",
+   "erwartet": [
+    "blunder",
+    "mistake"
+   ],
+   "fehlertyp": "hung",
+   "begruendung": "16.Kd1 läuft in die Fesselung auf der d-Linie (…Bxg3 hxg3 Rd8, Nd4 gefesselt) und verliert Material (SF d20: Bilanz +1→−2, bester Zug Kf1). App: „Stellungsfehler“ – Zwischenstand nach dem Rückschlag hxg3 verdeckt den späteren Verlust.",
+   "quelle": [
+    "chess.com 186250470540, Halbzug 30",
+    "Stockfish d20 MultiPV 3 / d22 (team/echte_auswertung.mjs)"
+   ]
+  },
+  {
+   "id": "echt_hung_23Nd4",
+   "kategorie": "fehlertyp_hung_fenster",
+   "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. O-O Bc5 5. c3 a6 6. d4 exd4 7. cxd4 Ba7 8. e5 Ng8 9. Be3 d6 10. Nc3 Be6 11. Bxe6 fxe6 12. Bg5 Qd7 13. exd6 Qxd6 14. Be3 O-O-O 15. Ne4 Qe7 16. Rc1 Nf6 17. Nc5 Bxc5 18. Rxc5 Qxc5 19. dxc5 Rxd1 20. Rxd1 Nb4 21. a3 Nbd5 22. Kf1 Rd8 23. Nd4",
+   "elo": {
+    "w": 1024,
+    "b": 1024
+   },
+   "time_control": "300",
+   "zug": "23.Nd4",
+   "erwartet": [
+    "blunder"
+   ],
+   "fehlertyp": "hung",
+   "begruendung": "23.Nd4?? 23...Nxe3+ 24.fxe3 e5 und der Springer d4 geht für einen Bauern verloren (SF d20: Patzer, Verlust 0,41 EP; bester Zug Bd4). App: „Stellungsfehler“, weil exd4 erst im 5. Halbzug kommt.",
+   "quelle": [
+    "chess.com 186000059536, Halbzug 44",
+    "Stockfish d20 MultiPV 3 / d22 (team/echte_auswertung.mjs)"
+   ]
+  },
+  {
+   "id": "echt_hung_12Rb1_kontrolle",
+   "kategorie": "kontrolle_hung",
+   "pgn": "1. e4 e5 2. Nf3 d6 3. Nc3 Nc6 4. Bc4 Be6 5. d3 Nf6 6. b3 Be7 7. Bg5 O-O 8. Bxe6 fxe6 9. O-O Nh5 10. Bxe7 Qxe7 11. g3 Qf6 12. Rb1",
+   "elo": {
+    "w": 376,
+    "b": 595
+   },
+   "time_control": "60+1",
+   "zug": "12.Rb1",
+   "erwartet": [
+    "blunder"
+   ],
+   "fehlertyp": "hung",
+   "begruendung": "Kontrolle (App richtig): 12.Rb1?? Qxf3 – der Springer f3 hängt (Qf6+Rf8 gegen Nf3). SF d16 und d20: Patzer, Material eingestellt.",
+   "quelle": [
+    "chess.com 187054798396, Halbzug 22",
+    "Stockfish d20 MultiPV 3 / d22 (team/echte_auswertung.mjs)"
+   ]
+  },
+  {
+   "id": "echt_kein_hung_6Bc4",
+   "kategorie": "fehlertyp_hung_b0",
+   "pgn": "1. e4 Nf6 2. e5 b5 3. exf6 gxf6 4. Bxb5 Bb7 5. Qh5 Bxg2 6. Bc4",
+   "elo": {
+    "w": 1250,
+    "b": 146
+   },
+   "time_control": "600",
+   "zug": "6.Bc4",
+   "erwartet": [
+    "inaccuracy",
+    "mistake"
+   ],
+   "fehlertyp": "positional",
+   "begruendung": "6.Bc4 (droht Qxf7#) – der Turm h1 geht nach 6...d5 7.Bb3 Bxh1 verloren, aber genauso nach dem besten Zug 6.d4 Bxh1. Der Zug stellt nichts ein; die Bilanz sinkt nur relativ zu b0 (Weiß ist vor dem Zug vorübergehend +2). App: „Material eingestellt“.",
+   "quelle": [
+    "chess.com 186149179666, Halbzug 10",
+    "Stockfish d20 MultiPV 3 / d22 (team/echte_auswertung.mjs)"
+   ]
+  },
+  {
+   "id": "echt_kein_mt_11Nb6",
+   "kategorie": "fehlertyp_mt_fenster",
+   "pgn": "1. d4 d5 2. Nf3 Nc6 3. Bf4 Bf5 4. e3 e6 5. Be2 Bd6 6. Bg3 Nf6 7. a3 O-O 8. Nbd2 Re8 9. c4 e5 10. cxd5 Nxd5 11. Bc4 Nb6",
+   "elo": {
+    "w": 623,
+    "b": 627
+   },
+   "time_control": "120+1",
+   "zug": "11...Nb6",
+   "erwartet": [
+    "inaccuracy",
+    "mistake"
+   ],
+   "fehlertyp": "positional",
+   "begruendung": "Bester Zug 11...exd4 (+1,5) gewinnt keine Figur: 12.Bxd5 Bxg3 13.Bxf7+ Kxf7 14.hxg3 ist materiell ausgeglichen. App: „Taktik verpasst“, weil das 5-Halbzug-Fenster nach 13...Kxf7 endet, vor dem Rückschlag hxg3.",
+   "quelle": [
+    "chess.com 186250470540, Halbzug 21",
+    "Stockfish d20 MultiPV 3 / d22 (team/echte_auswertung.mjs)"
+   ]
+  },
+  {
+   "id": "echt_kein_mt_16b4",
+   "kategorie": "fehlertyp_mt_fenster",
+   "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. Qe2 d6 5. c3 Bg4 6. h3 Bxf3 7. Qxf3 Be7 8. O-O O-O 9. d3 a6 10. Bg5 h6 11. Bh4 b5 12. Bxf6 Bxf6 13. Bd5 Qd7 14. Nd2 Rab8 15. Rad1 a5 16. Nb3 b4",
+   "elo": {
+    "w": 586,
+    "b": 635
+   },
+   "time_control": "120+1",
+   "zug": "16...b4",
+   "erwartet": [
+    "inaccuracy",
+    "mistake"
+   ],
+   "fehlertyp": "positional",
+   "begruendung": "Bester Zug 16...Ne7 gewinnt nichts (…Nxd5 exd5 = Tausch); 16...b4 verliert nur den Bauern a5 (SF d22: +0,72 gegen −0,53). App: „Taktik verpasst“ (Fenster endet nach Nxd5, vor exd5).",
+   "quelle": [
+    "chess.com 186001603352, Halbzug 31",
+    "Stockfish d20 MultiPV 3 / d22 (team/echte_auswertung.mjs)"
+   ]
+  },
+  {
+   "id": "echt_kein_mt_20Rd2",
+   "kategorie": "fehlertyp_mt_fenster",
+   "pgn": "1. e4 e5 2. Nf3 d6 3. h3 Be6 4. Nc3 Nc6 5. Bb5 a6 6. Ba4 Ne7 7. Bb3 Qd7 8. d3 g6 9. Bg5 Bg7 10. Qd2 f6 11. Bh6 Bxb3 12. axb3 Rg8 13. Bxg7 Rxg7 14. Qh6 Ng8 15. Qe3 O-O-O 16. O-O-O Nb4 17. Kb1 d5 18. exd5 Nxd5 19. Nxd5 Qxd5 20. Rd2",
+   "elo": {
+    "w": 670,
+    "b": 617
+   },
+   "time_control": "120+1",
+   "zug": "20.Rd2",
+   "erwartet": [
+    "inaccuracy",
+    "mistake"
+   ],
+   "fehlertyp": "positional",
+   "begruendung": "Bester Zug 20.d4 gewinnt nur den Bauern e5 (20...Re7 21.dxe5 Qxd1+ 22.Rxd1 Rxd1+ 23.Ka2), SF d22 +0,73 gegen −0,10. App: „Taktik verpasst“, weil das Fenster nach 22.Rxd1 endet (Turm noch nicht zurückgeschlagen).",
+   "quelle": [
+    "chess.com 186069868192, Halbzug 38",
+    "Stockfish d20 MultiPV 3 / d22 (team/echte_auswertung.mjs)"
+   ]
+  },
+  {
+   "id": "echt_mt_25f5_kontrolle",
+   "kategorie": "kontrolle_missedTactic",
+   "pgn": "1. e4 e5 2. Nf3 d6 3. Nc3 Nc6 4. Bb5 Bd7 5. O-O a6 6. Bxc6 Bxc6 7. Nd5 Ne7 8. Nxe7 Bxe7 9. d4 O-O 10. dxe5 Bxe4 11. exd6 Bxd6 12. Re1 Bc6 13. Ne5 Re8 14. Nxc6 bxc6 15. Rxe8+ Qxe8 16. Be3 Rd8 17. Qe1 Qe5 18. c3 Qxh2+ 19. Kf1 Qh1+ 20. Ke2 Qh5+ 21. Kf1 Qb5+ 22. Qe2 Qxe2+ 23. Kxe2 Re8 24. g3 Kf8 25. f4 f5",
+   "elo": {
+    "w": 526,
+    "b": 601
+   },
+   "time_control": "120+1",
+   "zug": "25...f5",
+   "erwartet": [
+    "miss"
+   ],
+   "fehlertyp": "missedTactic",
+   "begruendung": "Kontrolle (App richtig): Weiß hatte gerade gepatzt; 25...Bc5 fesselt und gewinnt den Läufer e3 (Re8 gegen Ke2). 25...f5 lässt das aus → Verpasst, Taktik verpasst.",
+   "quelle": [
+    "chess.com 186069569048, Halbzug 49",
+    "Stockfish d20 MultiPV 3 / d22 (team/echte_auswertung.mjs)"
+   ]
+  },
+  {
+   "id": "echt_matt1_verpasst_16Qc4",
+   "kategorie": "vorschlag_matt_verpasst",
+   "pgn": "1. h4 e5 2. h5 Nc6 3. Rh4 Qxh4 4. g3 Qxh5 5. Bh3 d6 6. Bxc8 Rxc8 7. g4 Qh1 8. e4 Qxg1+ 9. Ke2 Nd4+ 10. Kd3 Qxd1 11. Kc3 Qf3+ 12. Kb4 Nc6+ 13. Kb5 a6+ 14. Kc4 Qxe4+ 15. Kc3 Nf6 16. Kb3 Qc4+",
+   "elo": {
+    "w": 146,
+    "b": 1250
+   },
+   "time_control": "600",
+   "zug": "16...Qc4+",
+   "nicht": [
+    "best",
+    "excellent"
+   ],
+   "fehlertyp": "missedMate",
+   "begruendung": "16...Qb4# war Matt in 1; 16...Qc4+?? opfert die Dame (17.Kxc4) und steht nur noch +9,5. App: „Exzellent“ ohne Hinweis (EP-Sättigung bei ±1500 cp). Vorschlag: verpasstes Matt in ≤3 mindestens Ungenauigkeit + Fehlertyp „Matt übersehen“ [A].",
+   "quelle": [
+    "chess.com 186149236492, Halbzug 31",
+    "Stockfish d20 MultiPV 3 / d22 (team/echte_auswertung.mjs)"
+   ]
+  }
+ ]
+}

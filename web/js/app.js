@@ -91,7 +91,7 @@ function renderGames() {
 // Alte Analysen auf die aktuelle Einstufung bringen (sofort, ohne Engine)
 async function upgradeAnalyses() {
   const up = [];
-  for (const g of st.games) { const a = st.analyses.get(g.url); if (a && (a.v || 1) < 7) { try { const n = reclassify(g, a); st.analyses.set(g.url, n); up.push(n); } catch {} } }
+  for (const g of st.games) { const a = st.analyses.get(g.url); if (a && (a.v || 1) < 8) { try { const n = reclassify(g, a); st.analyses.set(g.url, n); up.push(n); } catch {} } }
   if (up.length) await S.putMany('analyses', up);
 }
 
@@ -190,7 +190,11 @@ function go(ply) {
   board.setPosition(P.fens[ply], { last: mv ? { from: mv.from, to: mv.to } : null, animate: true, badge: mv && cls.cls !== 'forced' ? { sq: mv.to, cls: cls.cls } : null });
   st.ex = cls ? explain(g, an, P, i, { my: me(g), hist: st.hist, elo: (me(g) === 'w' ? g.white : g.black).rating }) : null; st.step = 0;
   st.hint = 0; updHint();
-  const os = cls && !['mistake', 'miss', 'blunder'].includes(cls.cls) ? openingStep(P.fens, ply, me(g), an.lines[ply]?.[0]?.pv) : null;
+  // Eröffnungsidee einmal pro Partie: beim ersten Zug nach der Theorie (bzw. beim letzten Theoriezug, wenn die Partie in der Theorie endet)
+  const outIdx = an.moves.findIndex(x => x.cls !== 'book' && x.cls !== 'forced');
+  const showIdx = outIdx < 0 ? an.moves.length - 1 : an.moves.findIndex((x, k) => k >= outIdx && !['mistake', 'miss', 'blunder'].includes(x.cls));
+  const once = i === showIdx;
+  const os = cls && !['mistake', 'miss', 'blunder'].includes(cls.cls) ? openingStep(P.fens, ply, me(g), an.lines[ply]?.[0]?.pv, once) : null;
   if (os) { os.last = { from: mv.from, to: mv.to }; if (cls.cls === 'book') st.ex.steps.splice(1, 0, os); else st.ex.steps.push(os); }
   st.more = false; renderSteps(); applyStep(0);
   const ev = an.evals[ply], flip = board.orientation === 'b';
@@ -757,7 +761,7 @@ async function brilList() {
   const items = [], up = []; let analysed = 0;
   for (const g of games) {
     let an = st.analyses.get(g.url); if (!an) continue;
-    if ((an.v || 1) < 7) { try { an = reclassify(g, an); st.analyses.set(g.url, an); up.push(an); } catch { continue; } }
+    if ((an.v || 1) < 8) { try { an = reclassify(g, an); st.analyses.set(g.url, an); up.push(an); } catch { continue; } }
     analysed++;
     const c = me(g); let P = null;
     an.moves.forEach((m, i) => { if (m.cls !== 'brilliant') return; P = P || parseGame(g); if (P.moves[i].color === c) items.push({ g, i, P }); });

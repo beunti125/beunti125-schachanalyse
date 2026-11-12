@@ -30,14 +30,15 @@ export class Engine {
   }
 
   // fen analysieren → {lines:[{move, cp, mate, pv}], depth}; Reihenfolge = MultiPV-Rang
-  analyse(fen, { depth = 16, movetime = 1000, multipv = 2 } = {}) {
+  // searchmoves: nur diese Züge (uci) untersuchen – für den Wert des gespielten Zuges aus derselben Stellung
+  analyse(fen, { depth = 16, movetime = 1000, multipv = 2, searchmoves } = {}) {
     const job = async () => {
       await this.ready;
       const black = fen.split(' ')[1] === 'b';
       const lines = []; let maxDepth = 0;
       this.send(`setoption name MultiPV value ${multipv}`);
       this.send('position fen ' + fen);
-      this.send(`go depth ${depth} movetime ${movetime}`);
+      this.send(`go depth ${depth} movetime ${movetime}${searchmoves?.length ? ' searchmoves ' + searchmoves.join(' ') : ''}`);
       await this._wait(l => l.startsWith('bestmove'), l => {
         if (!l.startsWith('info') || !l.includes(' pv ') || l.includes('upperbound') || l.includes('lowerbound')) return;
         const d = +(/ depth (\d+)/.exec(l)?.[1] || 0);

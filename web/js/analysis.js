@@ -50,14 +50,25 @@ function material(chess) {
   return { w, b, nonPawn: chess.board().flat().filter(p => p && p.type !== 'p' && p.type !== 'k').reduce((s, p) => s + VAL[p.type], 0) };
 }
 const bal = (chess, c) => { const m = material(chess); return c === 'w' ? m.w - m.b : m.b - m.w; };
-// Materialbilanz für Farbe c entlang einer Zugfolge (uci), Werte nach jedem Halbzug
-function balAlong(fen, pv, c, n = 6) {
-  const ch = new Chess(fen); const out = [];
-  for (const u of pv.slice(0, n)) {
+// Materialbilanz für Farbe c an den Ruhepunkten einer Zugfolge (uci), bis n Halbzüge (n gerade).
+// Ruhepunkt: kein Schach und der nächste Halbzug der Folge schlägt nicht – so wird nie mitten im Abtausch gemessen.
+// Gibt es keinen Ruhepunkt, zählt der letzte Wert.
+export function quietBal(fen, pv, c, n = 8) {
+  const ch = new Chess(fen), out = []; let last = null;
+  const seq = pv || [];
+  for (let k = 0; k < Math.min(n, seq.length); k++) {
+    const u = seq[k];
     try { ch.move({ from: u.slice(0, 2), to: u.slice(2, 4), promotion: u[4] }); } catch { break; }
-    out.push(bal(ch, c));
+    last = bal(ch, c);
+    const nx = seq[k + 1];
+    let nextCap = false;
+    if (nx) {
+      const p = ch.get(nx.slice(0, 2));
+      nextCap = !!ch.get(nx.slice(2, 4)) || !!(p && p.type === 'p' && nx[0] !== nx[2]);
+    }
+    if (!ch.inCheck() && !nextCap) out.push(last);
   }
-  return out;
+  return out.length ? out : last != null ? [last] : [];
 }
 export function uciToSan(fen, uci) {
   try { return new Chess(fen).move({ from: uci.slice(0, 2), to: uci.slice(2, 4), promotion: uci[4] }).san; } catch { return uci; }
@@ -97,7 +108,8 @@ function terminalEval(fen) {
 export async function analyseGame(game, engine, quality = 'standard', onProgress) {
   const P = parseGame(game);
   const q = QUALITY[quality] || QUALITY.standard;
-  let done = 0;
+  let done = 0, total = P.fens.length;
+  const slim = x => ({ move: x.move, pv: x.pv.slice(0, 10), cp: x.cp, mate: x.mate });
   // Alle Stellungen gleichzeitig in die Warteschlange – die Engines arbeiten sie parallel ab
   const res = await Promise.all(P.fens.map(async fen => {
     const t = terminalEval(fen);
@@ -106,13 +118,49 @@ export async function analyseGame(game, engine, quality = 'standard', onProgress
     else {
       const r = await engine.analyse(fen, { ...q, multipv: 2 });
       const l = r.lines[0] || { cp: 0, mate: null, pv: [] };
-      out = { ev: { cp: l.cp, mate: l.mate }, lines: r.lines.map(x => ({ move: x.move, pv: x.pv.slice(0, 10), cp: x.cp, mate: x.mate })), depth: r.depth };
+      out = { ev: { cp: l.cp, mate: l.mate }, lines: r.lines.map(slim), depth: r.depth };
     }
-    onProgress?.(++done, P.fens.length);
+    onProgress?.(++done, total);
     return out;
   }));
-  return finish(game, P, res, quality);
+  // 2. Wert des gespielten Zuges aus derselben Stellung (searchmoves), wenn er in keiner MultiPV-Linie steht
+  //    und der Verlust nahe einer Klassengrenze liegt – dort entscheidet sonst das Rauschen der Nachher-Suche.
+  const pre = finish(game, P, res, quality);
+  const smJobs = P.moves.map((m, i) => i).filter(i => {
+    const m = P.moves[i], x = pre.moves[i];
+    if (terminalEval(P.fens[i]) || res[i].lines.some(l => l.move === m.uci) || x.cls === 'book' || x.cls === 'forced') return false;
+    return nearBoundary(x.loss);
+  });
+  total += smJobs.length;
+  await Promise.all(smJobs.map(async i => {
+    const r = await engine.analyse(P.fens[i], { ...q, multipv: 1, searchmoves: [P.moves[i].uci] });
+    const l = r.lines.find(x => x.move === P.moves[i].uci);
+    if (l) res[i].lines.push({ ...slim(l), sm: 1 });
+    onProgress?.(++done, total);
+  }));
+  const pre2 = finish(game, P, res, quality, true);
+  // 3. Brillant-/Großartig-Kandidaten tiefer nachrechnen (+4 Halbzüge, MultiPV 3, nur diese wenigen Stellungen),
+  //    damit die Schwellen nicht am Tiefenrauschen kippen. Gespeichert in an.deep → reclassify braucht keine Engine.
+  const deepQ = { depth: q.depth + 4, movetime: q.movetime * 3 };
+  total += pre2.cand.length;
+  await Promise.all(pre2.cand.map(async i => {
+    const r = await engine.analyse(P.fens[i], { ...deepQ, multipv: 3 });
+    const lines = r.lines.map(slim);
+    if (!lines.some(l => l.move === P.moves[i].uci)) {
+      const s = await engine.analyse(P.fens[i], { ...deepQ, multipv: 1, searchmoves: [P.moves[i].uci] });
+      const l = s.lines.find(x => x.move === P.moves[i].uci);
+      if (l) lines.push({ ...slim(l), sm: 1 });
+    }
+    if (lines.length) res[i].deep = { lines, depth: r.depth };
+    onProgress?.(++done, total);
+  }));
+  const out = finish(game, P, res, quality);
+  delete out.cand;
+  return out;
 }
+// Liegt ein EP-Verlust nahe einer Klassengrenze (Exzellent/Gut/Ungenauigkeit/Fehler/Patzer)?
+// Fensterbreiten so gewählt, dass die Zusatzsuchen zusammen mit der Nachrechnung ≤ ~25 % Rechenzeit kosten (gemessen an 70 Partien)
+const nearBoundary = loss => [[EP.excellent, 0.5], [EP.good, 1], [EP.inaccuracy, 1.5], [EP.mistake, 2.5]].some(([b, w]) => Math.abs(loss - b) <= w);
 
 // ---------- Zugeinstufung nach dem Expected-Points-Prinzip (wie chess.com „Classification V2“) ----------
 // Spezifikation: docs/klassifizierung_spec.md. Alle Werte in Prozentpunkten Expected Points (0..100 = 0.00..1.00),
@@ -139,18 +187,25 @@ export function classifyMove(o) {
   if (o.inBook) return 'book';
   if (o.mate) return 'best';
   const { loss } = o;
-  const cls = o.base || (o.isBest || loss < EP.best ? 'best' : loss < EP.excellent ? 'excellent' : loss < EP.good ? 'good'
+  let cls = o.base || (o.isBest || loss < EP.best ? 'best' : loss < EP.excellent ? 'excellent' : loss < EP.good ? 'good'
     : loss < EP.inaccuracy ? 'inaccuracy' : loss < EP.mistake ? 'mistake' : 'blunder');
+  // Ein kurzes Matt (≤ 3) auszulassen, ist mindestens eine Ungenauigkeit – auch wenn die EP danach noch fast 1 ist
+  if (o.missedShortMate && (cls === 'best' || cls === 'excellent' || cls === 'good')) cls = 'inaccuracy';
+  // Langes Matt (> 5) ausgelassen, aber weiter entscheidend vorn (≥ +6,00): wie ein längerer Mattweg höchstens „Gut“
+  // (sonst macht die Elo-Skalierung aus +8 bei 600 Elo eine Ungenauigkeit)
+  if (o.longMateWin && ['inaccuracy', 'mistake', 'blunder'].includes(cls)) cls = 'good';
   const R = o.R || 1500;
   // Brillant: bester Zug (unter 1200 auch exzellent) + echtes Figurenopfer, danach nicht schlecht (≥ 0.45),
-  // und ohne diesen Zug nicht ohnehin völlig gewonnen (bester anderer Zug < 0.90 bzw. 0.95)
+  // und ohne diesen Zug nicht ohnehin völlig gewonnen: bester anderer Zug < 0.90 bzw. 0.95 (Elo-skaliert)
+  // UND Elo-unabhängig weder ≥ +6,00 noch Matt (altWon)
   const okBase = R < 1200 ? (cls === 'best' || cls === 'excellent') : cls === 'best';
-  if (okBase && !o.obvious && o.wpAlt != null && o.wpA >= 45 && o.wpAlt < winAnyway(R)) {
+  if (okBase && !o.obvious && !o.altWon && o.wpAlt != null && o.wpA >= 45 && o.wpAlt < winAnyway(R)) {
     const sac = typeof o.sacrifice === 'function' ? o.sacrifice() : o.sacrifice;
     if (sac && (sac === true || sac.length)) return 'brilliant';
   }
   // Großartig: Top-Zug, der beste andere Zug ist deutlich schlechter und fällt in eine schlechtere Lage-Kategorie
-  // (verloren statt offen, offen statt gewonnen). Nicht für offensichtliche Züge und nicht für das Schlagen freier Figuren.
+  // (verloren statt offen, offen statt gewonnen). Nicht für offensichtliche Züge und nicht für offensichtlichen
+  // Materialgewinn durch Schlagen (freeCapture: SEE ≥ 2 Bauerneinheiten).
   if (cls === 'best' && o.isBest && !o.obvious && o.wpAlt != null && o.wpA - o.wpAlt >= greatGap(R)
     && outcome(o.wpAlt) < outcome(o.wpA)) {
     const free = typeof o.freeCapture === 'function' ? o.freeCapture() : o.freeCapture;
@@ -199,16 +254,17 @@ function bestCapture(ch, skip, from) {
   const me = ch.turn(), T = [];
   for (const row of ch.board()) for (const p of row) if (p && p.color !== me && p.type !== 'k' && p.square !== skip) T.push(p);
   T.sort((a, b) => SV[b.type] - SV[a.type]);
-  let g = 0;
+  let g = 0; lastGross = 0;
   for (const p of T) {
     if (SV[p.type] <= g) break; // mehr als den Wert der Figur bringt kein Schlag
     for (const f of ch.attackers(p.square, me)) {
       if (f === from) continue;
-      for (const x of gen(ch, f)) if (x.to === p.square) { const s = see(ch, x); if (s > g) g = s; }
+      for (const x of gen(ch, f)) if (x.to === p.square) { const s = see(ch, x); if (s > g) { g = s; lastGross = SV[p.type]; } }
     }
   }
   return g;
 }
+let lastGross = 0; // Wert der Figur, die der beste Schlag von bestCapture trifft
 // beste ruhige Parade der Seite am Zug: max über alle nicht schlagenden Züge von −(bester Schlaggewinn des Gegners danach), ≤ 0.
 // Drohungen der Figur auf sq zählen nicht: sie verschwinden ja gerade, wenn man diese Figur schlägt.
 // Bricht ab, sobald das Ergebnis über stop liegt (dann steht schon fest, dass die Figur nicht hängt).
@@ -229,11 +285,16 @@ function gainAt(ch, x, want = 1) {
   for (const f of ch.attackers(x, ch.turn())) for (const c of gen(ch, f)) {
     if (c.to !== x) continue;
     const s = see(ch, c); if (s < 1 || s <= sk) continue;
-    make(ch, c); const k = bestCapture(ch, x); unmake(ch);
+    const xv = SV[ch.get(x).type];
+    make(ch, c); const k = bestCapture(ch, x), kv = lastGross; unmake(ch);
+    // Gegenschlag auf eine mindestens gleich wertvolle Figur: Tausch (+ evtl. Bauer), kein Figurenopfer (Spec 4.1)
+    if (k >= 1 && kv >= xv) continue;
     sk = Math.max(sk, s - k);
   }
   if (sk === -Infinity) return 0;
-  if (sk >= want) return sk;
+  // Steht die Seite am Zug im Schach, gibt es keine „ruhige Parade“ – nur Fluchtzüge, die oft mehr verlieren.
+  // Sie würden einen glatten Tausch mit Schach (Txe8+ Dxe8) zum Opfer aufblähen. Dann zählt nur die Abtauschrechnung.
+  if (sk >= want || ch.inCheck()) return sk >= 1 ? sk : 0;
   const g = sk - parry(ch, x, sk - 1);
   return g >= 1 ? g : 0;
 }
@@ -273,29 +334,34 @@ export function findSacrifices(fenB, uci) {
   const out = [];
   for (const [x, h] of HQ) {
     const net = h.gain - capv; if (net < 1) continue;
-    if (x === mv.to) { if (HP.has(mv.from) && trapped(mv.from)) continue; }
-    else if (HP.has(x) && rescued >= SV[h.type]) continue; // Schadensbegrenzung beim Doppelangriff
+    // Schadensbegrenzung beim Doppelangriff – auch für die gezogene Figur (14.Lxb5: schlägt den gabelnden Bauern,
+    // rettet die Dame und gibt den ohnehin verlorenen Läufer) – sowie Desperado der gezogenen Figur
+    if (x === mv.to) { if (HP.has(mv.from) && (rescued >= SV[h.type] || trapped(mv.from))) continue; }
+    else if (HP.has(x) && rescued >= SV[h.type]) continue;
     out.push({ piece: h.type, square: x, net, before: x === mv.to ? HP.has(mv.from) : HP.has(x) });
   }
   return out.sort((a, b) => SV[b.piece] - SV[a.piece] || b.net - a.net);
 }
-// Schlägt der Zug eine freie Figur (Springer oder mehr, ohne dass der Gegner etwas zurückholt)?
-function isFreeCapture(fenB, m) {
-  if (!m.captured || m.captured === 'p') return false;
+// Abtauschrechnung (SEE) des gespielten Zuges in der Stellung fenB; null, wenn der Zug nicht schlägt
+function seeOf(fenB, m) {
+  if (!m.captured) return null;
   const ch = new Chess(fenB);
   const x = gen(ch, m.from).find(y => y.to === m.to && (y.promotion || '') === (m.uci[4] || ''));
-  return !!x && see(ch, x) >= SV[m.captured];
+  return x ? see(ch, x) : null;
 }
 
-function finish(game, P, res, quality) {
-  const out = [];
+function finish(game, P, res, quality, wantCand = false) {
+  const out = [], cand = [];
   const side = (c, ev, R) => ev ? (c === 'w' ? winPctR(ev, R) : 100 - winPctR(ev, R)) : null;
   let chain = false, bookAcc = false; // Theorie-Kette: alle bisherigen Züge Theorie
   for (let i = 0; i < P.moves.length; i++) {
     const m = P.moves[i], c = m.color, sgn = c === 'w' ? 1 : -1;
     const before = res[i], after = res[i + 1];
     const R = (c === 'w' ? game.white : game.black)?.rating || 1500;
-    const lines = before.lines || [];
+    // Für die Einstufung zählt die tiefere Nachrechnung, falls vorhanden (nur Brillant-/Großartig-Kandidaten);
+    // Bewertungsbalken und Genauigkeit bleiben bei der normalen Suche (before.ev / after.ev).
+    const lines = before.deep?.lines || before.lines || [];
+    const depthB = before.deep?.depth ?? before.depth;
     const best = lines[0]?.move;
     const top = best === m.uci;
     const term = terminalEval(P.fens[i + 1]);
@@ -304,31 +370,47 @@ function finish(game, P, res, quality) {
     // sieht ein Matt gegen den Ziehenden, oder sie rechnete tiefer und kommt auf einen deutlich anderen Wert (dann ist sie genauer).
     // Bei gleicher Tiefe gilt ein bloß anderer Wert nicht als genauer (Horizont-Effekte gibt es in beiden Suchen).
     const wpAfter = side(c, after.ev, R);
-    const ownLine = lines.find(l => l.move === m.uci);
-    let wpA = wpAfter, disagree = false;
-    if (ownLine && !term) {
-      const wpLine = side(c, ownLine, R);
-      const mAfter = after.ev?.mate != null ? Math.sign(after.ev.mate * sgn) : 0, mLine = ownLine.mate != null ? Math.sign(ownLine.mate * sgn) : 0;
-      const deeper = before.depth != null && after.depth != null && after.depth > before.depth;
-      disagree = (mAfter < 0 && mLine >= 0) || (deeper && Math.abs(wpLine - wpAfter) >= DISAGREE);
-      if (!disagree) wpA = wpLine;
-    }
-    // EP des besten Zuges: Maximum über die MultiPV-Linien, die eigene Linie mit dem korrigierten Wert
-    let wpB = wpA;
-    for (const l of lines) wpB = Math.max(wpB, l.move === m.uci ? wpA : side(c, l, R));
-    if (top && !disagree) wpA = wpB;
-    const isBest = top ? !disagree || wpA >= wpB : disagree && wpA >= wpB;
-    const loss = Math.max(0, wpB - wpA);
+    // Die eigene Linie kann auch aus einer searchmoves-Suche derselben Stellung stammen (Kennzeichen sm)
+    const evalMove = (ls, dB) => {
+      const tp = ls[0]?.move === m.uci;
+      const own = ls.find(l => l.move === m.uci);
+      let a = wpAfter, dis = false;
+      if (own && !term) {
+        const wpLine = side(c, own, R);
+        const mAfter = after.ev?.mate != null ? Math.sign(after.ev.mate * sgn) : 0, mLine = own.mate != null ? Math.sign(own.mate * sgn) : 0;
+        const deeper = dB != null && after.depth != null && after.depth > dB;
+        dis = (mAfter < 0 && mLine >= 0) || (deeper && Math.abs(wpLine - wpAfter) >= DISAGREE);
+        if (!dis) a = wpLine;
+      }
+      // EP des besten Zuges: Maximum über die Linien, die eigene Linie mit dem korrigierten Wert
+      let b = a;
+      for (const l of ls) b = Math.max(b, l.move === m.uci ? a : side(c, l, R));
+      if (tp && !dis) a = b;
+      return { own, dis, wpA: a, wpB: b, isBest: tp ? !dis || a >= b : dis && a >= b, loss: Math.max(0, b - a) };
+    };
+    const E = evalMove(lines, depthB);
+    const ownLine = E.own, disagree = E.dis, { wpA, wpB, isBest, loss } = E;
+    // Genauigkeit bleibt unverändert bei der normalen MultiPV-Suche (ohne searchmoves/Nachrechnung) – Kalibrierung
+    const lossAcc = (before.deep || lines.some(l => l.sm)) ? evalMove((before.lines || []).filter(l => !l.sm), before.depth).loss : loss;
     const altLine = lines.find(l => l.move !== m.uci);
     const wpAlt = altLine ? side(c, altLine, R) : null;
     // Mattlängen (beide Züge setzen matt): gleich lang = Bester, 1 Zug länger = Exzellent, 2–6 = Gut, sonst Ungenauigkeit
-    let base = null;
+    let base = null, missedShortMate = false;
     const bm = lines[0]?.mate != null && lines[0].mate * sgn > 0 ? lines[0].mate * sgn : null;
     if (bm != null && !top && !mate) {
       const pm = ownLine?.mate != null && ownLine.mate * sgn > 0 ? ownLine.mate * sgn
         : after.ev?.mate != null && after.ev.mate * sgn > 0 ? Math.abs(after.ev.mate) + 1 : null;
       if (pm != null) { const d = pm - bm; base = d <= 0 ? 'best' : d === 1 ? 'excellent' : d <= 6 ? 'good' : 'inaccuracy'; }
+      else missedShortMate = bm <= 3; // kurzes Matt ausgelassen, danach kein Matt mehr
     }
+    // „Ohnehin gewonnen“ Elo-unabhängig: bester anderer Zug ≥ +6,00 (unskaliert, Sicht des Ziehenden) oder Matt
+    const altLine0 = lines.find(l => l.move !== m.uci);
+    // Bewertung des gespielten Zuges (Weiß-Sicht) und Abstand zum besten Zug in Hundertstel (Sicht des Ziehenden, unskaliert)
+    const playEv = (ownLine && !disagree && !term) ? ownLine : after.ev;
+    const cpOf = ev => !ev ? 0 : ev.mate != null ? (ev.mate === 0 ? (ev.matedWhite ? -1e4 : 1e4) : Math.sign(ev.mate) * 1e4) : ev.cp;
+    const cpGap = lines[0] ? (cpOf(lines[0]) - cpOf(playEv)) * sgn : 0;
+    const longMateWin = bm != null && bm > 5 && base == null && !mate && cpOf(playEv) * sgn >= 600;
+    const altWon = !!altLine0 && (altLine0.mate != null ? altLine0.mate * sgn > 0 : altLine0.cp * sgn >= 600);
     const chB = new Chess(P.fens[i]);
     const legal = chB.moves().length;
     // Theorie: Stellung im Buch, alle vorherigen Züge Theorie – und der Zug ist laut Engine kein Fehler
@@ -337,16 +419,29 @@ function finish(game, P, res, quality) {
     // Genauigkeit bleibt bei der bisherigen Buchregel (kalibriert): Buchkette ohne Engine-Prüfung
     bookAcc = inBook && (i === 0 || bookAcc);
     const prevM = i > 0 ? P.moves[i - 1] : null;
-    const recapture = !!(prevM && prevM.captured && m.to === prevM.to);
+    const seeM = seeOf(P.fens[i], m);
+    // Zurückschlagen ist nur dann offensichtlich, wenn der zurückschlagende Stein nicht selbst geopfert wird (SEE ≥ 0);
+    // 21…Txe4+ nach 20…Lxe4 21.fxe4 ist ein Qualitätsopfer, kein bloßes Zurückschlagen.
+    const recapture = !!(prevM && prevM.captured && m.to === prevM.to) && !(seeM != null && seeM < 0);
     // Kein Sonderlabel für: Antwort auf Schach, Zurückschlagen, Damenumwandlung (Mattzüge: immer Bester Zug)
     const obviousCls = chB.inCheck() || recapture || m.uci[4] === 'q';
     let sac = null;
-    const cls = classifyMove({
-      legal, inBook: chain, mate, R, loss, isBest, base, wpA, wpB, wpAlt, obvious: obviousCls,
+    const inp = {
+      legal, inBook: chain, mate, R, loss, isBest, base, wpA, wpB, wpAlt, obvious: obviousCls, altWon, missedShortMate, longMateWin,
       sacrifice: () => (sac = findSacrifices(P.fens[i], m.uci)),
-      freeCapture: () => isFreeCapture(P.fens[i], m),
+      // offensichtlicher Materialgewinn durch Schlagen: SEE ≥ 2 Bauerneinheiten → nie Großartig
+      freeCapture: () => seeM != null && seeM >= 2,
       prevOppCls: i > 0 ? out[i - 1].cls : null, wpPrev: i > 0 ? side(c, res[i - 1].ev, R) : null,
-    });
+    };
+    const cls = classifyMove(inp);
+    // Kandidaten für die tiefere Nachrechnung (nur ohne Nachrechnung bestimmt): Brillant/Großartig und knapp daran
+    if (wantCand && !before.deep && !chain && legal > 1 && !mate && !obviousCls && wpAlt != null) {
+      const nearGreat = isBest && !inp.freeCapture() && wpA - wpAlt >= greatGap(R) - 4 && outcome(wpAlt - 4) < outcome(wpA + 4);
+      const okB = ['best', 'excellent'].includes(cls) || (R < 1200 && cls === 'good');
+      const nearBrill = cls !== 'brilliant' && okB && wpA >= 40 && !(altLine0?.mate != null && altLine0.mate * sgn > 0)
+        && findSacrifices(P.fens[i], m.uci).length > 0;
+      if (cls === 'brilliant' || cls === 'great' || nearGreat || nearBrill) cand.push(i);
+    }
     // für die Texte: Zurückschlagen oder eine gleich-/höherwertige Figur schlagen
     const obvious = recapture || !!(m.captured && VAL[m.captured] >= VAL[m.piece]);
 
@@ -354,24 +449,31 @@ function finish(game, P, res, quality) {
     const wpC = ev => { if (!ev) return 50; if (ev.mate != null) return winPct(ev); const cp = Math.max(-1500, Math.min(1500, ev.cp)); return 50 + 50 * (2 / (1 + Math.exp(-0.00184104 * cp)) - 1); };
     const sB = c === 'w' ? wpC(before.ev) : 100 - wpC(before.ev), sA = c === 'w' ? wpC(after.ev) : 100 - wpC(after.ev);
     const lossStd = Math.max(0, sB - sA);
-    const acc = (bookAcc && loss < EP.mistake) ? 100 : Math.max(0, Math.min(100, 103.1668 * Math.exp(-0.15 * lossStd) - 3.1669 + 2));
+    const acc = (bookAcc && lossAcc < EP.mistake) ? 100 : Math.max(0, Math.min(100, 103.1668 * Math.exp(-0.15 * lossStd) - 3.1669 + 2));
 
     // Fehlertyp
     let err = null;
     if (BAD.has(cls)) {
-      const bm = lines[0]?.mate, am = after.ev.mate;
-      if (bm != null && bm * sgn > 0 && !(am != null && am * sgn > 0)) err = 'missedMate';
-      else if (am != null && am * sgn < 0) err = 'allowedMate';
+      const am = after.ev.mate;
+      const keepsMate = (am != null && am * sgn > 0) || (ownLine?.mate != null && ownLine.mate * sgn > 0);
+      // Matt übersehen nur bis Matt in 5 (längere Matts: Gewinnweg/Taktik verpasst);
+      // Matt zugelassen nur, wenn die Stellung vorher nicht ohnehin hoffnungslos war (wpB ≥ 10)
+      if (bm != null && !keepsMate) err = bm <= 5 ? 'missedMate' : 'missedTactic';
+      else if (am != null && am * sgn < 0 && wpB >= 10) err = 'allowedMate';
       else {
+        // Materialbilanz an Ruhepunkten (bis 8 Halbzüge): gespielte Linie (Gegner am Zug) gegen beste Linie
         const b0 = bal(new Chess(P.fens[i]), c);
-        const oppLine = after.lines[0]?.pv || [];
-        const seqA = balAlong(P.fens[i + 1], oppLine, c, 4);
-        const bestLine = lines[0]?.pv || [];
-        const seqB = balAlong(P.fens[i], bestLine, c, 5);
-        const endA = seqA.length ? Math.min(...seqA.filter((_, k) => k % 2 === 1 || k === seqA.length - 1)) : b0;
-        const endB = seqB.length ? seqB[seqB.length - 1] : b0;
-        if (endA <= b0 - 2 && (bal(new Chess(P.fens[i + 1]), c) >= b0 - 1)) err = 'hung';
-        else if (endB >= b0 + 2 && endB - endA >= 2) err = 'missedTactic';
+        const qA = quietBal(P.fens[i + 1], after.lines?.[0]?.pv, c, 8);
+        const qB = quietBal(P.fens[i], lines[0]?.pv, c, 8);
+        const endA = qA.length ? Math.min(...qA) : bal(new Chess(P.fens[i + 1]), c);
+        const endB = qB.length ? Math.max(...qB) : b0;
+        // Bezug: Bilanz vorher – steht ein Rückschlag noch aus, der erste Ruhepunkt der besten Linie
+        const ref = Math.min(b0, qB.length ? qB[0] : b0);
+        // Materialunterschied nur, wenn ihn auch die Bewertung trägt (≥ 1,50): sonst holt die Seite das Material
+        // hinter dem Fenster zurück (6.Lc4: Lh1 bleibt gefangen) und es ist ein Stellungsfehler
+        const real = endB - endA >= 2 && cpGap >= 150;
+        if (real && endA <= ref - 2) err = 'hung';
+        else if (real && endB >= ref + 2) err = 'missedTactic';
         else if (cls === 'miss') err = 'notPunished';
         else err = 'positional';
       }
@@ -397,8 +499,9 @@ function finish(game, P, res, quality) {
     return +(0.9 * mean + 0.1 * harm).toFixed(1);
   };
   return {
-    url: game.url, quality, v: 7, end_time: game.end_time,
+    url: game.url, quality, v: 8, end_time: game.end_time,
     evals: res.map(r => r.ev), lines: res.map(r => r.lines), depth: res.map(r => r.depth ?? null), moves: out,
+    deep: res.some(r => r.deep) ? res.map(r => r.deep || null) : undefined, cand,
     accuracy: { w: accOf('w'), b: accOf('b') },
   };
 }
@@ -439,15 +542,17 @@ export function coachText(game, an, P, i) {
   if (mv.cls === 'great') t += ' Der einzige Zug, der die Stellung hält.';
   if (mv.cls === 'book') { const nm = BOOK[bookKey(P.fens[i + 1])]; if (nm) t += ` (${nm.slice(4)})`; }
   if (['excellent', 'good', 'inaccuracy', 'mistake', 'miss', 'blunder'].includes(mv.cls) && bestSan && bestSan !== m.san) t += ` Bester Zug war ${bestSan}.`;
+  // neutral formuliert (Name statt „du“): der Text wird für beide Seiten benutzt
+  const who = (m.color === 'w' ? game.white : game.black)?.username || (m.color === 'w' ? 'Weiß' : 'Schwarz');
   const opp = an.lines[i + 1]?.[0];
   const oppSan = opp ? uciToSan(P.fens[i + 1], opp.move) : '';
   const L = an.lines[i]?.[0];
   switch (mv.err) {
     case 'hung': t += ` Danach gewinnt ${oppSan} Material.`; break;
-    case 'missedTactic': t += ` Mit ${bestSan} hättest du Material gewonnen (${pvToSan(P.fens[i], L.pv, 5).join(' ')}).`; break;
+    case 'missedTactic': t += L?.mate != null ? ` Mit ${bestSan} gab es ein langes Matt (Matt in ${Math.abs(L.mate)}).` : ` Mit ${bestSan} war Materialgewinn möglich (${pvToSan(P.fens[i], L.pv, 5).join(' ')}).`; break;
     case 'missedMate': t += ` Hier gab es Matt in ${Math.abs(L.mate)}: ${pvToSan(P.fens[i], L.pv, Math.abs(L.mate) * 2 - 1).join(' ')}.`; break;
-    case 'allowedMate': t += ` Damit lässt du Matt in ${Math.abs(an.evals[i + 1].mate)} zu (${oppSan}).`; break;
-    case 'notPunished': t += ' Der Gegner hatte gerade einen Fehler gemacht – den hast du nicht bestraft.'; break;
+    case 'allowedMate': t += ` Damit lässt ${who} Matt in ${Math.abs(an.evals[i + 1].mate)} zu (${oppSan}).`; break;
+    case 'notPunished': t += ` Der Gegner hatte gerade einen Fehler gemacht – ${who} hat ihn nicht bestraft.`; break;
   }
   if (mv.pressure && BAD.has(mv.cls)) t += ' Gespielt unter Zeitdruck.';
   return t;
@@ -456,6 +561,9 @@ export function coachText(game, an, P, i) {
 // Bereits analysierte Partie neu einstufen (ohne neue Engine-Rechnung)
 export function reclassify(game, an) {
   const P = parseGame(game);
-  const res = an.evals.map((ev, i) => ({ ev, lines: an.lines[i] || [], depth: an.depth?.[i] ?? null }));
-  return finish(game, P, res, an.quality);
+  // gespeicherte Nachrechnung (an.deep) und searchmoves-Linien werden mitbenutzt – keine Engine nötig
+  const res = an.evals.map((ev, i) => ({ ev, lines: an.lines[i] || [], depth: an.depth?.[i] ?? null, ...(an.deep?.[i] ? { deep: an.deep[i] } : {}) }));
+  const out = finish(game, P, res, an.quality);
+  delete out.cand;
+  return out;
 }

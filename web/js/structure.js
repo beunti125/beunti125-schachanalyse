@@ -22,7 +22,7 @@ const STRUCTS = [
     b: 'Gegenspiel am Königsflügel: Figuren Richtung weißen König, Springer nach e4, oft …f5.', sq: ['b5', 'e4'] },
   { id: 'french', name: 'Französische Bauernkette', test: (w, b) => has(w, 'e5', 'd4') && has(b, 'e6', 'd5'),
     w: 'Raumvorteil am Königsflügel nutzen: Figuren Richtung schwarzen König, f4–f5 vorbereiten. Die Kette an d4 halten.',
-    b: 'Die Kette an der Basis angreifen: …c5 gegen d4 und …f6 gegen e5. Der Läufer c8 braucht eine Aufgabe (…b6/…La6).', sq: ['d4', 'e5'] },
+    b: 'Die Kette an der Basis angreifen: …c5 gegen d4 und …f6 gegen e5. Der Läufer c8 braucht eine Aufgabe (…b6/…Ba6).', sq: ['d4', 'e5'] },
   { id: 'kid', name: 'Königsindische Kette', test: (w, b) => has(w, 'd5', 'e4') && has(b, 'd6', 'e5'),
     w: 'Angriff am Damenflügel: c4–c5 und b4, um die Kette an d6 aufzubrechen.',
     b: 'Angriff am Königsflügel: …f5–f4 und …g5–g4, Figuren zum weißen König.', sq: ['c5', 'f5'] },
@@ -36,11 +36,11 @@ const STRUCTS = [
     w: 'Die Bauern c4 und e4 kontrollieren d5 – Schwarz bekommt kaum Raum. Ruhig ausbauen und Gegenspiel verhindern.',
     b: 'Geduldig spielen, Figuren tauschen und mit …b5 oder …f5 den Hebel suchen.', sq: ['d5'] },
   { id: 'stonewall-w', name: 'Stonewall (Weiß)', test: w => has(w, 'd4', 'e3', 'f4', 'c3'),
-    w: 'Springer nach e5, Angriff am Königsflügel mit Tf3–h3 oder g4.',
+    w: 'Springer nach e5, Angriff am Königsflügel mit Rf3–h3 oder g4.',
     b: 'Das Loch auf e4 nutzen, den Springer e5 abtauschen, Gegenspiel am Damenflügel.', sq: ['e5', 'e4'] },
   { id: 'stonewall-b', name: 'Stonewall (Schwarz)', test: (w, b) => has(b, 'd5', 'e6', 'f5', 'c6'),
     w: 'Das Loch auf e5 nutzen, den Springer e4 abtauschen, Gegenspiel am Damenflügel.',
-    b: 'Springer nach e4, Angriff am Königsflügel mit …Tf6–h6 oder …g5.', sq: ['e4', 'e5'] },
+    b: 'Springer nach e4, Angriff am Königsflügel mit …Rf6–h6 oder …g5.', sq: ['e4', 'e5'] },
   { id: 'slav', name: 'Slawisches Dreieck', test: (w, b) => has(b, 'c6', 'd5', 'e6') && fileHas(w, 'c'),
     w: 'Druck auf d5, Raum mit e4 im passenden Moment, oft a4 gegen …b5.',
     b: 'Sehr solide. Befreien mit …c5 oder …e5, den Läufer c8 vorher aktivieren.', sq: ['d5', 'e4'] },
@@ -60,8 +60,8 @@ export function detectStructure(fen) {
   return STRUCTS.find(s => { try { return s.test(w, b); } catch { return false; } }) || null;
 }
 
-const DE = { N: 'S', B: 'L', R: 'T', Q: 'D', K: 'K' };
-export const sanDE = san => san.replace(/^[NBRQK]/, c => DE[c]).replace(/=([NBRQ])/, (_, c) => '=' + DE[c]).replace(/^O-O-O/, 'lange Rochade').replace(/^O-O(?!-)/, 'Rochade');
+// Notation einheitlich englisch (SAN wie auf chess.com: K Q R B N) – wie in allen anderen Texten der App
+export const sanDE = san => san;
 
 // Engine-Plan aus der Hauptvariante: welche Züge plant jede Seite?
 export function enginePlan(fen, pv, my, nMine = 3, nOpp = 2) {
