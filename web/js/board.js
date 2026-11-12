@@ -93,19 +93,19 @@ export class Board {
         // Springerzug als L: erst die lange Strecke, dann um die Ecke
         const ax = x0 + .5, ay = y0 + .5, bx = x1 + .5, by = y1 + .5;
         const cx = adx === 2 ? bx : ax, cy = adx === 2 ? ay : by;
-        const ux = Math.sign(bx - cx), uy = Math.sign(by - cy), ex = bx - ux * .4, ey = by - uy * .4;
+        const ux = Math.sign(bx - cx), uy = Math.sign(by - cy), ex = bx - ux * .46, ey = by - uy * .46;
         const sx = ax + Math.sign(cx - ax) * .25, sy = ay + Math.sign(cy - ay) * .25;
         const px = -uy, py = ux;
-        h += `<path d="M${sx} ${sy}L${cx} ${cy}L${ex} ${ey}" fill="none" stroke="${a.color}" stroke-width=".15" stroke-linejoin="miter" stroke-linecap="butt"/>`;
-        h += `<path d="M${ex + px * .21} ${ey + py * .21}L${bx - ux * .06} ${by - uy * .06}L${ex - px * .21} ${ey - py * .21}Z" fill="${a.color}"/>`;
+        h += `<path d="M${sx} ${sy}L${cx} ${cy}L${ex} ${ey}" fill="none" stroke="${a.color}" stroke-width=".24" stroke-linejoin="miter" stroke-linecap="butt"/>`;
+        h += `<path d="M${ex + px * .3} ${ey + py * .3}L${bx - ux * .06} ${by - uy * .06}L${ex - px * .3} ${ey - py * .3}Z" fill="${a.color}"/>`;
         if (typeof a.label === 'string') h += `<circle cx="${cx}" cy="${cy}" r=".19" fill="${a.color}" stroke="#fff" stroke-width=".035"/><text x="${cx}" y="${cy + .075}" text-anchor="middle" font-size=".22" font-weight="800" fill="#fff" font-family="Arial,sans-serif">${a.label}</text>`;
         continue;
       }
       const ax = x0 + .5, ay = y0 + .5, bx = x1 + .5, by = y1 + .5;
       const dx = bx - ax, dy = by - ay, len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
-      const head = .42, w = .15, sx = ax + ux * .3, sy = ay + uy * .3, ex = bx - ux * head, ey = by - uy * head;
+      const head = .48, w = .24, sx = ax + ux * .3, sy = ay + uy * .3, ex = bx - ux * head, ey = by - uy * head;
       const px = -uy, py = ux;
-      h += `<path d="M${sx + px * w / 2} ${sy + py * w / 2}L${ex + px * w / 2} ${ey + py * w / 2}L${ex + px * .21} ${ey + py * .21}L${bx - ux * .06} ${by - uy * .06}L${ex - px * .21} ${ey - py * .21}L${ex - px * w / 2} ${ey - py * w / 2}L${sx - px * w / 2} ${sy - py * w / 2}Z" fill="${a.color || 'rgba(127,191,77,.85)'}"/>`;
+      h += `<path d="M${sx + px * w / 2} ${sy + py * w / 2}L${ex + px * w / 2} ${ey + py * w / 2}L${ex + px * .3} ${ey + py * .3}L${bx - ux * .06} ${by - uy * .06}L${ex - px * .3} ${ey - py * .3}L${ex - px * w / 2} ${ey - py * w / 2}L${sx - px * w / 2} ${sy - py * w / 2}Z" fill="${a.color || 'rgba(127,191,77,.85)'}"/>`;
       const lx = (sx + ex) / 2 + px * .3, ly = (sy + ey) / 2 + py * .3;
       if (typeof a.label === 'string') h += `<circle cx="${lx}" cy="${ly}" r=".19" fill="${a.color}" stroke="#fff" stroke-width=".035"/><text x="${lx}" y="${ly + .075}" text-anchor="middle" font-size=".22" font-weight="800" fill="#fff" font-family="Arial,sans-serif">${a.label}</text>`;
     }
