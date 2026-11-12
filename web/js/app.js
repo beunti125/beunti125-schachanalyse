@@ -223,9 +223,12 @@ function setEvalBar(ev) {
   const atBottom = whiteBetter !== flip; tx.style.top = atBottom ? 'auto' : '0'; tx.style.bottom = atBottom ? '0' : 'auto'; tx.style.color = whiteBetter ? '#333' : '#eee';
 }
 // Die gezogene Figur ist der Trainer
+// Figuren optisch mittig im Kreis (gemessene Verschiebung/Größe je Figur)
+const FIG_CENTER = {"wK": {"dx": 0.1, "dy": -0.7, "s": 0.997}, "wQ": {"dx": 0.0, "dy": 0.3, "s": 0.909}, "wR": {"dx": 0.0, "dy": -3.3, "s": 1.111}, "wB": {"dx": 0.0, "dy": 0.8, "s": 1.006}, "wN": {"dx": 1.1, "dy": -1.1, "s": 1.045}, "wP": {"dx": 0.0, "dy": -3.9, "s": 1.093}, "bK": {"dx": 0.1, "dy": -0.7, "s": 0.997}, "bQ": {"dx": 0.0, "dy": -1.6, "s": 0.909}, "bR": {"dx": 0.0, "dy": -3.3, "s": 1.111}, "bB": {"dx": 0.0, "dy": 0.8, "s": 1.006}, "bN": {"dx": 1.1, "dy": -1.1, "s": 1.045}, "bP": {"dx": 0.0, "dy": -3.9, "s": 1.093}};
 function setCoachPiece(color, piece) {
-  const img = $('.avatar img'), av = $('.avatar');
-  img.src = `pieces/${color || 'w'}${(piece || 'n').toUpperCase()}.svg`;
+  const img = $('.avatar img'), av = $('.avatar'), k = (color || 'w') + (piece || 'n').toUpperCase(), f = FIG_CENTER[k];
+  img.src = `pieces/${k}.svg`;
+  if (f) $('.av-in').style.transform = `translate(${f.dx}%, ${f.dy}%) scale(${f.s})`;
   av.classList.toggle('blk', color === 'b');
 }
 function movableColor(fen) { const c = new Chess(fen); return c.isGameOver() ? null : c.turn(); }

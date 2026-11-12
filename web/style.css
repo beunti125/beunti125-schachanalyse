@@ -342,3 +342,19 @@ body.focus #v-review.analysing .board-col{width:min(calc(100vh - 80px),calc(100v
 /* Bewertung in der Sprechblase: Weiß-Vorteil hell, Schwarz-Vorteil dunkel */
 .bubble .coach-eval{background:#fff;color:#26241f;box-shadow:inset 0 0 0 1px #cfcbbf}
 .bubble .coach-eval.neg{background:#26241f;color:#fff;box-shadow:none}
+/* Trainerfigur mittig links neben der Sprechblase */
+.coach{align-items:center}
+.avatar{margin-top:0;width:52px;height:52px;display:grid;place-items:center}
+.avatar img{width:42px;height:42px;display:block}
+@keyframes idle{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-2px) rotate(-2deg)}}
+@keyframes nod{0%,100%{transform:translateY(0)}35%{transform:translateY(3px) rotate(4deg)}70%{transform:translateY(-1px)}}
+@keyframes shake{0%,100%{transform:rotate(0)}20%{transform:rotate(-12deg)}40%{transform:rotate(10deg)}60%{transform:rotate(-8deg)}80%{transform:rotate(5deg)}}
+@keyframes tilt{0%,100%{transform:rotate(0)}50%{transform:rotate(-10deg)}}
+@keyframes jump{0%{transform:scale(1)}30%{transform:translateY(-8px) scale(1.12) rotate(-6deg)}60%{transform:translateY(1px) scale(.97)}100%{transform:scale(1)}}
+.bubble::before{top:50%;transform:translateY(-50%)}
+/* Blase wieder oben ausrichten; Figur genau mittig im Kreis */
+.coach{align-items:flex-start}
+.avatar{margin-top:4px}
+.bubble::before{top:20px;transform:none}
+.av-in{display:block;width:42px;height:42px}
+.av-in img{width:100%;height:100%}
