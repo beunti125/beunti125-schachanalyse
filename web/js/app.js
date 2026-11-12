@@ -3,6 +3,7 @@ import { EnginePool } from './engine.js';
 import { Board } from './board.js';
 import { icon, CLASS_COLOR } from './icons.js';
 import { explain } from './explain.js';
+import { openingStep } from './openings.js';
 import * as S from './store.js';
 import { CLASSES, CLASS_DE, ERR_DE, PHASE_DE, parseGame, analyseGame, extractPuzzles, coachText, winPct, fmtEval, uciToSan, pvToSan } from './analysis.js';
 
@@ -177,6 +178,9 @@ function go(ply) {
   const i = ply - 1, mv = i >= 0 ? P.moves[i] : null, cls = i >= 0 ? an.moves[i] : null;
   board.setPosition(P.fens[ply], { last: mv ? { from: mv.from, to: mv.to } : null, animate: true, badge: mv && cls.cls !== 'forced' ? { sq: mv.to, cls: cls.cls } : null });
   st.ex = cls ? explain(g, an, P, i, { my: me(g), hist: st.hist }) : null; st.step = 0;
+  st.hint = 0; updHint();
+  const os = cls && ply <= 20 ? openingStep(P.fens, ply, me(g)) : null;
+  if (os) { os.last = { from: mv.from, to: mv.to }; if (cls.cls === 'book') st.ex.steps.splice(1, 0, os); else st.ex.steps.push(os); }
   renderSteps(); applyStep(0);
   const ev = an.evals[ply], wp = winPct(ev), flip = board.orientation === 'b';
   setEvalBar(ev);
@@ -267,18 +271,17 @@ async function showVar(animate) {
   setCoachPiece(mv?.color, mv?.piece);
   $('.coach-ico').innerHTML = ''; $('.coach-txt').innerHTML = mv ? `<b>${esc(mv.san)}</b> – <span style="color:var(--mut)">wird geprüft …</span>` : 'Eigene Variante';
   $('#steps').style.display = 'none';
+  st.hint = 0; updHint();
   const tok = ++st.varTok;
   const [b, a] = await Promise.all([mv ? evalOf(v.fens[v.idx - 1]) : null, evalOf(fen)]);
   if (tok !== st.varTok) return;
   setEvalBar(a.ev);
   const ce = $('.coach-eval'); ce.textContent = fmtEval(a.ev); ce.classList.toggle('neg', winPct(a.ev) < 50);
-  if (a.best) board.setArrows([{ from: a.best.slice(0, 2), to: a.best.slice(2, 4), color: 'rgba(91,143,199,.85)' }]);
   const c = new Chess(fen);
   let text;
   if (mv) {
     const cls = classifyVar(b, a, mv);
     board.setPosition(fen, { last: { from: mv.from, to: mv.to }, badge: { sq: mv.to, cls } });
-    if (a.best) board.setArrows([{ from: a.best.slice(0, 2), to: a.best.slice(2, 4), color: 'rgba(91,143,199,.85)' }]);
     $('.coach-ico').innerHTML = icon(cls, 30);
     $('.coach-txt').innerHTML = `<b>${esc(mv.san)}</b> – <b style="color:${CLASS_COLOR[cls]}">${CLASS_DE[cls]}</b> <span class="tag">eigene Variante</span>`;
     const prev = v.fens[v.idx - 1];
@@ -288,9 +291,11 @@ async function showVar(animate) {
   } else text = 'Zieh eine Figur – für Weiß oder Schwarz.';
   if (c.isCheckmate()) text += ' Schachmatt!';
   else if (c.isDraw()) text += ' Die Stellung ist remis.';
-  else if (a.best) text += ` Jetzt am besten für ${c.turn() === 'w' ? 'Weiß' : 'Schwarz'}: ${pvToSan(fen, a.pv, 5).join(' ')} (blauer Pfeil).`;
+  else if (a.best) text += ` Du bist dran für ${c.turn() === 'w' ? 'Weiß' : 'Schwarz'} – „Tipp“ zeigt dir den besten Zug.`;
   const el = $('#steps'); el.style.display = ''; el.innerHTML = `<div class="step-text">${esc(text)}</div>`;
+  applyVarHint();
 }
+function applyVarHint() { if (!st.var) return; board.setArrows(bestArrow()); board.setMarks(hintMarks()); }
 function renderVarLine() {
   const el = $('#varLine'), v = st.var;
   if (!v) { el.style.display = 'none'; el.innerHTML = ''; return; }
@@ -359,11 +364,15 @@ function applyStep(k) {
     board.setPosition(s.fen, { last: s.last, badge: s.fen === st.P.fens[st.ply] && mvx && st.an.moves[i].cls !== 'forced' ? { sq: mvx.to, cls: st.an.moves[i].cls } : null });
   }
   st.step = k;
-  board.setArrows([...s.arrows, ...(k === 0 ? bestArrow() : [])]); board.setMarks(s.marks);
+  const live0 = s.fen === st.P.fens[st.ply];
+  board.setArrows([...s.arrows, ...(live0 ? bestArrow() : [])]); board.setMarks({ ...s.marks, ...(live0 ? hintMarks() : {}) });
   const tx = document.querySelector('#steps .step-text'); if (tx) tx.textContent = s.text;
   document.querySelectorAll('#steps .dots i').forEach(e => e.classList.toggle('on', +e.dataset.k === k));
 }
-function bestArrow() { const nb = st.an.lines[st.ply]?.[0]?.move; return st.showBest && nb ? [{ from: nb.slice(0, 2), to: nb.slice(2, 4), color: 'rgba(91,143,199,.85)' }] : []; }
+function curBest() { if (st.var) return live.get(st.var.fens[st.var.idx])?.best; return st.an.lines[st.ply]?.[0]?.move; }
+function bestArrow() { const nb = curBest(); return st.hint === 2 && nb ? [{ from: nb.slice(0, 2), to: nb.slice(2, 4), color: 'rgba(91,143,199,.85)' }] : []; }
+function hintMarks() { const nb = curBest(); return st.hint === 1 && nb ? { [nb.slice(0, 2)]: 'hint' } : {}; }
+function updHint() { const b = $('#hintBtn'); if (!b) return; b.textContent = ['💡 Tipp', '💡 Zug zeigen', '💡 Ausblenden'][st.hint || 0]; b.classList.toggle('on', !!st.hint); }
 
 // Stapelanalyse
 async function batch() {
@@ -578,7 +587,7 @@ $('#varLine').onclick = e => { const m = e.target.closest('[data-vi]'); if (m &&
 $('#moveList').onclick = e => { const m = e.target.closest('.mv'); if (m) go(+m.dataset.ply); };
 $('#graph').onclick = e => { if (!st.an) return; const b = e.currentTarget.getBoundingClientRect(); go(Math.round((e.clientX - b.left) / b.width * (st.an.evals.length - 1))); };
 document.querySelector('.controls').onclick = e => { const n = e.target.closest('[data-nav]')?.dataset.nav; if (!n) return; go({ first: 0, prev: st.ply - 1, next: st.ply + 1, last: 1e9 }[n]); };
-$('#hintBtn').onclick = e => { st.showBest = !st.showBest; e.currentTarget.classList.toggle('on', st.showBest); if (st.var) showVar(false); else applyStep(st.step); };
+$('#hintBtn').onclick = () => { st.hint = ((st.hint || 0) + 1) % 3; updHint(); if (st.var) applyVarHint(); else applyStep(st.step); };
 $('#nextBtn').onclick = () => { if (st.var) { if (st.var.idx < st.var.moves.length) { st.var.idx++; showVar(true); } } else go(st.ply + 1); };
 $('#startBtn').onclick = () => go(Math.max(1, st.ply));
 $('#flipBtn').onclick = () => { board.flip(); if (st.an) { renderGraph(); go(st.ply); } };

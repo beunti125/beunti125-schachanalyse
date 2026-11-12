@@ -338,3 +338,4 @@ body.focus #v-review.analysing .board-col{width:min(calc(100vh - 80px),calc(100v
 .controls{padding:12px 14px 14px}
 .controls .ic{height:62px;font-size:26px;border-radius:10px}
 .ver{font-size:11px;color:var(--dim)}
+.sq.plan::after{content:"";position:absolute;inset:0;background:rgba(155,89,200,.28)}

@@ -64,7 +64,7 @@ export class Board {
   }
   _paintMarks() {
     for (const d of this.sqL.children) {
-      const sq = d.dataset.sq; d.classList.remove('last', 'sel', 'hint', 'good', 'bad', 'check', 'brill');
+      const sq = d.dataset.sq; d.classList.remove('last', 'sel', 'hint', 'good', 'bad', 'check', 'brill', 'plan');
       d.querySelector('.dot')?.remove();
       if (this.last && (sq === this.last.from || sq === this.last.to)) d.classList.add('last');
       if (this.marks[sq]) d.classList.add(this.marks[sq]);
@@ -85,6 +85,19 @@ export class Board {
     let h = '';
     for (const a of this.arrows) {
       const [x0, y0] = this._xy(a.from), [x1, y1] = this._xy(a.to);
+      const adx = Math.abs(x1 - x0), ady = Math.abs(y1 - y0);
+      if ((adx === 1 && ady === 2) || (adx === 2 && ady === 1)) {
+        // Springerzug als L: erst die lange Strecke, dann um die Ecke
+        const ax = x0 + .5, ay = y0 + .5, bx = x1 + .5, by = y1 + .5;
+        const cx = adx === 2 ? bx : ax, cy = adx === 2 ? ay : by;
+        const ux = Math.sign(bx - cx), uy = Math.sign(by - cy), ex = bx - ux * .4, ey = by - uy * .4;
+        const sx = ax + Math.sign(cx - ax) * .25, sy = ay + Math.sign(cy - ay) * .25;
+        const px = -uy, py = ux;
+        h += `<path d="M${sx} ${sy}L${cx} ${cy}L${ex} ${ey}" fill="none" stroke="${a.color}" stroke-width=".15" stroke-linejoin="miter" stroke-linecap="butt"/>`;
+        h += `<path d="M${ex + px * .21} ${ey + py * .21}L${bx - ux * .06} ${by - uy * .06}L${ex - px * .21} ${ey - py * .21}Z" fill="${a.color}"/>`;
+        if (typeof a.label === 'string') h += `<circle cx="${cx}" cy="${cy}" r=".19" fill="${a.color}" stroke="#fff" stroke-width=".035"/><text x="${cx}" y="${cy + .075}" text-anchor="middle" font-size=".22" font-weight="800" fill="#fff" font-family="Arial,sans-serif">${a.label}</text>`;
+        continue;
+      }
       const ax = x0 + .5, ay = y0 + .5, bx = x1 + .5, by = y1 + .5;
       const dx = bx - ax, dy = by - ay, len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
       const head = .42, w = .15, sx = ax + ux * .3, sy = ay + uy * .3, ex = bx - ux * head, ey = by - uy * head;
