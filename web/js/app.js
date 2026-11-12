@@ -2,7 +2,7 @@ import { Chess } from '../vendor/chess.js';
 import { EnginePool } from './engine.js';
 import { Board } from './board.js';
 import { icon, CLASS_COLOR } from './icons.js';
-import { explain } from './explain.js';
+import { explain, judgeIdea } from './explain.js';
 import { openingStep } from './openings.js';
 import * as S from './store.js';
 import { CLASSES, CLASS_DE, ERR_DE, PHASE_DE, parseGame, analyseGame, extractPuzzles, coachText, winPct, fmtEval, uciToSan, pvToSan } from './analysis.js';
@@ -271,7 +271,7 @@ async function showVar(animate) {
   setCoachPiece(mv?.color, mv?.piece);
   $('.coach-ico').innerHTML = ''; $('.coach-txt').innerHTML = mv ? `<b>${esc(mv.san)}</b> – <span style="color:var(--mut)">wird geprüft …</span>` : 'Eigene Variante';
   $('#steps').style.display = 'none';
-  st.hint = 0; updHint();
+  st.hint = 0; updHint(); st.varArrows = []; st.varMarks = {};
   const tok = ++st.varTok;
   const [b, a] = await Promise.all([mv ? evalOf(v.fens[v.idx - 1]) : null, evalOf(fen)]);
   if (tok !== st.varTok) return;
@@ -285,17 +285,19 @@ async function showVar(animate) {
     $('.coach-ico').innerHTML = icon(cls, 30);
     $('.coach-txt').innerHTML = `<b>${esc(mv.san)}</b> – <b style="color:${CLASS_COLOR[cls]}">${CLASS_DE[cls]}</b> <span class="tag">eigene Variante</span>`;
     const prev = v.fens[v.idx - 1];
-    text = cls === 'best' ? 'Stark – das ist der beste Zug in dieser Stellung.' : `Besser wäre ${uciToSan(prev, b.best)} gewesen (${fmtEval(b.ev)}).`;
+    const g = st.g, opp = me(g) === 'w' ? g.black.username : g.white.username;
+    const J = judgeIdea({ before: prev, after: fen, m: { ...mv, promotion: mv.uci[4] }, b, a, my: me(g), oppName: opp, startEv: v.idx > 1 ? st.an.evals[v.base] : null, prevFen: v.idx >= 2 ? v.fens[v.idx - 2] : (v.base > 0 ? st.P.fens[v.base - 1] : null) });
+    text = J.text; st.varArrows = J.arrows; st.varMarks = J.marks;
     const av = $('.avatar'); av.style.borderColor = CLASS_COLOR[cls];
     av.classList.remove('jump', 'nod', 'tilt', 'shake'); void av.offsetWidth; av.classList.add(cls === 'best' ? 'nod' : ['mistake', 'blunder'].includes(cls) ? 'shake' : 'tilt');
-  } else text = 'Zieh eine Figur – für Weiß oder Schwarz.';
+  } else { text = 'Spiel deine Idee: Zieh Figuren für Weiß und Schwarz – ich sage dir nach jedem Zug, ob sie funktioniert und warum.'; st.varArrows = []; st.varMarks = {}; }
   if (c.isCheckmate()) text += ' Schachmatt!';
   else if (c.isDraw()) text += ' Die Stellung ist remis.';
-  else if (a.best) text += ` Du bist dran für ${c.turn() === 'w' ? 'Weiß' : 'Schwarz'} – „Tipp“ zeigt dir den besten Zug.`;
+  else if (a.best && !mv) text += '';
   const el = $('#steps'); el.style.display = ''; el.innerHTML = `<div class="step-text">${esc(text)}</div>`;
   applyVarHint();
 }
-function applyVarHint() { if (!st.var) return; board.setArrows(bestArrow()); board.setMarks(hintMarks()); }
+function applyVarHint() { if (!st.var) return; board.setArrows([...(st.varArrows || []), ...bestArrow()]); board.setMarks({ ...(st.varMarks || {}), ...hintMarks() }); }
 function renderVarLine() {
   const el = $('#varLine'), v = st.var;
   if (!v) { el.style.display = 'none'; el.innerHTML = ''; return; }

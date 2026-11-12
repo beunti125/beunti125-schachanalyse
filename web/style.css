@@ -339,3 +339,6 @@ body.focus #v-review.analysing .board-col{width:min(calc(100vh - 80px),calc(100v
 .controls .ic{height:62px;font-size:26px;border-radius:10px}
 .ver{font-size:11px;color:var(--dim)}
 .sq.plan::after{content:"";position:absolute;inset:0;background:rgba(155,89,200,.28)}
+/* Bewertung in der Sprechblase: Weiß-Vorteil hell, Schwarz-Vorteil dunkel */
+.bubble .coach-eval{background:#fff;color:#26241f;box-shadow:inset 0 0 0 1px #cfcbbf}
+.bubble .coach-eval.neg{background:#26241f;color:#fff;box-shadow:none}

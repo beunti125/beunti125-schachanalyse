@@ -14,7 +14,7 @@ const bal = (fen, col) => { let s = 0; for (const p of new Chess(fen).board().fl
 const list = a => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' und ' + a.at(-1);
 function lossName(d) {
   d = Math.abs(d);
-  return d >= 9 ? 'etwa eine Dame' : d >= 5 ? 'etwa einen Turm' : d >= 3 ? 'etwa eine Leichtfigur' : d === 2 ? 'zwei Bauern' : 'einen Bauern';
+  return d >= 9 ? 'etwa eine Dame' : d >= 5 ? 'etwa einen Turm' : d >= 3 ? 'etwa eine Leichtfigur' : d === 2 ? 'etwa zwei Bauern an Material' : 'einen Bauern';
 }
 
 // Beschreibt einen Zug: Schlagen, Schach, Matt, Angriffe (Gabel), Umwandlung
@@ -40,6 +40,17 @@ function describe(fen, u) {
   if (c.inCheck()) { const k = c.board().flat().find(p => p && p.type === 'k' && p.color === opp); marks[k.square] = 'bad'; }
   return { san: m.san, text: parts.join(', '), marks, r };
 }
+function pawnWeak(fen, col) {
+  const ps = new Chess(fen).board().flat().filter(p => p && p.type === 'p' && p.color === col).map(p => p.square[0]);
+  const cnt = {}; ps.forEach(f => cnt[f] = (cnt[f] || 0) + 1);
+  const F = 'abcdefgh'; let w = 0;
+  for (const f in cnt) { if (cnt[f] > 1) w += cnt[f] - 1; const k = F.indexOf(f); if (!cnt[F[k - 1]] && !cnt[F[k + 1]]) w += cnt[f]; }
+  return w;
+}
+const castleRights = (fen, col) => { const f = fen.split(' ')[2]; return col === 'w' ? /[KQ]/.test(f) : /[kq]/.test(f); };
+// Materialbilanz am Ende einer Zugfolge relativ zu einer Ausgangsstellung
+function lineEnd(fen, pv, n) { let f = fen; for (const u of (pv || []).slice(0, n)) { const r = mv(f, u); if (!r) break; f = r.fen; } return f; }
+
 const sent = (who, d) => `${who} ${d.san}${d.text ? ' – ' + d.text.replace(/ – /g, ': ') : ''}.`;
 const arrow = (u, color, label) => ({ from: u.slice(0, 2), to: u.slice(2, 4), color, label });
 
@@ -144,24 +155,58 @@ export function explain(game, an, P, i, ctx = {}) {
       miss: 'Hier hast du eine Chance liegen lassen.', blunder: pick(['Autsch – ein Patzer.', 'Das tut weh – ein Patzer.'], seed)
     }[x.cls];
     let intro = `${head} Die Bewertung kippt von ${evB} auf ${evA}. `;
-    if (x.cls === 'miss' && i > 0) intro += `${oppName} hatte dir gerade mit ${P.moves[i - 1].san} eine Tür geöffnet – du bist nicht durchgegangen. `;
-    if (reply) {
-      const end = playLine(after, reply.pv, x.cls === 'inaccuracy' ? 2 : 4, 0, { me: COL.grey, them: COL.red }, intro + 'Warum? ');
-      if (steps.length) steps[0].last = last;
+    if (x.cls === 'miss' && i > 0) intro += `${oppName} hatte dir gerade mit ${P.moves[i - 1].san} eine Tür geöffnet. `;
+    const sgn = c === 'w' ? 1 : -1, base = bal(before, c);
+    const dr = reply ? describe(after, reply.move) : null;
+    const lossA = reply ? bal(lineEnd(after, reply.pv, 4), c) - base : 0;
+    const gainB = best ? bal(lineEnd(before, best.pv, 5), c) - base : 0;
+    const db = best && best.move !== m.uci ? describe(before, best.move) : null;
+    const allowsMate = an.evals[i + 1].mate != null && an.evals[i + 1].mate * sgn < 0;
+    const hadMate = best?.mate != null && best.mate * sgn > 0;
+    let kind = 'generic', why = '', f0 = after, arr = [], mk = {};
+    if (allowsMate) {
+      kind = 'loss'; why = `Damit lässt du Matt zu: ${oppName} antwortet ${dr.san}${dr.text ? ' – ' + dr.text : ''}.`; arr = [arrow(reply.move, COL.red)]; mk = dr.marks;
+    } else if (hadMate && db) {
+      kind = 'missed'; f0 = before; why = `Du hattest Matt in ${Math.abs(best.mate)} – mit ${db.san}${db.text ? ' (' + db.text + ')' : ''}.`; arr = [arrow(m.uci, COL.red, '✕'), arrow(best.move, COL.green, '✓')]; mk = db.marks;
+    } else if (reply && lossA <= -2) {
+      kind = 'loss'; why = `${oppName} antwortet ${dr.san}${dr.text ? ' – ' + dr.text : ''} – und am Ende verlierst du ${lossName(lossA)}.`; arr = [arrow(reply.move, COL.red)]; mk = dr.marks;
+    } else if (db && gainB >= 2 && gainB - lossA >= 2) {
+      kind = 'missed'; f0 = before; why = `Du hast eine Taktik übersehen: ${db.san}${db.text ? ' – ' + db.text : ''} hätte ${lossName(gainB)} gewonnen.`; arr = [arrow(m.uci, COL.red, '✕'), arrow(best.move, COL.green, '✓')]; mk = db.marks;
+    } else {
+      const rm = reply ? mv(after, reply.move) : null;
+      const kicked = rm && rm.m.piece === 'p' && m.piece !== 'p' && m.piece !== 'k' && rm.c.attackers(m.to, rm.m.color).includes(rm.m.to);
+      if (kicked) {
+        kind = 'tempo'; why = `${m.piece === 'q' ? 'Deine Dame' : 'Dein ' + NAME[m.piece]} auf ${m.to} steht ungünstig: ${oppName} vertreibt ${m.piece === 'q' ? 'sie' : 'ihn'} sofort mit ${dr.san} und gewinnt dabei Zeit und Raum.`;
+        arr = [arrow(reply.move, COL.red)]; mk = { [m.to]: 'bad' };
+      } else if (castleRights(before, c) && !castleRights(after, c) && !m.san.startsWith('O-O')) {
+        kind = 'king'; why = 'Damit verlierst du das Rochaderecht – dein König bleibt in der Mitte und wird zum Angriffsziel.';
+      } else if (pawnWeak(after, c) > pawnWeak(before, c)) {
+        kind = 'pawns'; why = 'Dadurch entsteht eine Bauernschwäche (Doppel- oder isolierter Bauer), die dein Gegner auf Dauer angreifen kann.';
+      } else if (i < 24 && P.moves.slice(0, i).some(q => q.color === c && q.to === m.from) && new Chess(before).board()[c === 'w' ? 7 : 0].filter(p => p && p.color === c && (p.type === 'n' || p.type === 'b')).length >= 2) {
+        kind = 'dev'; why = 'Du ziehst dieselbe Figur ein zweites Mal, während andere Figuren noch unentwickelt sind – das kostet Entwicklungszeit.';
+      }
+      if (kind === 'generic' && db) { f0 = before; why = `Der Zug ist zu harmlos. Viel stärker war ${db.san}${db.text ? ' – ' + db.text : ''}.`; arr = [arrow(m.uci, COL.red, '✕'), arrow(best.move, COL.green, '✓')]; mk = db.marks; }
+      else if (dr && dr.text && kind !== 'tempo') why += ` Danach spielt ${oppName} ${dr.san} – ${dr.text}.`;
+    }
+    steps.push({ fen: f0, last: f0 === before ? lastPrev : last, arrows: arr, marks: mk, text: intro + 'Warum? ' + why });
+    if (kind === 'missed' || (kind === 'generic' && db)) {
+      // So wäre es richtig gegangen
+      const end = playLine(before, best.pv, 4, 0, { me: COL.green, them: COL.grey });
+      const g = outcome(before, end); if (g.includes('gewinnst') || g.includes('setzt du matt')) steps.push({ fen: end, last: null, arrows: [], marks: {}, text: g.replace('Unterm Strich', 'So') });
+    } else if (reply) {
+      const end = playLine(after, reply.pv, x.cls === 'inaccuracy' ? 2 : 4, 0, { me: COL.grey, them: COL.red });
       const oc = outcome(before, end);
       if (oc && !oc.includes('gewinnst') && !oc.includes('setzt du matt')) steps.push({ fen: end, last: null, arrows: [], marks: {}, text: oc });
-    } else steps.push({ fen: after, last, arrows: [], marks: {}, text: intro });
+    }
     const pers = personal();
     if (pers) steps.push({ fen: after, last, arrows: [], marks: {}, text: pers });
-    if (best && best.move !== m.uci) {
-      const db = describe(before, best.move);
+    if (db && kind !== 'missed' && !(kind === 'generic')) {
       const line = []; let f = before;
       for (const u of best.pv.slice(0, 5)) { const r = mv(f, u); if (!r) break; line.push(r.m.san); f = r.fen; }
-      const gain = outcome(before, f);
-      const mateTxt = best.mate != null && best.mate * (c === 'w' ? 1 : -1) > 0 ? ` Das wäre sogar Matt in ${Math.abs(best.mate)} gewesen!` : '';
       steps.push({ fen: before, last: lastPrev, arrows: [arrow(m.uci, COL.red, '✕'), arrow(best.move, COL.green, '✓')], marks: db.marks,
-        text: `Besser war ${db.san}${db.text ? ' – ' + db.text : ''} (${myEv(best)}). Zum Beispiel: ${line.join(' ')}.${mateTxt}${gain.includes('gewinnst') && !mateTxt ? ' ' + gain.replace('Unterm Strich', 'Damit') : ''}${x.err && LESSON[x.err] && x.cls !== 'inaccuracy' ? ` Merksatz: ${LESSON[x.err]}` : ''}` });
+        text: `Besser war ${db.san}${db.text ? ' – ' + db.text : ''} (${myEv(best)}). Zum Beispiel: ${line.join(' ')}.` });
     }
+    if (x.err && LESSON[x.err] && x.cls !== 'inaccuracy') steps[steps.length - 1].text += ` Merksatz: ${LESSON[x.err]}`;
   } else {
     // Fehler deines Gegners – deine Chance
     const head = { inaccuracy: `${oppName} spielt ungenau.`, mistake: `${oppName} macht einen Fehler.`, miss: `${oppName} lässt eine Chance liegen.`, blunder: `${oppName} patzt!` }[x.cls];
@@ -179,3 +224,49 @@ export function explain(game, an, P, i, ctx = {}) {
   }
   return { cls: x.cls, title: CLASS_DE[x.cls], steps };
 }
+
+// Eigene Idee in einer Variante beurteilen: funktioniert sie – und warum (nicht)?
+// b/a: {ev, best, pv} vor bzw. nach dem Zug (Weiß-Sicht), m: chess.js-Zug, my: eigene Farbe
+export function judgeIdea({ before, after, m, b, a, my, oppName, startEv, prevFen }) {
+  const c = m.color, mine = c === my, sgn = c === 'w' ? 1 : -1;
+  const who = mine ? 'Deine Idee' : 'Diese Antwort';
+  const base = bal(before, c);
+  const reply = a?.best ? { move: a.best, pv: a.pv } : null;
+  const dr = reply ? describe(after, reply.move) : null;
+  const endA = bal(reply ? lineEnd(after, reply.pv, 4) : after, c);
+  // „scheitert“: schlechter als die beste Fortsetzung; „funktioniert“: echter Gewinn gegenüber vor dem letzten Abtausch
+  const lossRel = endA - bal(b?.pv?.length ? lineEnd(before, b.pv, 5) : before, c);
+  const gainAbs = endA - bal(prevFen || before, c);
+  const lossA = lossRel;
+  const db = b?.best && b.best !== m.from + m.to + (m.promotion || '') ? describe(before, b.best) : null;
+  const evOf = ev => { const s = fmtEval(ev); if (my === 'w' || !s) return s; return s.startsWith('-M') ? s.slice(1) : s.startsWith('-') ? '+' + s.slice(1) : s.startsWith('+') ? '-' + s.slice(1) : s.startsWith('M') ? '-' + s : s; };
+  const wb = winPct(b.ev), wa = winPct(a.ev), loss = Math.max(0, c === 'w' ? wb - wa : wa - wb);
+  const arrows = [], marks = {};
+  let text;
+  const self = describe(before, m.from + m.to + (m.promotion || ''));
+  const chA = new Chess(after);
+  if (chA.isCheckmate()) text = `${who} sitzt: Schachmatt!`;
+  else if (a.ev.mate != null && a.ev.mate * sgn > 0) text = `${who} funktioniert: Matt in ${Math.abs(a.ev.mate)}!${reply ? ` Weiter mit ${uciSan(after, reply.move)}.` : ''}`;
+  else if (a.ev.mate != null && a.ev.mate * sgn < 0) {
+    text = `${who} scheitert: ${mine ? oppName : 'Die Gegenseite'} setzt nach ${dr.san} matt.`; arrows.push(arrow(reply.move, COL.red)); Object.assign(marks, dr.marks);
+  } else if (lossA <= -2) {
+    text = `${who} scheitert an ${dr.san}${dr.text ? ' – ' + dr.text : ''}. Gegenüber dem besten Zug kostet das ${lossName(lossA)}.`; arrows.push(arrow(reply.move, COL.red)); Object.assign(marks, dr.marks);
+  } else if (gainAbs >= 2 && lossRel > -1) {
+    const line = []; let f = after; for (const u of (reply?.pv || []).slice(0, 4)) { const r = mv(f, u); if (!r) break; line.push(r.m.san); f = r.fen; }
+    text = `${who} funktioniert: ${mine ? 'Du gewinnst' : oppName + ' gewinnt'} ${lossName(gainAbs)}${line.length ? ` (z. B. ${line.join(' ')})` : ''}.`;
+  } else if (loss < 2) {
+    text = `${who} ist richtig gut – die Engine stimmt zu.${self.text ? ' Der Zug ' + self.text + '.' : ''}`;
+  } else {
+    const rm = reply ? mv(after, reply.move) : null;
+    const kicked = rm && rm.m.piece === 'p' && m.piece !== 'p' && m.piece !== 'k' && rm.c.attackers(m.to, rm.m.color).includes(rm.m.to);
+    if (kicked) { text = `${who} hat einen Haken: ${m.piece === 'q' ? 'Die Dame' : 'Der ' + NAME[m.piece]} auf ${m.to} wird mit ${dr.san} sofort vertrieben – das kostet Zeit.`; arrows.push(arrow(reply.move, COL.red)); marks[m.to] = 'bad'; }
+    else if (castleRights(before, c) && !castleRights(after, c) && !m.san.startsWith('O-O')) text = `${who} kostet das Rochaderecht – der König bleibt in der Mitte.`;
+    else if (pawnWeak(after, c) > pawnWeak(before, c)) text = `${who} schafft eine Bauernschwäche, die der Gegner angreifen kann.`;
+    else text = `${who} ist spielbar, aber nicht das Beste.`;
+    if (db) text += ` Stärker war ${db.san}${db.text ? ' – ' + db.text : ''} (${evOf(b.ev)} statt ${evOf(a.ev)}).`;
+    else if (dr?.text) text += ` ${dr.san} – ${dr.text}.`;
+  }
+  if (startEv) text += ` Seit Beginn deiner Variante: ${evOf(startEv)} → ${evOf(a.ev)}.`;
+  return { text, arrows, marks, bestBefore: db ? b.best : null };
+}
+const uciSan = (fen, u) => mv(fen, u)?.m.san || u;
