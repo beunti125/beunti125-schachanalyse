@@ -26,14 +26,20 @@ if [ -n "$REMOTE" ] && [ "$REMOTE" -gt "$LOCAL" ] 2>/dev/null; then
   rm -rf "$TMP"
 fi
 # Läuft schon? Dann nur die Oberfläche öffnen (im Hintergrundmodus gar nichts tun).
-if curl -s --max-time 1 "$URL/api/ping" >/dev/null 2>&1; then [ $BG = 0 ] && open "$URL"; exit 0; fi
+if curl -s --max-time 1 "$URL/api/ping" >/dev/null 2>&1; then
+  # Läuft eine andere (alte) Version des Servers? Dann beenden und neu starten.
+  RUNV=$(curl -s --max-time 2 "$URL/api/config" | sed -n 's/.*"version"[^0-9]*\([0-9][0-9]*\).*/\1/p' | head -1)
+  if [ "$RUNV" = "$(ver "$DIR/version.json")" ]; then [ $BG = 0 ] && open "$URL"; exit 0; fi
+  curl -s -X POST --max-time 2 "$URL/api/quit" >/dev/null 2>&1; sleep 0.6
+  PIDS=$(lsof -ti tcp:$PORT 2>/dev/null); [ -n "$PIDS" ] && kill $PIDS 2>/dev/null; sleep 0.4
+fi
 cd "$DIR"
 if xcode-select -p >/dev/null 2>&1 && /usr/bin/python3 -c 'import sys' >/dev/null 2>&1; then
-  RUN=(/usr/bin/python3 server.py)
+  RUN=(/usr/bin/python3 "$DIR/server.py")
 elif command -v python3 >/dev/null 2>&1 && [ "$(command -v python3)" != "/usr/bin/python3" ]; then
-  RUN=(python3 server.py)
+  RUN=(python3 "$DIR/server.py")
 elif command -v node >/dev/null 2>&1; then
-  RUN=(node server.js)
+  RUN=(node "$DIR/server.js")
 else
   [ $BG = 1 ] && exit 1
   osascript -e 'display dialog "Schachanalyse braucht Python 3 oder Node.js.\n\nAm einfachsten: Terminal öffnen und eingeben:\nxcode-select --install" buttons {"OK"} with icon caution with title "Schachanalyse"'
