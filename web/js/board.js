@@ -112,7 +112,9 @@ export class Board {
     this.bdL.innerHTML = '';
     if (!this.badge) return;
     const [x, y] = this._xy(this.badge.sq);
-    this.bdL.innerHTML = `<div class="sq-badge" style="left:calc(${(x + 1) * 12.5}% - 3.2%);top:calc(${y * 12.5}% - 2.2%)">${icon(this.badge.cls, 64)}</div>`;
+    // nicht über den Brettrand hinausragen (8. Reihe oben, h-Linie rechts)
+    const left = Math.min((x + 1) * 12.5 - 3.2, 100 - 5.8 - .3), top = Math.max(y * 12.5 - 2.2, .3);
+    this.bdL.innerHTML = `<div class="sq-badge" style="left:${left}%;top:${top}%">${icon(this.badge.cls, 64)}</div>`;
   }
   // Eingabe
   _canMove(sq) { if (!this.movable) return false; const p = new Chess(this.fen).get(sq); return p && p.color === this.movable && new Chess(this.fen).turn() === this.movable; }
