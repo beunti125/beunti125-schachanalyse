@@ -691,6 +691,8 @@ async function initCfg() {
     else if (st.user && c.user !== st.user) saveCfg({ user: st.user });
     if (st.user && !st.profiles.some(p => p.user.toLowerCase() === st.user.toLowerCase())) linkProfile(st.user);
     renderProfile();
+    // fehlende Avatare nachladen
+    for (const p of st.profiles.filter(p => !p.avatar)) S.loadPlayer(p.user).then(info => { if (info?.avatar) { p.avatar = info.avatar; if (info.username) p.user = info.username; saveCfg({ profiles: st.profiles }); renderProfile(); } });
   } catch {}
 }
 $('#quitBtn').onclick = async () => {
