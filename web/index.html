@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schachanalyse</title>
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<aside class="side">
+  <div class="logo"><img src="icon.png" alt=""><span>Schach<b>analyse</b></span></div>
+  <nav>
+    <button data-view="games" class="on"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h10"/></svg>Partien</button>
+    <button data-view="review"><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>Spielbericht</button>
+    <button data-view="errors"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>Fehleranalyse</button>
+    <button data-view="puzzles"><svg viewBox="0 0 24 24"><path d="M9 3h6v3a2 2 0 1 0 0 4v3h3a2 2 0 1 1 4 0"/><path d="M3 9h6v3a2 2 0 1 0 0 4v5h12v-8"/></svg>Taktik<span class="pill" id="puzzleCount"></span></button>
+  </nav>
+  <div class="side-foot">
+    <label>Analysetiefe
+      <select id="quality">
+        <option value="schnell">Schnell</option>
+        <option value="standard" selected>Standard</option>
+        <option value="gruendlich">Gründlich</option>
+      </select>
+    </label>
+    <div class="bm">
+      <a id="bmLink" class="bm-btn" title="In die Lesezeichenleiste ziehen">♞ Analysieren</a>
+      <span>In die Lesezeichenleiste ziehen. Auf chess.com nach der Partie anklicken.</span>
+    </div>
+    <label class="chk"><input type="checkbox" id="autoOpen"> Nach jeder Partie automatisch öffnen</label>
+    <label class="chk"><input type="checkbox" id="autostart"> Beim Mac-Start im Hintergrund laufen</label>
+    <div class="engine" id="engineLabel">Engine startet …</div>
+    <button class="quit" id="quitBtn" type="button">App beenden</button>
+    <div class="ver" id="verLabel"></div>
+  </div>
+</aside>
+
+<main>
+  <header class="top">
+    <form id="userForm" class="userbox">
+      <input id="user" placeholder="chess.com-Benutzername" autocomplete="off" spellcheck="false">
+      <select id="months"><option value="1">1 Monat</option><option value="3" selected>3 Monate</option><option value="6">6 Monate</option><option value="12">12 Monate</option></select>
+      <button class="btn primary">Partien laden</button>
+    </form>
+    <button class="btn" id="lastBtn" type="button">Letzte Partie analysieren</button>
+    <div id="status" class="status"></div>
+    <div class="grow"></div>
+    <div id="ratings" class="ratings"></div>
+  </header>
+
+  <!-- Partien -->
+  <section id="v-games" class="view on">
+    <div class="toolbar">
+      <div class="seg" id="tcFilter">
+        <button data-tc="" class="on">Alle</button><button data-tc="bullet">Bullet</button><button data-tc="blitz">Blitz</button><button data-tc="rapid">Schnellschach</button><button data-tc="daily">Täglich</button>
+      </div>
+      <div class="grow"></div>
+      <button class="btn" id="batchBtn">Letzte 20 analysieren</button>
+    </div>
+    <div id="gameList" class="game-list"><div class="empty">Gib deinen chess.com-Namen ein und lade deine Partien.</div></div>
+  </section>
+
+  <!-- Spielbericht -->
+  <section id="v-review" class="view">
+    <div class="review">
+      <div class="board-col">
+        <div class="player top-p"><span class="pname"></span><span class="clock"></span></div>
+        <div class="board-wrap">
+          <div class="evalbar"><div class="eb-fill"></div><span class="eb-txt"></span></div>
+          <div id="reviewBoard"></div>
+        </div>
+        <div class="player bot-p"><span class="pname"></span><span class="clock"></span></div>
+        <div class="board-progress" id="boardProg"><div class="bp-txt">Analysiere …</div><div class="bar"><i></i></div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>Spielbericht</div>
+        <div class="coach" id="coach">
+          <div class="avatar"><img src="pieces/wN.svg" alt="Trainer"></div>
+          <div class="bubble">
+            <div class="bubble-head"><div class="coach-ico"></div><div class="coach-txt">Wähle eine Partie unter „Partien“.</div><div class="coach-eval"></div></div>
+            <div class="steps" id="steps"></div>
+          </div>
+        </div>
+        <div class="pane sum-pane" id="sumPane">
+          <div class="acc-row" id="accRow"></div>
+          <div class="cls-table" id="clsTable"></div>
+          <button class="btn primary big" id="startBtn" type="button">Zug für Zug ansehen →</button>
+        </div>
+        <div class="pane mov-pane" id="movPane">
+          <div class="act-row"><button class="act" id="hintBtn" type="button" title="Besten Zug zeigen">💡 Tipp</button><button class="act primary" id="nextBtn" type="button" title="Nächster Zug (→)">→</button></div>
+          <div class="var-line" id="varLine" style="display:none"></div>
+          <div class="moves" id="moveList"></div>
+        </div>
+        <div id="graph" class="graph"></div>
+        <div class="controls">
+          <button class="ic" data-nav="first" title="Anfang">⏮</button>
+          <button class="ic" data-nav="prev" title="Zurück (←)">◀</button>
+          <button class="ic" data-nav="next" title="Weiter (→)">▶</button>
+          <button class="ic" data-nav="last" title="Ende">⏭</button>
+          <div class="grow"></div>
+          <button class="ic" id="flipBtn" title="Brett drehen">⇅</button>
+          <a class="ic" id="ccLink" target="_blank" rel="noopener" title="Auf chess.com öffnen">↗</a>
+        </div>
+      </div>
+    </div>
+    <div class="overlay" id="progress"><div class="prog-box"><div class="prog-title">Analysiere Partie …</div><div class="bar"><i></i></div><div class="prog-sub"></div></div></div>
+  </section>
+
+  <!-- Fehleranalyse -->
+  <section id="v-errors" class="view"><div id="errorsBody" class="errors"></div></section>
+
+  <!-- Taktik -->
+  <section id="v-puzzles" class="view">
+    <div class="review">
+      <div class="board-col">
+        <div class="board-wrap"><div id="puzzleBoard"></div></div>
+      </div>
+      <div class="panel puzzle-panel">
+        <div class="panel-head"><svg viewBox="0 0 24 24"><path d="M9 3h6v3a2 2 0 1 0 0 4v3h3a2 2 0 1 1 4 0"/><path d="M3 9h6v3a2 2 0 1 0 0 4v5h12v-8"/></svg>Taktik aus deinen Fehlern</div>
+        <div id="puzzleBody"></div>
+      </div>
+    </div>
+  </section>
+</main>
+<div class="overlay picker-ov" id="gamePicker"><div class="picker">
+  <div class="picker-head"><input id="pickQ" placeholder="Gegner, Eröffnung, Datum oder „Sieg“ …" autocomplete="off" spellcheck="false"><button class="hd-ic" id="pickClose" title="Schließen (Esc)">✕</button></div>
+  <div id="pickList" class="pick-list"></div>
+</div></div>
+<div id="toast" class="toast"></div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

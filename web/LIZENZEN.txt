@@ -1,0 +1,6 @@
+Schachanalyse – verwendete Bausteine
+- Stockfish 19 (stockfish.js von Nathan Rugg) – GPLv3, siehe engine/COPYING-Stockfish.txt
+- chess.js – BSD-2-Clause
+- Figuren „cburnett“ von Colin M.L. Burnett – GPLv2+
+- Eröffnungsnamen: lichess-org/chess-openings – CC0
+- Partiedaten: öffentliche chess.com-Schnittstelle (api.chess.com/pub)
