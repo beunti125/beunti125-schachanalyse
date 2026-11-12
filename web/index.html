@@ -38,11 +38,18 @@
 
 <main>
   <header class="top">
-    <form id="userForm" class="userbox">
-      <input id="user" placeholder="chess.com-Benutzername" autocomplete="off" spellcheck="false">
-      <select id="months"><option value="1">1 Monat</option><option value="3" selected>3 Monate</option><option value="6">6 Monate</option><option value="12">12 Monate</option></select>
-      <button class="btn primary">Partien laden</button>
-    </form>
+    <div class="prof-wrap">
+      <button class="prof" id="profBtn" type="button"><span class="prof-av" id="profAv"></span><span class="prof-name" id="profName">Profil verknüpfen</span><span class="prof-caret">▾</span></button>
+      <div class="prof-menu" id="profMenu">
+        <div id="profList"></div>
+        <form id="userForm" class="prof-add">
+          <input id="user" placeholder="chess.com-Name verknüpfen" autocomplete="off" spellcheck="false">
+          <button class="btn primary">+</button>
+        </form>
+      </div>
+    </div>
+    <select id="months" title="Zeitraum"><option value="1">1 Monat</option><option value="3" selected>3 Monate</option><option value="6">6 Monate</option><option value="12">12 Monate</option></select>
+    <button class="btn primary" id="reloadBtn" type="button">Partien laden</button>
     <button class="btn" id="lastBtn" type="button">Letzte Partie analysieren</button>
     <div id="status" class="status"></div>
     <div class="grow"></div>

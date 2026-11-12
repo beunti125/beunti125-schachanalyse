@@ -10,8 +10,8 @@ const TYPES = {'.html':'text/html; charset=utf-8','.js':'text/javascript','.mjs'
 const H = {'Cross-Origin-Opener-Policy':'same-origin','Cross-Origin-Embedder-Policy':'require-corp',
   'Cross-Origin-Resource-Policy':'same-origin','Cache-Control':'no-cache'};
 
-const loadCfg = () => { let c = {}; try { c = JSON.parse(fs.readFileSync(CFG, 'utf8')); } catch {} let v = null; try { v = JSON.parse(fs.readFileSync(path.join(__dirname, 'version.json'), 'utf8')).version; } catch {} return { user: c.user || '', autoOpen: c.autoOpen !== false, autostart: fs.existsSync(AGENT), version: v }; };
-const saveCfg = c => { fs.mkdirSync(CFG_DIR, { recursive: true }); fs.writeFileSync(CFG, JSON.stringify({ user: c.user, autoOpen: c.autoOpen })); };
+const loadCfg = () => { let c = {}; try { c = JSON.parse(fs.readFileSync(CFG, 'utf8')); } catch {} let v = null; try { v = JSON.parse(fs.readFileSync(path.join(__dirname, 'version.json'), 'utf8')).version; } catch {} return { user: c.user || '', autoOpen: c.autoOpen !== false, profiles: c.profiles || [], autostart: fs.existsSync(AGENT), version: v }; };
+const saveCfg = c => { fs.mkdirSync(CFG_DIR, { recursive: true }); fs.writeFileSync(CFG, JSON.stringify({ user: c.user, autoOpen: c.autoOpen, profiles: c.profiles || [] })); };
 const setAutostart = on => {
   if (on) { fs.mkdirSync(path.dirname(AGENT), { recursive: true }); fs.writeFileSync(AGENT, `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -54,13 +54,20 @@ http.createServer((req, res) => {
     if (req.method === 'POST') {
       let b = ''; req.on('data', d => b += d); req.on('end', () => {
         const d = JSON.parse(b || '{}'), c = loadCfg();
-        if ('user' in d) c.user = d.user; if ('autoOpen' in d) c.autoOpen = d.autoOpen;
+        if ('user' in d) c.user = d.user; if ('autoOpen' in d) c.autoOpen = d.autoOpen; if ('profiles' in d) c.profiles = d.profiles;
         saveCfg(c); if ('autostart' in d) setAutostart(!!d.autostart);
         json(200, loadCfg());
       });
       return;
     }
     return json(200, loadCfg());
+  }
+  if (url === '/api/img') {
+    const q = new URL(req.url, 'http://x').searchParams.get('u') || '';
+    let host = ''; try { host = new URL(q).hostname; } catch {}
+    if (!q.startsWith('https://') || !(host.endsWith('chesscomfiles.com') || host.endsWith('chess.com'))) return json(403, {});
+    https.get(q, { headers: { 'User-Agent': 'Schachanalyse/1.0' } }, r => { res.writeHead(200, { ...H, 'Content-Type': r.headers['content-type'] || 'image/jpeg', 'Cache-Control': 'max-age=86400' }); r.pipe(res); }).on('error', () => json(502, {}));
+    return;
   }
   if (url.startsWith('/api/cc/')) {
     https.get('https://api.chess.com/pub/' + req.url.slice(8), { headers: { 'User-Agent': 'Schachanalyse/1.0' } }, r => {

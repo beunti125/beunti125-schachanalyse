@@ -42,9 +42,11 @@ const openingOf = g => ((g.eco || '').split('/openings/')[1] || '').replace(/-/g
 
 // ---------- Laden ----------
 async function loadUser(user, fromCache) {
-  st.user = user.trim(); S.ls.set('user', st.user); $('#user').value = st.user;
+  st.user = user.trim(); S.ls.set('user', st.user); $('#user').value = '';
   if (!st.user) return;
-  if (!fromCache) saveCfg({ user: st.user });
+  saveCfg({ user: st.user });
+  linkProfile(st.user); renderProfile();
+  st.analysesShown = null;
   const cachedStats = S.ls.get('stats:' + st.user.toLowerCase(), null);
   if (cachedStats) renderRatings(cachedStats);
   st.games = await S.cachedGames(st.user);
@@ -577,7 +579,40 @@ const pboard = new Board($('#puzzleBoard'), { onMove: onPuzzleMove });
 new ResizeObserver(() => { $('.evalbar').style.height = $('#reviewBoard').offsetHeight + 'px'; }).observe($('#reviewBoard'));
 
 document.querySelectorAll('nav button').forEach(b => b.onclick = () => show(b.dataset.view));
-$('#userForm').onsubmit = e => { e.preventDefault(); loadUser($('#user').value); };
+$('#userForm').onsubmit = e => { e.preventDefault(); const u = $('#user').value.trim(); if (!u) return; closeProfMenu(); loadUser(u); };
+$('#reloadBtn').onclick = () => st.user ? loadUser(st.user) : openProfMenu();
+
+// ---------- Profile: einmal verknüpfen, dauerhaft wieder aufrufen ----------
+st.profiles = [];
+function avatarSrc(url) { return url ? '/api/img?u=' + encodeURIComponent(url) : ''; }
+function avHtml(p) {
+  const letter = esc((p?.user || '?')[0].toUpperCase());
+  return p?.avatar ? `<img src="${avatarSrc(p.avatar)}" alt="" onerror="this.outerHTML='<b>${letter}</b>'">` : `<b>${letter}</b>`;
+}
+function renderProfile() {
+  const cur = st.profiles.find(p => p.user.toLowerCase() === st.user.toLowerCase());
+  $('#profAv').innerHTML = st.user ? avHtml(cur || { user: st.user }) : '<b>+</b>';
+  $('#profName').textContent = st.user || 'Profil verknüpfen';
+  $('#profList').innerHTML = st.profiles.map((p, i) => `<div class="prof-item ${p.user.toLowerCase() === st.user.toLowerCase() ? 'on' : ''}" data-i="${i}"><span class="prof-av">${avHtml(p)}</span><span class="pi-name">${esc(p.user)}</span><button class="pi-del" data-del="${i}" title="Verknüpfung entfernen">✕</button></div>`).join('') || '<div class="prof-empty">Noch kein Profil verknüpft.</div>';
+}
+async function linkProfile(user) {
+  const lc = user.toLowerCase();
+  let p = st.profiles.find(x => x.user.toLowerCase() === lc);
+  if (!p) { p = { user }; st.profiles.push(p); }
+  if (!p.avatar) { const info = await S.loadPlayer(user); if (info?.avatar) p.avatar = info.avatar; if (info?.username) p.user = info.username; }
+  saveCfg({ profiles: st.profiles }); renderProfile();
+}
+function openProfMenu() { $('#profMenu').classList.add('on'); setTimeout(() => $('#user').focus(), 30); }
+function closeProfMenu() { $('#profMenu').classList.remove('on'); }
+$('#profBtn').onclick = e => { e.stopPropagation(); $('#profMenu').classList.contains('on') ? closeProfMenu() : openProfMenu(); };
+$('#profMenu').onclick = e => {
+  e.stopPropagation();
+  const d = e.target.closest('[data-del]');
+  if (d) { const p = st.profiles.splice(+d.dataset.del, 1)[0]; saveCfg({ profiles: st.profiles }); if (p && p.user.toLowerCase() === st.user.toLowerCase()) { st.user = st.profiles[0]?.user || ''; S.ls.set('user', st.user); saveCfg({ user: st.user }); if (st.user) loadUser(st.user, true); else { st.games = []; renderGames(); $('#ratings').innerHTML = ''; } } renderProfile(); return; }
+  const it = e.target.closest('.prof-item');
+  if (it) { closeProfMenu(); const p = st.profiles[+it.dataset.i]; if (p.user.toLowerCase() !== st.user.toLowerCase()) { $('#ratings').innerHTML = ''; loadUser(p.user, true).then(() => S.cachedGames(p.user).then(g => { if (!g.length) loadUser(p.user); })); } }
+};
+document.addEventListener('click', () => closeProfMenu());
 $('#quality').value = st.quality; $('#quality').onchange = e => { st.quality = e.target.value; S.ls.set('quality', st.quality); };
 $('#tcFilter').onclick = e => { const b = e.target.closest('button'); if (!b) return; st.tc = b.dataset.tc; $('#tcFilter').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); renderGames(); };
 $('#gameList').onclick = e => { const r = e.target.closest('.g-row'); if (r) openReview(filtered()[+r.dataset.i]); };
@@ -650,8 +685,11 @@ async function initCfg() {
     const c = await (await fetch('/api/config')).json();
     $('#autoOpen').checked = c.autoOpen; $('#autostart').checked = c.autostart;
     if (c.version) $('#verLabel').textContent = 'Version ' + c.version;
+    st.profiles = Array.isArray(c.profiles) ? c.profiles : [];
     if (!st.user && c.user) { st.user = c.user; S.ls.set('user', c.user); }
     else if (st.user && c.user !== st.user) saveCfg({ user: st.user });
+    if (st.user && !st.profiles.some(p => p.user.toLowerCase() === st.user.toLowerCase())) linkProfile(st.user);
+    renderProfile();
   } catch {}
 }
 $('#quitBtn').onclick = async () => {

@@ -22,7 +22,7 @@ def load_cfg():
             c = json.load(f)
     except Exception:
         c = {}
-    c.setdefault("user", ""); c.setdefault("autoOpen", True)
+    c.setdefault("user", ""); c.setdefault("autoOpen", True); c.setdefault("profiles", [])
     c["autostart"] = os.path.exists(AGENT)
     try:
         with open(os.path.join(APP, "version.json")) as f:
@@ -35,7 +35,7 @@ def load_cfg():
 def save_cfg(c):
     os.makedirs(CFG_DIR, exist_ok=True)
     with open(CFG, "w") as f:
-        json.dump({k: c[k] for k in ("user", "autoOpen")}, f)
+        json.dump({k: c[k] for k in ("user", "autoOpen", "profiles")}, f)
 
 
 def set_autostart(on):
@@ -125,6 +125,20 @@ class Handler(SimpleHTTPRequestHandler):
             return self._send(200, b'{"ok":true}')
         if p == "/api/config":
             return self._send(200, json.dumps(load_cfg()).encode())
+        if p == "/api/img":
+            q = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query).get("u", [""])[0]
+            host = urllib.parse.urlparse(q).hostname or ""
+            if not (q.startswith("https://") and (host.endswith("chesscomfiles.com") or host.endswith("chess.com"))):
+                return self._send(403, b"{}")
+            try:
+                with urllib.request.urlopen(urllib.request.Request(q, headers={"User-Agent": UA}), timeout=15) as r:
+                    data, ct = r.read(), r.headers.get("Content-Type", "image/jpeg")
+            except Exception:
+                out = subprocess.run(["curl", "-s", "-A", UA, q], capture_output=True, timeout=20)
+                data, ct = out.stdout, "image/jpeg"
+            self.send_response(200); self.send_header("Content-Type", ct); self.send_header("Content-Length", str(len(data)))
+            self.send_header("Cache-Control", "max-age=86400"); self.end_headers(); self.wfile.write(data)
+            return
         if self.path.startswith("/api/cc/"):
             try:
                 code, body = fetch_chesscom(self.path[len("/api/cc/"):])
@@ -142,7 +156,7 @@ class Handler(SimpleHTTPRequestHandler):
             n = int(self.headers.get("Content-Length", 0))
             data = json.loads(self.rfile.read(n) or b"{}")
             c = load_cfg()
-            for k in ("user", "autoOpen"):
+            for k in ("user", "autoOpen", "profiles"):
                 if k in data:
                     c[k] = data[k]
             save_cfg(c)

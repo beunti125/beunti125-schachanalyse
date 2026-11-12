@@ -42,6 +42,9 @@ export async function loadGames(user, months = 3, onStep) {
   await putMany('games', games);
   return games;
 }
+export async function loadPlayer(user) {
+  try { return await cc(`player/${encodeURIComponent(user.toLowerCase().trim())}`); } catch { return null; }
+}
 export async function loadStats(user) {
   const u = encodeURIComponent(user.toLowerCase().trim());
   const s = await cc(`player/${u}/stats`);
