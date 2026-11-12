@@ -5,7 +5,7 @@ import { icon, CLASS_COLOR } from './icons.js';
 import { explain, judgeIdea } from './explain.js';
 import { openingStep } from './openings.js';
 import * as S from './store.js';
-import { CLASSES, CLASS_DE, ERR_DE, PHASE_DE, parseGame, analyseGame, extractPuzzles, coachText, winPct, fmtEval, uciToSan, pvToSan } from './analysis.js';
+import { CLASSES, CLASS_DE, ERR_DE, PHASE_DE, parseGame, analyseGame, extractPuzzles, reclassify, coachText, winPct, fmtEval, uciToSan, pvToSan } from './analysis.js';
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -49,6 +49,7 @@ async function loadUser(user, fromCache) {
   const cachedStats = S.ls.get('stats:' + st.user.toLowerCase(), null);
   if (cachedStats) renderRatings(cachedStats);
   st.games = await S.cachedGames(st.user);
+  await upgradeAnalyses();
   renderGames(); updatePuzzleCount();
   if (fromCache && st.games.length) { status(`${st.games.length} Partien (gespeichert)`); return; }
   try {
@@ -83,6 +84,13 @@ function renderGames() {
       <button class="btn g-btn ${an ? '' : 'primary'}">${an ? 'Ansehen' : 'Analysieren'}</button>
     </div>`;
   }).join('');
+}
+
+// Alte Analysen auf die aktuelle Einstufung bringen (sofort, ohne Engine)
+async function upgradeAnalyses() {
+  const up = [];
+  for (const g of st.games) { const a = st.analyses.get(g.url); if (a && (a.v || 1) < 2) { try { const n = reclassify(g, a); st.analyses.set(g.url, n); up.push(n); } catch {} } }
+  if (up.length) await S.putMany('analyses', up);
 }
 
 // ---------- Analyse ----------

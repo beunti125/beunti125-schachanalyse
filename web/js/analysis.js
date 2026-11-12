@@ -29,6 +29,15 @@ export function winPct(ev) {
   const cp = Math.max(-1500, Math.min(1500, ev.cp));
   return 50 + 50 * (2 / (1 + Math.exp(-0.00368208 * cp)) - 1);
 }
+// Wie chess.com „Expected Points“: dieselbe Bewertung ist für schwächere Spieler weniger sicher gewonnen.
+// Steilheit der Kurve hängt von der Wertungszahl ab (Annäherung, die genaue Formel ist nicht öffentlich).
+export function eloFactor(r) { return Math.max(.55, Math.min(1.35, .45 + (r || 1500) / 1800)); }
+export function winPctR(ev, rating) {
+  if (!ev) return 50;
+  if (ev.mate != null) return winPct(ev);
+  const cp = Math.max(-1500, Math.min(1500, ev.cp)) * eloFactor(rating);
+  return 50 + 50 * (2 / (1 + Math.exp(-0.00368208 * cp)) - 1);
+}
 export function fmtEval(ev) {
   if (!ev) return '';
   if (ev.mate != null) return ev.mate === 0 ? '#' : (ev.mate > 0 ? 'M' : '-M') + Math.abs(ev.mate);
@@ -109,8 +118,9 @@ function finish(game, P, res, quality) {
   for (let i = 0; i < P.moves.length; i++) {
     const m = P.moves[i], c = m.color, sgn = c === 'w' ? 1 : -1;
     const before = res[i], after = res[i + 1];
-    const wpB = c === 'w' ? winPct(before.ev) : 100 - winPct(before.ev);
-    const wpA = c === 'w' ? winPct(after.ev) : 100 - winPct(after.ev);
+    const R = (c === 'w' ? game.white : game.black)?.rating || 1500;
+    const wpB = c === 'w' ? winPctR(before.ev, R) : 100 - winPctR(before.ev, R);
+    const wpA = c === 'w' ? winPctR(after.ev, R) : 100 - winPctR(after.ev, R);
     const loss = Math.max(0, wpB - wpA);
     const best = before.lines[0]?.move;
     const isBest = best === m.uci;
@@ -131,15 +141,19 @@ function finish(game, P, res, quality) {
     const obvious = !!(prevM && prevM.captured && m.to === prevM.to) || !!(m.captured && VAL[m.captured] >= VAL[m.piece]);
     // Großartig: einziger guter Zug (zweitbester deutlich schlechter) – aber nicht bei offensichtlichen Zügen
     if (cls === 'best' && before.lines[1] && !obvious) {
-      const wp1 = c === 'w' ? winPct(before.lines[0]) : 100 - winPct(before.lines[0]);
-      const wp2 = c === 'w' ? winPct(before.lines[1]) : 100 - winPct(before.lines[1]);
-      if (wp1 - wp2 >= 15 && wpA >= 40 && wpB < 95) cls = 'great';
+      const wp1 = c === 'w' ? winPctR(before.lines[0], R) : 100 - winPctR(before.lines[0], R);
+      const wp2 = c === 'w' ? winPctR(before.lines[1], R) : 100 - winPctR(before.lines[1], R);
+      // bei Anfängern großzügiger (wie chess.com)
+      const gap = R < 1000 ? 10 : R < 1600 ? 13 : R < 2000 ? 16 : 20;
+      if (wp1 - wp2 >= gap && wpA >= 40 && wpB < 95) cls = 'great';
     }
     // Brillant: guter Zug mit echtem Materialopfer, Stellung nicht schon völlig gewonnen
     if ((cls === 'best' || cls === 'great' || cls === 'excellent') && wpB < 95 && wpA >= 45 && after.lines[0]) {
       const b0 = bal(new Chess(P.fens[i]), c);
       const seq = balAlong(P.fens[i + 1], after.lines[0].pv, c, 4);
-      if (!obvious && seq.length >= 2 && seq[0] <= b0 - 2 && seq[1] <= b0 - 2 && m.piece !== 'p') cls = 'brilliant';
+      // Opfer: bei Anfängern zählt schon weniger Material (wie chess.com), Starke brauchen ein echtes Figurenopfer
+      const need = R < 1200 ? 2 : 3;
+      if (!obvious && seq.length >= 2 && seq[0] <= b0 - need && seq[1] <= b0 - need && m.piece !== 'p' && (cls !== 'excellent' || R < 1200)) cls = 'brilliant';
     }
     // Verpasst: Gegner hat zuvor gepatzt, und du nutzt es nicht
     if ((cls === 'mistake' || cls === 'blunder' || cls === 'inaccuracy') && i > 0 && ['mistake', 'blunder', 'miss'].includes(out[i - 1].cls) && loss >= 10 && wpB >= 55 && !(cls === 'blunder' && wpA < 30)) cls = 'miss';
@@ -182,7 +196,7 @@ function finish(game, P, res, quality) {
     return +((mean + harm) / 2).toFixed(1);
   };
   return {
-    url: game.url, quality, v: 1, end_time: game.end_time,
+    url: game.url, quality, v: 2, end_time: game.end_time,
     evals: res.map(r => r.ev), lines: res.map(r => r.lines), moves: out,
     accuracy: { w: accOf('w'), b: accOf('b') },
   };
@@ -236,4 +250,11 @@ export function coachText(game, an, P, i) {
   }
   if (mv.pressure && BAD.has(mv.cls)) t += ' Gespielt unter Zeitdruck.';
   return t;
+}
+
+// Bereits analysierte Partie neu einstufen (ohne neue Engine-Rechnung)
+export function reclassify(game, an) {
+  const P = parseGame(game);
+  const res = an.evals.map((ev, i) => ({ ev, lines: an.lines[i] || [] }));
+  return finish(game, P, res, an.quality);
 }
