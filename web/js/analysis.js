@@ -158,8 +158,10 @@ function finish(game, P, res, quality) {
     // Verpasst: Gegner hat zuvor gepatzt, und du nutzt es nicht
     if ((cls === 'mistake' || cls === 'blunder' || cls === 'inaccuracy') && i > 0 && ['mistake', 'blunder', 'miss'].includes(out[i - 1].cls) && loss >= 10 && wpB >= 55 && !(cls === 'blunder' && wpA < 30)) cls = 'miss';
 
-    const acc = ['book', 'forced', 'best', 'great', 'brilliant'].includes(cls) ? 100
-      : Math.max(0, Math.min(100, 103.1668 * Math.exp(-0.04354 * loss) - 3.1669));
+    // Genauigkeit wie Lichess: aus dem Verlust an (Standard-)Gewinnchance, ohne Elo-Anpassung
+    const sB = c === 'w' ? winPct(before.ev) : 100 - winPct(before.ev), sA = c === 'w' ? winPct(after.ev) : 100 - winPct(after.ev);
+    const lossStd = Math.max(0, sB - sA);
+    const acc = cls === 'forced' ? null : Math.max(0, Math.min(100, 103.1668 * Math.exp(-0.04354 * lossStd) - 3.1669 + 1));
 
     // Fehlertyp
     let err = null;
@@ -190,15 +192,21 @@ function finish(game, P, res, quality) {
     out.push({ cls, loss: +loss.toFixed(1), acc: +acc.toFixed(1), wpB: +wpB.toFixed(1), wpA: +wpA.toFixed(1), best, err, phase, pressure, obvious, clock: m.clock });
   }
 
+  // Lichess-Methode: volatilitätsgewichtetes Mittel + harmonisches Mittel, davon der Durchschnitt
+  const wps = res.map(r => winPct(r.ev));
+  const win = Math.max(2, Math.min(8, Math.floor(wps.length / 10)));
+  const sd = a => { const m = a.reduce((x, y) => x + y, 0) / a.length; return Math.sqrt(a.reduce((x, y) => x + (y - m) ** 2, 0) / a.length); };
+  const weights = out.map((_, i) => { const lo = Math.max(0, Math.min(i, wps.length - win)); return Math.max(.5, Math.min(12, sd(wps.slice(lo, lo + win)))); });
   const accOf = c => {
-    const a = out.filter((_, i) => P.moves[i].color === c).map(x => x.acc);
-    if (!a.length) return null;
-    const mean = a.reduce((s, x) => s + x, 0) / a.length;
-    const harm = a.length / a.reduce((s, x) => s + 1 / Math.max(x, 10), 0);
-    return +((mean + harm) / 2).toFixed(1);
+    const idx = out.map((x, i) => i).filter(i => P.moves[i].color === c && out[i].acc != null);
+    if (!idx.length) return null;
+    const a = idx.map(i => out[i].acc), w = idx.map(i => weights[i]);
+    const wmean = a.reduce((s, x, k) => s + x * w[k], 0) / w.reduce((s, x) => s + x, 0);
+    const harm = a.length / a.reduce((s, x) => s + 1 / Math.max(x, 1), 0);
+    return +((wmean + harm) / 2).toFixed(1);
   };
   return {
-    url: game.url, quality, v: 3, end_time: game.end_time,
+    url: game.url, quality, v: 4, end_time: game.end_time,
     evals: res.map(r => r.ev), lines: res.map(r => r.lines), moves: out,
     accuracy: { w: accOf('w'), b: accOf('b') },
   };
