@@ -44,7 +44,7 @@
         <div id="profList"></div>
         <form id="userForm" class="prof-add">
           <input id="user" placeholder="chess.com-Name verknüpfen" autocomplete="off" spellcheck="false">
-          <button class="btn primary">+</button>
+          <button class="btn primary" id="userBtn">⌕ Suchen</button>
         </form>
       </div>
     </div>
@@ -136,5 +136,14 @@
 </div></div>
 <div id="toast" class="toast"></div>
 <script type="module" src="js/app.js"></script>
+<script>
+setTimeout(function () {
+  if (window.__appOk) return;
+  var d = document.createElement('div');
+  d.style.cssText = 'position:fixed;inset:0;z-index:999;background:rgba(20,19,17,.94);display:grid;place-items:center;font:15px -apple-system,sans-serif;color:#e8e6e1;text-align:center;padding:30px';
+  d.innerHTML = '<div style="max-width:560px"><div style="font-size:22px;font-weight:800;margin-bottom:12px">Diese Kopie der App ist veraltet oder beschädigt</div>Du hast vermutlich eine alte Kopie gestartet (z. B. aus Downloads oder dem Papierkorb).<br><br>Bitte nur <b>Programme → Schachanalyse</b> starten und alte Kopien sowie das alte Dock-Symbol entfernen.</div>';
+  document.body.appendChild(d);
+}, 6000);
+</script>
 </body>
 </html>

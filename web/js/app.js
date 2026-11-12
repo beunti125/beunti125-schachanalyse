@@ -41,10 +41,9 @@ const fmtClock = s => s == null ? '' : s >= 3600 ? `${Math.floor(s / 3600)}:${St
 const openingOf = g => ((g.eco || '').split('/openings/')[1] || '').replace(/-/g, ' ').replace(/\s\d.*$/, '').replace(/\.\.\./g, '').trim() || 'Unbekannt';
 
 // ---------- Laden ----------
-async function loadUser(user, fromCache) {
+async function loadUser(user, fromCache, makeMine = false) {
   st.user = user.trim(); $('#user').value = '';
   if (!st.user) return;
-  if (!st.me) setMine(st.user);
   renderProfile();
   const cachedStats = S.ls.get('stats:' + st.user.toLowerCase(), null);
   if (cachedStats) renderRatings(cachedStats);
@@ -55,10 +54,12 @@ async function loadUser(user, fromCache) {
   try {
     status('Lade Wertungen …');
     renderRatings(await S.loadStats(st.user));
+    // erst jetzt steht fest, dass es den Spieler gibt
+    if (makeMine || !st.me) { setMine(st.user); renderProfile(); toast(`${st.user} ist jetzt dein Profil.`); }
     st.games = await S.loadGames(st.user, +$('#months').value, (i, n) => status(`Lade Partien … Monat ${i}/${n}`));
     status(`${st.games.length} Partien geladen`);
     renderGames();
-  } catch (e) { status(''); toast(e.message); }
+  } catch (e) { status(''); toast(e.message); if (makeMine || !st.me) { st.user = st.me || ''; renderProfile(); } }
 }
 function renderRatings(s) {
   const items = [['chess_bullet', 'Bullet'], ['chess_blitz', 'Blitz'], ['chess_rapid', 'Schnell'], ['chess_daily', 'Täglich']];
@@ -600,7 +601,7 @@ const pboard = new Board($('#puzzleBoard'), { onMove: onPuzzleMove });
 new ResizeObserver(() => { $('.evalbar').style.height = $('#reviewBoard').offsetHeight + 'px'; }).observe($('#reviewBoard'));
 
 document.querySelectorAll('nav button').forEach(b => b.onclick = () => show(b.dataset.view));
-$('#userForm').onsubmit = e => { e.preventDefault(); const u = $('#user').value.trim(); if (!u) return; closeProfMenu(); $('#ratings').innerHTML = ''; loadUser(u); };
+$('#userForm').onsubmit = e => { e.preventDefault(); const u = $('#user').value.trim(); if (!u) return; const mk = !!st.linkMode || !st.me; st.linkMode = false; closeProfMenu(); $('#ratings').innerHTML = ''; loadUser(u, false, mk); };
 $('#reloadBtn').onclick = () => st.user ? loadUser(st.user) : openProfMenu();
 
 // ---------- Profil: nur das eigene wird dauerhaft verknüpft, andere Spieler werden gesucht ----------
@@ -622,15 +623,19 @@ function renderProfile() {
   $('#profAv').innerHTML = st.user ? avHtml({ user: st.user, avatar: st.avatars[lc(st.user)] }) : '<b>+</b>';
   $('#profName').innerHTML = st.user ? `${esc(st.user)}${mine ? '' : ' <span class="tag">angesehen</span>'}` : 'Profil verknüpfen';
   avatarOf(st.user); if (st.me) avatarOf(st.me);
-  $('#profList').innerHTML = st.me
-    ? `<div class="prof-label">Mein Profil</div><div class="prof-item ${mine ? 'on' : ''}" data-me="1"><span class="prof-av">${avHtml({ user: st.me, avatar: st.avatars[lc(st.me)] })}</span><span class="pi-name">${esc(st.me)}</span></div>` +
-      (!mine && st.user ? `<button class="prof-set" id="setMine" type="button">„${esc(st.user)}“ als mein Profil festlegen</button>` : '')
-    : '<div class="prof-label">Verknüpfe zuerst dein eigenes chess.com-Profil</div>';
-  $('#user').placeholder = st.me ? 'Spieler suchen …' : 'Dein chess.com-Name';
+  const link = st.linkMode || !st.me;
+  let h = '';
+  if (st.me && !st.meOk) h += `<div class="prof-ask">Ist <b>${esc(st.me)}</b> dein chess.com-Profil?<div><button class="btn primary" data-yes="1" type="button">Ja</button><button class="btn" data-edit="1" type="button">Nein, ändern</button></div></div>`;
+  if (st.me) h += `<div class="prof-label">Mein Profil</div><div class="prof-item ${mine ? 'on' : ''}" data-me="1"><span class="prof-av">${avHtml({ user: st.me, avatar: st.avatars[lc(st.me)] })}</span><span class="pi-name">${esc(st.me)}</span><button class="pi-edit" data-edit="1" type="button">✎ ändern</button></div>`;
+  if (st.me && !mine && st.user && !link) h += `<button class="prof-set" id="setMine" type="button">„${esc(st.user)}“ als mein Profil festlegen</button>`;
+  h += `<div class="prof-label">${link ? 'Dein chess.com-Profil verknüpfen' : 'Andere Spieler ansehen'}</div>`;
+  $('#profList').innerHTML = h;
+  $('#user').placeholder = link ? 'Dein chess.com-Name' : 'Spieler suchen …';
+  $('#userBtn').textContent = link ? 'Verknüpfen' : '⌕ Suchen';
 }
 function setMine(user) {
-  st.me = user; S.ls.set('user', user);
-  saveCfg({ user, profiles: [{ user }] });
+  st.me = user; st.meOk = true; st.linkMode = false; S.ls.set('user', user);
+  saveCfg({ user, profiles: [{ user, confirmed: true }] });
 }
 function openProfMenu() { renderProfile(); $('#profMenu').classList.add('on'); setTimeout(() => $('#user').focus(), 30); }
 function closeProfMenu() { $('#profMenu').classList.remove('on'); }
@@ -638,6 +643,8 @@ $('#profBtn').onclick = e => { e.stopPropagation(); $('#profMenu').classList.con
 $('#profMenu').onclick = e => {
   e.stopPropagation();
   if (e.target.closest('#setMine')) { setMine(st.user); renderProfile(); toast(`${st.user} ist jetzt dein Profil.`); return; }
+  if (e.target.closest('[data-yes]')) { setMine(st.me); renderProfile(); return; }
+  if (e.target.closest('[data-edit]')) { st.linkMode = true; renderProfile(); $('#user').focus(); return; }
   if (e.target.closest('[data-me]')) { closeProfMenu(); if (lc(st.user) !== lc(st.me)) { $('#ratings').innerHTML = ''; loadUser(st.me, true); } }
 };
 document.addEventListener('click', () => closeProfMenu());
@@ -718,8 +725,11 @@ async function initCfg() {
     st.version = c.version;
     st.me = c.user || st.user || '';
     if (st.me && c.user !== st.me) saveCfg({ user: st.me });
+    const p0 = Array.isArray(c.profiles) ? c.profiles[0] : null;
+    st.meOk = !!(p0 && p0.confirmed && lc(p0.user) === lc(st.me));
     st.user = st.me;
     renderProfile();
+    if (!st.me || !st.meOk) setTimeout(openProfMenu, 600);
   } catch {}
 }
 $('#quitBtn').onclick = async () => {
@@ -736,6 +746,7 @@ setInterval(async () => {
 $('#autoOpen').onchange = e => { saveCfg({ autoOpen: e.target.checked }); toast(e.target.checked ? 'Neue Partien öffnen sich automatisch.' : 'Automatisches Öffnen aus.'); };
 $('#autostart').onchange = e => { saveCfg({ autostart: e.target.checked }); toast(e.target.checked ? 'Startet ab jetzt beim Anmelden am Mac im Hintergrund.' : 'Autostart aus.'); };
 
+window.__appOk = true;
 (async () => {
   for (const a of await S.all('analyses')) st.analyses.set(a.url, a);
   st.view = 'games';
