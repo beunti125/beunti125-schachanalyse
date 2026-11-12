@@ -2,7 +2,7 @@
 """Lokaler Server für Schachanalyse: liefert die Oberfläche aus, setzt die Header für
 Stockfish mit mehreren Threads, leitet chess.com-Anfragen weiter und öffnet nach jeder
 neuen Partie automatisch den Spielbericht."""
-import json, os, subprocess, sys, threading, time, urllib.parse, urllib.request, urllib.error
+import io, json, os, shutil, subprocess, sys, tempfile, threading, time, urllib.parse, urllib.request, urllib.error, zipfile
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 
 APP = os.path.dirname(os.path.abspath(__file__))
@@ -81,6 +81,60 @@ def newest_game(user):
         return None
     games = [g for g in json.loads(body).get("games", []) if g.get("rules") == "chess"]
     return max(games, key=lambda g: g.get("end_time", 0)) if games else None
+
+
+REPO = "beunti125/beunti125-schachanalyse"
+
+
+def http_get(url, timeout=30):
+    try:
+        with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": UA}), timeout=timeout) as r:
+            return r.read()
+    except Exception:
+        out = subprocess.run(["curl", "-fsL", "-A", UA, url], capture_output=True, timeout=timeout + 30)
+        return out.stdout if out.returncode == 0 else None
+
+
+def local_version():
+    try:
+        with open(os.path.join(APP, "version.json")) as f:
+            return int(json.load(f).get("version", 0))
+    except Exception:
+        return 0
+
+
+def updater():
+    """Prüft regelmäßig GitHub auf eine neue Version, installiert sie und startet den Server neu."""
+    time.sleep(15)
+    while True:
+        try:
+            raw = http_get(f"https://raw.githubusercontent.com/{REPO}/main/version.json", 10)
+            remote = int(json.loads(raw).get("version", 0)) if raw else 0
+            if remote > local_version():
+                data = http_get(f"https://codeload.github.com/{REPO}/zip/refs/heads/main", 90)
+                if data:
+                    z = zipfile.ZipFile(io.BytesIO(data))
+                    tmp = tempfile.mkdtemp()
+                    z.extractall(tmp)
+                    src = os.path.join(tmp, os.listdir(tmp)[0])
+                    if os.path.exists(os.path.join(src, "web", "index.html")):
+                        for root, _, files in os.walk(os.path.join(src, "web")):
+                            rel = os.path.relpath(root, src)
+                            os.makedirs(os.path.join(APP, rel), exist_ok=True)
+                            for fn in files:
+                                shutil.copy2(os.path.join(root, fn), os.path.join(APP, rel, fn))
+                        for fn in ("server.py", "server.js", "version.json"):
+                            if os.path.exists(os.path.join(src, fn)):
+                                shutil.copy2(os.path.join(src, fn), os.path.join(APP, fn))
+                        if os.path.exists(os.path.join(src, "launcher.sh")) and os.path.isdir(os.path.dirname(EXE)):
+                            shutil.copy2(os.path.join(src, "launcher.sh"), EXE + ".neu"); os.chmod(EXE + ".neu", 0o755); os.replace(EXE + ".neu", EXE)
+                        shutil.rmtree(tmp, ignore_errors=True)
+                        print(f"Aktualisiert auf Version {remote} – Neustart", flush=True)
+                        os.execv(sys.executable, [sys.executable, os.path.join(APP, "server.py")] + sys.argv[1:])
+                    shutil.rmtree(tmp, ignore_errors=True)
+        except Exception as e:
+            print("Updater:", e, flush=True)
+        time.sleep(20 * 60)
 
 
 def watcher():
@@ -180,6 +234,7 @@ if __name__ == "__main__":
     srv = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
     if sys.platform == "darwin" or os.environ.get("SCHACH_WATCH"):
         threading.Thread(target=watcher, daemon=True).start()
+        threading.Thread(target=updater, daemon=True).start()
     print(f"Schachanalyse läuft auf http://localhost:{PORT}", flush=True)
     try:
         srv.serve_forever()

@@ -685,6 +685,7 @@ async function initCfg() {
     const c = await (await fetch('/api/config')).json();
     $('#autoOpen').checked = c.autoOpen; $('#autostart').checked = c.autostart;
     if (c.version) $('#verLabel').textContent = 'Version ' + c.version;
+    st.version = c.version;
     st.profiles = Array.isArray(c.profiles) ? c.profiles : [];
     if (!st.user && c.user) { st.user = c.user; S.ls.set('user', c.user); }
     else if (st.user && c.user !== st.user) saveCfg({ user: st.user });
@@ -696,6 +697,13 @@ $('#quitBtn').onclick = async () => {
   try { await fetch('/api/quit', { method: 'POST' }); } catch {}
   document.body.innerHTML = '<div style="margin:auto;text-align:center;color:#9a9890;font:15px -apple-system,sans-serif"><b style="color:#e8e6e1;font-size:18px">Schachanalyse ist beendet.</b><br><br>Du kannst diesen Tab schließen.<br>Neu starten über das App-Symbol.</div>';
 };
+// Neue Version vom Server installiert? Dann Seite automatisch neu laden (nicht mitten in einer Analyse)
+setInterval(async () => {
+  try {
+    const c = await (await fetch('/api/config')).json();
+    if (st.version && c.version && c.version > st.version && !st.busy) { toast('Neue Version ' + c.version + ' – lade neu …'); setTimeout(() => location.reload(), 1200); }
+  } catch {}
+}, 60000);
 $('#autoOpen').onchange = e => { saveCfg({ autoOpen: e.target.checked }); toast(e.target.checked ? 'Neue Partien öffnen sich automatisch.' : 'Automatisches Öffnen aus.'); };
 $('#autostart').onchange = e => { saveCfg({ autostart: e.target.checked }); toast(e.target.checked ? 'Startet ab jetzt beim Anmelden am Mac im Hintergrund.' : 'Autostart aus.'); };
 
