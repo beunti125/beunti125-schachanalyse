@@ -89,7 +89,7 @@ function renderGames() {
 // Alte Analysen auf die aktuelle Einstufung bringen (sofort, ohne Engine)
 async function upgradeAnalyses() {
   const up = [];
-  for (const g of st.games) { const a = st.analyses.get(g.url); if (a && (a.v || 1) < 2) { try { const n = reclassify(g, a); st.analyses.set(g.url, n); up.push(n); } catch {} } }
+  for (const g of st.games) { const a = st.analyses.get(g.url); if (a && (a.v || 1) < 3) { try { const n = reclassify(g, a); st.analyses.set(g.url, n); up.push(n); } catch {} } }
   if (up.length) await S.putMany('analyses', up);
 }
 
@@ -160,7 +160,7 @@ function renderReview() {
   $('#clsTable').innerHTML = CLASSES.map(k => `<div class="lbl ${cnt[mine][k] ? 'jump' : ''}" data-cls="${k}" data-side="${mine}" style="color:${CLASS_COLOR[k]}">${CLASS_DE[k]}</div><div class="c ${cnt.w[k] ? 'jump' : ''}" data-cls="${k}" data-side="w">${cnt.w[k] || 0}</div><div>${icon(k, 20)}</div><div class="c ${cnt.b[k] ? 'jump' : ''}" data-cls="${k}" data-side="b">${cnt.b[k] || 0}</div>`).join('');
   let h = '';
   for (let i = 0; i < P.moves.length; i += 2) {
-    const cell = j => j < P.moves.length ? `<div class="mv" data-ply="${j + 1}"><span class="mi">${NOTABLE.has(an.moves[j].cls) ? icon(an.moves[j].cls, 16) : ''}</span>${figSan(P.moves[j].san, P.moves[j].color)}</div>` : '<div></div>';
+    const cell = j => j < P.moves.length ? `<div class="mv" data-ply="${j + 1}"><span class="mi">${NOTABLE.has(an.moves[j].cls) ? icon(an.moves[j].cls, 16) : ''}</span>${figSan(P.moves[j].san, P.moves[j].color)}${an.moves[j].pressure ? `<span class="tp" title="Unter Zeitdruck (${fmtClock(P.moves[j].clock)})">⏱</span>` : ''}</div>` : '<div></div>';
     h += `<div class="mrow"><div class="mn">${i / 2 + 1}.</div>${cell(i)}${cell(i + 1)}</div>`;
   }
   $('#moveList').innerHTML = h;
@@ -475,19 +475,26 @@ function renderErrors() {
     ${[25, 50, 75].map(y => `<line x1="0" x2="${tN}" y1="${y}" y2="${y}" stroke="#3b3a36" vector-effect="non-scaling-stroke"/>`).join('')}
     <polyline points="${trend.map((v, i) => `${i},${100 - v}`).join(' ')}" fill="none" stroke="#7fbf4d" stroke-width="2.2" vector-effect="non-scaling-stroke"/></svg>`;
   const worst = serious.slice().sort((a, b) => b.loss - a.loss).slice(0, 10);
+  const bins = [['mehr als 60 s', c => c > 60], ['30–60 s', c => c > 30 && c <= 60], ['10–30 s', c => c > 10 && c <= 30], ['unter 10 s', c => c <= 10]].map(([n, f]) => {
+    const all = mv.filter(m => m.clock != null && f(m.clock)).length, bad = serious.filter(m => m.clock != null && f(m.clock)).length;
+    return { n, all, rate: all >= 5 ? 100 * bad / all : null };
+  });
+  const maxB = Math.max(1, ...bins.map(b => b.rate || 0));
+  const clockBars = bins.map(b => `<div class="hbar"><span>${b.n}</span><div class="t"><i style="width:${b.rate == null ? 0 : 100 * b.rate / maxB}%;background:#5b8fc7"></i></div><span class="n">${b.rate == null ? '–' : b.rate.toFixed(1)}</span></div>`).join('');
 
   el.innerHTML = `<h2>Fehleranalyse · ${ag.length} analysierte Partien</h2>
   <div class="kpis">
     <div class="kpi"><div class="k">Ø Genauigkeit</div><div class="v">${avgAcc.toFixed(1)}</div><div class="s">über ${accs.length} Partien</div></div>
     <div class="kpi"><div class="k">Patzer pro Partie</div><div class="v" style="color:var(--red)">${(blunders / ag.length).toFixed(1)}</div><div class="s">${blunders} insgesamt</div></div>
     <div class="kpi"><div class="k">Fehler + Patzer pro 100 Züge</div><div class="v">${(100 * serious.length / mv.length).toFixed(1)}</div><div class="s">${serious.length} von ${mv.length} Zügen</div></div>
-    <div class="kpi"><div class="k">Fehler unter Zeitdruck</div><div class="v">${serious.length ? Math.round(100 * pressN / serious.length) : 0} %</div><div class="s">&lt; 30 s bzw. 10 % der Zeit</div></div>
+    <div class="kpi"><div class="k">Fehler unter Zeitdruck</div><div class="v">${serious.length ? Math.round(100 * pressN / serious.length) : 0} %</div><div class="s">Bullet &lt;10 s · Blitz &lt;30 s · Schnell &lt;60 s</div></div>
   </div>
   <h3>Deine größten Baustellen</h3>
   <div class="tips" style="margin-bottom:14px">${tips.map(t => `<div class="tip"><div><b>${esc(t[0])}</b><span>${esc(t[1])}</span></div></div>`).join('') || '<div class="tip" style="border-color:var(--acc)"><div><b>Keine klare Schwäche</b><span>Analysiere mehr Partien für ein genaueres Bild.</span></div></div>'}</div>
   <div class="grid2">
     <div class="card"><h3>Fehlertypen</h3>${types.map(t => `<div class="hbar"><span>${ERR_DE[t.k]}</span><div class="t"><i style="width:${100 * t.n / maxT}%;background:var(--red)"></i></div><span class="n">${t.n}</span></div>`).join('')}</div>
     <div class="card"><h3>Fehler nach Spielphase <span style="color:var(--mut);font-weight:400">(pro 100 eigene Züge)</span></h3>${phases.map(p => `<div class="hbar"><span>${PHASE_DE[p.p]}</span><div class="t"><i style="width:${100 * p.rate / maxRate}%;background:#f59a4a"></i></div><span class="n">${p.rate.toFixed(1)}</span></div>`).join('')}
+      <h3 style="margin-top:18px">Fehler nach Restzeit <span style="color:var(--mut);font-weight:400">(pro 100 eigene Züge)</span></h3>${clockBars}
       <h3 style="margin-top:18px">Genauigkeit im Verlauf</h3>${trendSvg}</div>
   </div>
   <div class="grid2">

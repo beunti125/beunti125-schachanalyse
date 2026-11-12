@@ -184,8 +184,10 @@ function finish(game, P, res, quality) {
     }
     const mat = material(new Chess(P.fens[i]));
     const phase = i < 20 && mat.nonPawn > 50 ? 'opening' : mat.nonPawn <= 26 ? 'endgame' : 'middlegame';
-    const pressure = m.clock != null && P.base ? (m.clock < Math.min(30, P.base * 0.1)) : false;
-    out.push({ cls, loss: +loss.toFixed(1), acc: +acc.toFixed(1), wpB: +wpB.toFixed(1), wpA: +wpA.toFixed(1), best, err, phase, pressure, obvious });
+    // Zeitdruck je Zeitkontrolle: Bullet < 10 s, Blitz < 30 s, Schnellschach < 60 s (Tägliche Partien: nie)
+    const limit = !P.base ? null : P.base < 180 ? 10 : P.base < 600 ? 30 : P.base <= 3600 ? 60 : null;
+    const pressure = m.clock != null && limit != null && m.clock < limit;
+    out.push({ cls, loss: +loss.toFixed(1), acc: +acc.toFixed(1), wpB: +wpB.toFixed(1), wpA: +wpA.toFixed(1), best, err, phase, pressure, obvious, clock: m.clock });
   }
 
   const accOf = c => {
@@ -196,7 +198,7 @@ function finish(game, P, res, quality) {
     return +((mean + harm) / 2).toFixed(1);
   };
   return {
-    url: game.url, quality, v: 2, end_time: game.end_time,
+    url: game.url, quality, v: 3, end_time: game.end_time,
     evals: res.map(r => r.ev), lines: res.map(r => r.lines), moves: out,
     accuracy: { w: accOf('w'), b: accOf('b') },
   };

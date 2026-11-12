@@ -228,6 +228,13 @@ export function explain(game, an, P, i, ctx = {}) {
     }
     const pers = personal();
     if (pers) steps.push({ fen: after, last, arrows: [], marks: {}, text: pers });
+    // Unter Zeitdruck: praktischer, schnell spielbarer Zug statt bestem Engine-Zug
+    if (x.pressure && an.lines[i]?.length) {
+      const nat = an.lines[i].find(l => natural(before, l.move, i) && Math.abs(winPct(an.lines[i][0]) - winPct(l)) <= 8);
+      const safe = nat || an.lines[i][0];
+      const ss = mv(before, safe.move)?.m.san;
+      if (ss) steps.push({ fen: before, last: lastPrev, arrows: [arrow(safe.move, COL.green)], marks: {}, text: `Mit wenig Zeit gilt: einfach und sicher. ${ss} hätte gereicht${nat ? ' – schnell zu sehen' : ''}.` });
+    }
     if (db && kind !== 'missed' && !(kind === 'generic')) {
       const line = []; let f = before;
       for (const u of best.pv.slice(0, 5)) { const r = mv(f, u); if (!r) break; line.push(r.m.san); f = r.fen; }

@@ -394,3 +394,4 @@ body.focus #v-review.analysing .board-col{width:min(calc(100vh - 80px),calc(100v
 .prof-set{display:block;width:calc(100% - 8px);margin:6px 4px 2px;background:#2f3d29;border:1px solid #3f5a35;color:#a8dc7d;border-radius:7px;padding:7px;cursor:pointer;font-weight:600;font-size:12.5px}
 .prof-set:hover{background:#3f5a35;color:#fff}
 .prof-name .tag{margin-left:6px;font-size:10.5px}
+.tp{margin-left:3px;font-size:11px;opacity:.8}
