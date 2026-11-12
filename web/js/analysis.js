@@ -15,7 +15,7 @@ export const PHASE_DE = { opening: 'Eröffnung', middlegame: 'Mittelspiel', endg
 export const QUALITY = {
   schnell: { depth: 12, movetime: 300 },
   standard: { depth: 16, movetime: 900 },
-  gruendlich: { depth: 20, movetime: 2500 },
+  gruendlich: { depth: 22, movetime: 3000 },
 };
 const VAL = { p: 1, n: 3, b: 3, r: 5, q: 9, k: 0 };
 const BAD = new Set(['inaccuracy', 'mistake', 'miss', 'blunder']);

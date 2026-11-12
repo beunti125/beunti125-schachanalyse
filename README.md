@@ -1,5 +1,7 @@
 # Schachanalyse
 
+**Download:** [Schachanalyse.zip](https://github.com/beunti125/beunti125-schachanalyse/raw/main/Schachanalyse.zip) – entpacken, Anleitung liegt bei.
+
 Mac-App, die chess.com-Partien mit Stockfish 19 analysiert: Spielbericht mit Zugbewertung,
 Trainer mit Erklärungen, eigene Varianten, Fehleranalyse und Taktikaufgaben aus eigenen Fehlern.
 

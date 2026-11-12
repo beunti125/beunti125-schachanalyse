@@ -1,5 +1,5 @@
 import { Chess } from '../vendor/chess.js';
-import { Engine, EnginePool } from './engine.js';
+import { EnginePool } from './engine.js';
 import { Board } from './board.js';
 import { icon, CLASS_COLOR } from './icons.js';
 import { explain } from './explain.js';
@@ -18,9 +18,7 @@ const st = {
 };
 // Schnell/Standard: viele kleine Engines parallel. Gründlich + Taktik-Prüfung: eine große Engine (erst bei Bedarf geladen).
 const pool = new EnginePool();
-let full = null;
-const bigEngine = () => (full ??= new Engine());
-const engineFor = q => q === 'gruendlich' ? bigEngine() : pool;
+const engineFor = () => pool; // alle Stufen über die parallelen Lite-Engines (App bleibt klein)
 pool.ready.then(() => $('#engineLabel').textContent = pool.label).catch(() => $('#engineLabel').textContent = 'Engine-Fehler');
 
 function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 2600); }
