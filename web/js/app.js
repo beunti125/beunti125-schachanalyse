@@ -90,7 +90,7 @@ function renderGames() {
 // Alte Analysen auf die aktuelle Einstufung bringen (sofort, ohne Engine)
 async function upgradeAnalyses() {
   const up = [];
-  for (const g of st.games) { const a = st.analyses.get(g.url); if (a && (a.v || 1) < 5) { try { const n = reclassify(g, a); st.analyses.set(g.url, n); up.push(n); } catch {} } }
+  for (const g of st.games) { const a = st.analyses.get(g.url); if (a && (a.v || 1) < 6) { try { const n = reclassify(g, a); st.analyses.set(g.url, n); up.push(n); } catch {} } }
   if (up.length) await S.putMany('analyses', up);
 }
 

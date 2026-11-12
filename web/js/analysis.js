@@ -209,10 +209,11 @@ function finish(game, P, res, quality) {
       prevOppCls: i > 0 ? out[i - 1].cls : null, wpPrev: i > 0 ? side(c, res[i - 1].ev, R) : null,
     });
 
-    // Genauigkeit wie Lichess: aus dem Verlust an (Standard-)Gewinnchance, ohne Elo-Anpassung
-    const sB = c === 'w' ? winPct(before.ev) : 100 - winPct(before.ev), sA = c === 'w' ? winPct(after.ev) : 100 - winPct(after.ev);
+    // Genauigkeit, an 176 echten chess.com-Werten kalibriert: flachere Gewinnkurve, steilere Strafe, Theorie = 100
+    const wpC = ev => { if (!ev) return 50; if (ev.mate != null) return winPct(ev); const cp = Math.max(-1500, Math.min(1500, ev.cp)); return 50 + 50 * (2 / (1 + Math.exp(-0.00184104 * cp)) - 1); };
+    const sB = c === 'w' ? wpC(before.ev) : 100 - wpC(before.ev), sA = c === 'w' ? wpC(after.ev) : 100 - wpC(after.ev);
     const lossStd = Math.max(0, sB - sA);
-    const acc = cls === 'forced' ? null : Math.max(0, Math.min(100, 103.1668 * Math.exp(-0.04354 * lossStd) - 3.1669 + 1));
+    const acc = cls === 'book' ? 100 : Math.max(0, Math.min(100, 103.1668 * Math.exp(-0.15 * lossStd) - 3.1669 + 2));
 
     // Fehlertyp
     let err = null;
@@ -240,24 +241,19 @@ function finish(game, P, res, quality) {
     // Zeitdruck je Zeitkontrolle: Bullet < 10 s, Blitz < 30 s, Schnellschach < 60 s (Tägliche Partien: nie)
     const limit = !P.base ? null : P.base < 180 ? 10 : P.base < 600 ? 30 : P.base <= 3600 ? 60 : null;
     const pressure = m.clock != null && limit != null && m.clock < limit;
-    out.push({ cls, loss: +loss.toFixed(1), acc: +acc.toFixed(1), wpB: +wpB.toFixed(1), wpA: +wpA.toFixed(1), best, err, phase, pressure, obvious, clock: m.clock });
+    out.push({ cls, loss: +loss.toFixed(1), acc: acc == null ? null : +acc.toFixed(1), wpB: +wpB.toFixed(1), wpA: +wpA.toFixed(1), best, err, phase, pressure, obvious, clock: m.clock });
   }
 
-  // Lichess-Methode: volatilitätsgewichtetes Mittel + harmonisches Mittel, davon der Durchschnitt
-  const wps = res.map(r => winPct(r.ev));
-  const win = Math.max(2, Math.min(8, Math.floor(wps.length / 10)));
-  const sd = a => { const m = a.reduce((x, y) => x + y, 0) / a.length; return Math.sqrt(a.reduce((x, y) => x + (y - m) ** 2, 0) / a.length); };
-  const weights = out.map((_, i) => { const lo = Math.max(0, Math.min(i, wps.length - win)); return Math.max(.5, Math.min(12, sd(wps.slice(lo, lo + win)))); });
+  // Partie-Genauigkeit: 90 % arithmetisches + 10 % harmonisches Mittel (beste Übereinstimmung mit chess.com)
   const accOf = c => {
-    const idx = out.map((x, i) => i).filter(i => P.moves[i].color === c && out[i].acc != null);
-    if (!idx.length) return null;
-    const a = idx.map(i => out[i].acc), w = idx.map(i => weights[i]);
-    const wmean = a.reduce((s, x, k) => s + x * w[k], 0) / w.reduce((s, x) => s + x, 0);
+    const a = out.filter((x, i) => P.moves[i].color === c && x.acc != null).map(x => x.acc);
+    if (!a.length) return null;
+    const mean = a.reduce((s, x) => s + x, 0) / a.length;
     const harm = a.length / a.reduce((s, x) => s + 1 / Math.max(x, 1), 0);
-    return +((wmean + harm) / 2).toFixed(1);
+    return +(0.9 * mean + 0.1 * harm).toFixed(1);
   };
   return {
-    url: game.url, quality, v: 5, end_time: game.end_time,
+    url: game.url, quality, v: 6, end_time: game.end_time,
     evals: res.map(r => r.ev), lines: res.map(r => r.lines), moves: out,
     accuracy: { w: accOf('w'), b: accOf('b') },
   };
