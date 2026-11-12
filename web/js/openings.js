@@ -204,13 +204,14 @@ export function planStep(fens, ply, my, pv) {
   }
   const sq = [...(st?.sq || []), ...(plan?.sq || [])];
   const marks = Object.fromEntries(sq.map(s => [s, 'plan']));
+  const fs = t => (t || '').split(/(?<=[.!?])\s/)[0];
   let text = '';
-  if (plan) text += `${plan.t}: ${plan.idea} `;
+  if (plan) text += `${plan.t}: ${fs(plan.idea)} `;
   else if (opening && name) text += `${name.slice(4)}. `;
-  if (st) text += `Struktur: ${st.name}. Dein Plan: ${st[my]} `;
-  else if (plan) text += `Dein Plan: ${plan[my]} `;
-  else if (opening) text += 'Zentrum besetzen, Springer vor Läufern, früh rochieren, Dame nicht zu früh. ';
-  if (ep.mine.length) text += `Konkret laut Engine (lila): ${ep.mine.join(', ')}${ep.opp.length ? ` – der Gegner (grau): ${ep.opp.join(', ')}` : ''}.`;
+  if (st) text += `${st.name}: ${fs(st[my])} `;
+  else if (plan) text += `Plan: ${fs(plan[my])} `;
+  else if (opening) text += 'Zentrum, Springer vor Läufern, früh rochieren. ';
+  if (ep.mine.length) text += `Nächste Züge (lila): ${ep.mine.join(', ')}.`;
   return { fen, arrows, marks, text: text.trim() };
 }
 export const openingStep = (fens, ply, my, pv) => planStep(fens, ply, my, pv);
