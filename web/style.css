@@ -405,3 +405,8 @@ body.focus #v-review.analysing .board-col{width:min(calc(100vh - 80px),calc(100v
 .st-toggle{display:block;margin:6px 0 0 -2px;background:none;border:0;color:var(--acc2);font-weight:700;font-size:12.5px;cursor:pointer;padding:2px}
 .st-toggle:hover{text-decoration:underline}
 .st-more .st-line{color:#57544c}
+.st-bar{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.st-bar .st-toggle{margin:0}
+.st-nav{display:flex;gap:6px}
+.st-nav button{background:#e3e0d6;border:0;border-radius:6px;padding:4px 14px;cursor:pointer;font-weight:700;color:#26241f}
+.st-nav button:hover{background:#d4d0c4}

@@ -372,7 +372,7 @@ function renderSteps() {
   el.style.display = '';
   const line = (s, k) => `<div class="st-line ${k === st.step ? 'on' : ''}" data-k="${k}">${esc(s.text)}</div>`;
   const rest = ex.steps.slice(1);
-  el.innerHTML = line(ex.steps[0], 0) + (rest.length ? `<div class="st-more" style="display:${st.more ? 'block' : 'none'}">${rest.map((s, k) => line(s, k + 1)).join('')}</div><button class="st-toggle" type="button">${st.more ? 'Weniger ▴' : 'Mehr ▾'}</button>` : '');
+  el.innerHTML = line(ex.steps[0], 0) + (rest.length ? `<div class="st-more" style="display:${st.more ? 'block' : 'none'}">${rest.map((s, k) => line(s, k + 1)).join('')}</div><div class="st-bar"><button class="st-toggle" type="button">${st.more ? 'Weniger ▴' : 'Mehr ▾'}</button>${st.more ? '<span class="st-nav"><button data-s="-1" type="button" title="Schritt zurück (↑)">◀</button><button data-s="1" type="button" title="Nächster Schritt (↓)">▶</button></span>' : ''}</div>` : '');
 }
 // Folge automatisch auf dem Brett abspielen, danach zurück zur Partiestellung
 function stopAuto() { clearTimeout(st.autoT); st.autoT = null; }
@@ -655,7 +655,8 @@ $('#tcFilter').onclick = e => { const b = e.target.closest('button'); if (!b) re
 $('#gameList').onclick = e => { const r = e.target.closest('.g-row'); if (r) openReview(filtered()[+r.dataset.i]); };
 $('#batchBtn').onclick = batch;
 $('#steps').onclick = e => {
-  if (e.target.closest('.st-toggle')) { st.more = !st.more; renderSteps(); if (st.more) startAuto(); else { stopAuto(); applyStep(0); } return; }
+  if (e.target.closest('.st-toggle')) { stopAuto(); st.more = !st.more; renderSteps(); applyStep(st.more ? Math.min(1, st.ex.steps.length - 1) : 0); return; }
+  const nb = e.target.closest('[data-s]'); if (nb) { stopAuto(); applyStep(st.step + +nb.dataset.s); return; }
   stopAuto(); const d = e.target.closest('[data-k]'); if (d) applyStep(+d.dataset.k);
 };
 $('#reviewBoard').addEventListener('pointerdown', () => stopAuto());
@@ -717,7 +718,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft') { go(st.ply - 1); e.preventDefault(); }
   if (e.key === 'ArrowRight') { go(st.ply + 1); e.preventDefault(); }
   if (e.key === 'ArrowUp') { applyStep(st.step - 1); e.preventDefault(); }
-  if (e.key === 'ArrowDown') { applyStep(st.step + 1); e.preventDefault(); }
+  if (e.key === 'ArrowDown') { if (!st.more && st.ex?.steps.length > 1) { st.more = true; renderSteps(); } applyStep(st.step + 1); e.preventDefault(); }
 });
 
 // Einstellungen beim lokalen Server (Auto-Öffnen, Autostart)
