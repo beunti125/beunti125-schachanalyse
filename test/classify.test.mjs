@@ -1,7 +1,7 @@
 // Unit-Test der Zugeinstufung (Expected-Points-Modell). Aufruf: node test/classify.test.mjs [/tmp/an_dump_old.json]
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { classifyMove, winPctR, winPct, reclassify, greatGap, findSacrifices, offeredBefore } from '../web/js/analysis.js';
+import { classifyMove, winPctR, winPct, reclassify, greatGap, findSacrifices } from '../web/js/analysis.js';
 
 let n = 0;
 const t = (name, fn) => { fn(); n++; console.log('ok –', name); };
@@ -94,11 +94,4 @@ if (dump && fs.existsSync(dump)) {
     console.log('   neu:', nu.moves.map((m, i) => `${Math.floor(i / 2) + 1}${i % 2 ? '...' : '.'}${m.cls}`).filter((_, i) => i >= 6).join(' '));
   }
 }
-t('Kontext: Figur hing schon nach dem vorigen eigenen Zug (Opfer bereits angeboten)', () => {
-  assert.equal(offeredBefore('4k3/8/3p4/4N3/8/8/8/4K3 b - - 0 1', 'e5', 'n'), true);   // Se5 hängt gegen d6
-  assert.equal(offeredBefore('4k3/3n4/8/4N3/3P4/8/8/4K3 b - - 0 1', 'e5', 'n'), false); // gedeckt gegen Springer: Tausch
-  assert.equal(offeredBefore('4k3/8/3p4/4N3/8/8/8/4K3 b - - 0 1', 'e5', 'b'), false);  // andere Figur
-  assert.equal(offeredBefore('4k3/8/3p4/4N3/8/8/8/4K3 w - - 0 1', 'e5', 'n'), false);  // eigene Seite am Zug
-});
-
 console.log(`\n${n} Tests bestanden`);

@@ -346,13 +346,6 @@ export function findSacrifices(fenB, uci) {
   }
   return out.sort((a, b) => SV[b.piece] - SV[a.piece] || b.net - a.net);
 }
-// Hing die Figur (Typ type) auf sq in der Stellung fen schon – Gegner am Zug, echter Gewinn ≥ 1 nach Abschnitt 4?
-export function offeredBefore(fen, sq, type) {
-  let ch; try { ch = new Chess(fen); } catch { return false; }
-  const p = ch.get(sq);
-  if (!p || p.type !== type || p.color === ch.turn()) return false;
-  return gainAt(ch, sq) >= 1;
-}
 // Abtauschrechnung (SEE) des gespielten Zuges in der Stellung fenB; null, wenn der Zug nicht schlägt
 function seeOf(fenB, m) {
   if (!m.captured) return null;
@@ -365,17 +358,10 @@ function finish(game, P, res, quality, wantCand = false) {
   const out = [], cand = [], ctxCand = [];
   const side = (c, ev, R) => ev ? (c === 'w' ? winPctR(ev, R) : 100 - winPctR(ev, R)) : null;
   let chain = false, bookAcc = false; // Theorie-Kette: alle bisherigen Züge Theorie
-  // Opfer des Zuges i im Partiezusammenhang (Spec 12.1): Eine Figur, die schon nach dem eigenen vorigen Zug hing und die
-  // der Gegner nicht genommen hat, ist kein neues Opfer – sie wurde schon angeboten. Neue Opfer im selben Zug zählen weiter.
+  // Opfer des Zuges i (gecacht – wird für Kandidaten und Einstufung gebraucht). Jeder Zug, der eine Figur weiter
+  // hängen lässt, ist eine neue Entscheidung zum Opfer und zählt (Spec 12.1).
   const sacMemo = new Map();
-  const sacsAt = i => {
-    if (!sacMemo.has(i)) {
-      const m = P.moves[i];
-      sacMemo.set(i, findSacrifices(P.fens[i], m.uci).filter(s => !(i >= 2 && s.before
-        && offeredBefore(P.fens[i - 1], s.square === m.to ? m.from : s.square, s.piece))));
-    }
-    return sacMemo.get(i);
-  };
+  const sacsAt = i => { if (!sacMemo.has(i)) sacMemo.set(i, findSacrifices(P.fens[i], P.moves[i].uci)); return sacMemo.get(i); };
   for (let i = 0; i < P.moves.length; i++) {
     const m = P.moves[i], c = m.color, sgn = c === 'w' ? 1 : -1;
     const before = res[i], after = res[i + 1];

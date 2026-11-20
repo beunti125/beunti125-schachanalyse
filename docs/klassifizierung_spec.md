@@ -454,11 +454,9 @@ Die Fensterlänge muss gerade sein (der letzte Wert liegt sonst vor der Gegenant
 
 Anlass: Brillant und Patzer wurden bisher nur aus der Stellung vor und nach dem einen Zug bestimmt. Die Nachbarzüge der Partie (was man selbst vorher angeboten hat, was der Gegner geantwortet hat, wie die Bewertung zwei Halbzüge später aussieht) blieben ungenutzt. Diese Regeln gehen den Abschnitten 2–11 vor.
 
-### 12.1 Brillant: ein Opfer zählt nur einmal
-* Eine Figur, die **schon nach dem eigenen vorigen Zug hing** (Stellung `fens[i-1]`, Gegner am Zug, echter Gewinn ≥ 1 nach Abschnitt 4) und die der Gegner **nicht genommen** hat, ist im nächsten Zug **kein neues Opfer**. Sie wurde schon angeboten; der Zug, der sie weiter stehen lässt, setzt nur fort (`offeredBefore`).
-* Gilt für stehengelassene Figuren und für die gezogene Figur (geprüft auf ihrem alten Feld). Neue Opfer im selben Zug zählen weiter (zweites Opfer einer Kombination).
-* Abgrenzung zu Fischer 17…Le6!!: Die Dame b6 wurde erst durch den **letzten Gegnerzug** angegriffen, hing also nach dem eigenen vorigen Zug nicht → bleibt Opfer.
-* Folge: Wird ein Opfer mehrere Züge lang abgelehnt, gibt es nur beim ersten Angebot Brillant – nicht bei jedem Folgezug.
+### 12.1 Brillant: Opfer über mehrere Züge
+* Lässt der Ziehende eine Figur, die der Gegner im letzten Zug nicht genommen hat, **erneut** hängen, ist das eine **neue Entscheidung zum Opfer** und zählt wieder (jeder dieser Züge kann Brillant werden). Er hätte die Figur ja retten können.
+* Eine kurzzeitig erprobte Regel „ein Opfer zählt nur einmal“ wurde wieder entfernt: schachlich falsch (jeder Zug erneuert das Angebot), und sie änderte in 70 echten Partien keinen einzigen Zug.
 
 ### 12.2 Kontextprüfung über zwei Halbzüge (gegen Tiefenrauschen bei Patzern)
 Spielt der Gegner nach Zug `i` den besten Engine-Zug, muss die Bewertung nach seiner Antwort (`ev[i+2]`) zur Einstufung von Zug `i` passen. Mit `wp2` = EP des Ziehenden nach der Gegenantwort und `loss_ctx = max(0, EP_best − wp2)`:
