@@ -248,6 +248,14 @@ export function explain(game, an, P, i, ctx = {}) {
     if (follow && r1) arr.push(arrow(reply.pv[1], COL.teal));
     steps.push({ fen: after, last, arrows: arr, marks: { [m.to]: 'brill', [sac.square]: 'brill', ...(follow?.marks || {}) }, text: t.trim() });
     if (reply && reply.pv.length > 2) { let f2 = after; for (const u of reply.pv.slice(0, 2)) f2 = mv(f2, u)?.fen || f2; playLine(f2, reply.pv.slice(2), ctx.elo && ctx.elo < 1200 ? 2 : 4, 2, you ? { me: COL.teal, them: COL.grey } : { me: COL.grey, them: COL.teal }); }
+    // Was in der Partie wirklich geschah (Zusammenhang statt Einzelzug): angenommen oder abgelehnt?
+    const nxB = P.moves[i + 1];
+    if (nxB) {
+      const took = nxB.captured && nxB.to === sac.square;
+      const who2 = you ? oppName : 'du';
+      steps.push({ fen: P.fens[i + 2], last: { from: nxB.from, to: nxB.to }, arrows: [], marks: { [sac.square]: 'brill' },
+        text: took ? `In der Partie hat ${who2} das Opfer mit ${nxB.san} angenommen.` : `In der Partie hat ${who2} das Opfer nicht angenommen (${nxB.san}).` });
+    }
   } else if (x.cls === 'great') {
     steps.push({ fen: after, last, arrows: [], marks: self.marks, text: you
       ? `${pick(['Genau richtig erkannt!', 'Stark gefunden!', 'Sehr gut gesehen!'], seed)} ${m.san} ist der einzige gute Zug.`
@@ -346,6 +354,9 @@ export function explain(game, an, P, i, ctx = {}) {
     const sep = x.cls === 'inaccuracy' && kind === 'missed' && x.err === 'missedTactic' ? ' – ' : ': ';
     steps.push({ fen: f0, last: f0 === before ? lastPrev : last, arrows: arr, marks: mk, text: `${head}${why ? sep + why : '.'}` });
     if (missNote) steps.push({ fen: before, last: lastPrev, arrows: [], marks: {}, text: missNote });
+    // Zusammenhang mit den Nachbarzügen (Spec 12.3): derselbe Stein hing schon nach deinem letzten Fehler
+    if (x.repeat && i >= 2) steps.push({ fen: before, last: lastPrev, arrows: [], marks: {},
+      text: `Das Problem bestand schon nach deinem letzten Zug ${P.moves[i - 2].san}: ${oppName} hatte nicht zugegriffen – und du hast es wieder nicht behoben.` });
     // Die Widerlegung des gespielten Zuges (als Möglichkeit des Gegners)
     if (reply && kind !== 'missed') {
       const skip = (kind === 'loss' || kind === 'tempo' || (kind === 'generic' && why.startsWith('Nach'))) ? 1 : 0;
@@ -361,6 +372,10 @@ export function explain(game, an, P, i, ctx = {}) {
       const k0 = steps.findIndex(s => s.text.startsWith('Besser: '));
       if (k0 >= 0 && ev) steps[k0].text = steps[k0].text.replace(/\.$/, ev + '.');
     }
+    // Was in der Partie danach geschah: hat der Gegner den Fehler bestraft?
+    const nxE = P.moves[i + 1];
+    if (nxE && x.punished != null && (x.cls === 'mistake' || x.cls === 'blunder' || x.cls === 'miss')) steps.push({ fen: P.fens[i + 2], last: { from: nxE.from, to: nxE.to }, arrows: [], marks: {},
+      text: x.punished ? `In der Partie hat ${oppName} das mit ${nxE.san} sofort ausgenutzt.` : `Glück gehabt: In der Partie hat ${oppName} mit ${nxE.san} nicht zugegriffen.` });
     const pers = personal();
     if (pers) steps.push({ fen: after, last, arrows: [], marks: {}, text: pers });
     // Unter Zeitdruck: praktischer, schnell spielbarer Zug statt bestem Engine-Zug

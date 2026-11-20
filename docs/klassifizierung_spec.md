@@ -1,6 +1,6 @@
 # Zugeinstufung nach dem Prinzip von chess.com – Spezifikation
 
-Status: umgesetzt (Analyse-Version 8, Nachträge vom 12.11.2026 in **Abschnitt 11** – sie gehen den älteren Abschnitten vor). Betrifft `web/js/analysis.js` (`classifyMove`, `findSacrifices`, `finish`) und die Texte in `web/js/explain.js`.
+Status: umgesetzt (Analyse-Version 9, Nachträge vom 12.11.2026 in **Abschnitt 11** und vom 20.11.2026 in **Abschnitt 12** – sie gehen den älteren Abschnitten vor). Betrifft `web/js/analysis.js` (`classifyMove`, `findSacrifices`, `finish`) und die Texte in `web/js/explain.js`.
 Stand: 12.11.2026. Alle Prüffälle unten wurden mit python-chess auf Legalität geprüft und mit Stockfish (Tiefe 22, MultiPV 3) gegengerechnet. Ein Python-Prototyp dieser Regeln besteht alle 23 Fälle.
 
 ---
@@ -447,3 +447,32 @@ Die Fensterlänge muss gerade sein (der letzte Wert liegt sonst vor der Gegenant
 * Brillant-Texte konkret (Matt / Materialgewinn / Gleichgewicht / klarer Vorteil mit Bewertung); ein Tausch heißt nie „Opfer“.
 * Bewertungen in Klammern nur bei Unterschied ≥ 0,3 bzw. Matt ausgeschrieben, Dezimalkomma. Bei gut/exzellent keine Gegner-Alternativen.
 * Merksatz als eigener Schritt, passend zur Fehlerart; Verlaufshinweis („kein Einzelfall“) nur bei Fehler/Patzer, ab 3 Vorfällen, einmal je Partie und Fehlerart; Eröffnungsidee einmal pro Partie. `coachText` ist neutral formuliert (Spielername statt „du“).
+
+---
+
+## 12. Nachträge 20.11.2026 (Analyse-Version 9): Züge im Zusammenhang statt einzeln
+
+Anlass: Brillant und Patzer wurden bisher nur aus der Stellung vor und nach dem einen Zug bestimmt. Die Nachbarzüge der Partie (was man selbst vorher angeboten hat, was der Gegner geantwortet hat, wie die Bewertung zwei Halbzüge später aussieht) blieben ungenutzt. Diese Regeln gehen den Abschnitten 2–11 vor.
+
+### 12.1 Brillant: ein Opfer zählt nur einmal
+* Eine Figur, die **schon nach dem eigenen vorigen Zug hing** (Stellung `fens[i-1]`, Gegner am Zug, echter Gewinn ≥ 1 nach Abschnitt 4) und die der Gegner **nicht genommen** hat, ist im nächsten Zug **kein neues Opfer**. Sie wurde schon angeboten; der Zug, der sie weiter stehen lässt, setzt nur fort (`offeredBefore`).
+* Gilt für stehengelassene Figuren und für die gezogene Figur (geprüft auf ihrem alten Feld). Neue Opfer im selben Zug zählen weiter (zweites Opfer einer Kombination).
+* Abgrenzung zu Fischer 17…Le6!!: Die Dame b6 wurde erst durch den **letzten Gegnerzug** angegriffen, hing also nach dem eigenen vorigen Zug nicht → bleibt Opfer.
+* Folge: Wird ein Opfer mehrere Züge lang abgelehnt, gibt es nur beim ersten Angebot Brillant – nicht bei jedem Folgezug.
+
+### 12.2 Kontextprüfung über zwei Halbzüge (gegen Tiefenrauschen bei Patzern)
+Spielt der Gegner nach Zug `i` den besten Engine-Zug, muss die Bewertung nach seiner Antwort (`ev[i+2]`) zur Einstufung von Zug `i` passen. Mit `wp2` = EP des Ziehenden nach der Gegenantwort und `loss_ctx = max(0, EP_best − wp2)`:
+```
+Nachrechnen, wenn  Klasse(loss) ≠ Klasse(loss_ctx)  und  |wp2 − EP_play| ≥ 5  und  eine der beiden Klassen Fehler oder Patzer ist
+```
+Dann wird die Stellung vor Zug `i` wie ein Brillant-Kandidat nachgerechnet (+4 Halbzüge, MultiPV 3, gespielter Zug ggf. mit `searchmoves`, gespeichert in `an.deep`), und für die Einstufung zählt die tiefere Rechnung. So hängt die Grenze Ungenauigkeit/Fehler/Patzer nicht an einer einzelnen Suche.
+
+**Gemessen** (70 echte Partien, Tiefe 16): Eine erste Fassung mit fester Abweichung ≥ 15 EP traf keinen einzigen Zug – bei Tiefe 16 passen Einzelzug und Folgebewertung fast immer zusammen (größte Abweichung 9 EP). Die klassenbezogene Regel trifft 3 von 3840 Zügen (16…Ne2+ Verpasst, 9…Nxc3 Fehler, 15.gxh3 Gut); Mehraufwand < 1 % Rechenzeit.
+
+### 12.3 Fehler im Partieverlauf (nur Erklärung, ändert die Klasse nicht)
+* `punished`: Bei Fehler, Verpasst und Patzer – hat der Gegner im nächsten Zug zugegriffen (seine Klasse kein Fehler und Verlust < 0,05)? Text: „In der Partie hat X das mit … sofort ausgenutzt.“ bzw. „Glück gehabt: … nicht zugegriffen.“ Die Klasse bleibt (wie bei chess.com): Ein nicht bestrafter Patzer ist trotzdem ein Patzer.
+* `repeat`: Material eingestellt, und schon der eigene vorige Zug war ein Fehler/Patzer „Material eingestellt“, den der Gegner nicht bestraft hat → Hinweis „Das Problem bestand schon nach deinem letzten Zug …“.
+* Brillant: Der Text nennt zusätzlich, ob der Gegner das Opfer in der Partie angenommen oder abgelehnt hat.
+
+### 12.4 Alte Analysen
+`v: 9`. Gespeicherte Analysen mit `v < 9` werden beim Start ohne Engine neu eingestuft (12.1 und 12.3 greifen sofort). Die Nachrechnung aus 12.2 braucht die Engine und gilt für neu analysierte Partien.

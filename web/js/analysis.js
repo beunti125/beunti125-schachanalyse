@@ -155,7 +155,7 @@ export async function analyseGame(game, engine, quality = 'standard', onProgress
     onProgress?.(++done, total);
   }));
   const out = finish(game, P, res, quality);
-  delete out.cand;
+  delete out.cand; delete out.ctxCand;
   return out;
 }
 // Liegt ein EP-Verlust nahe einer Klassengrenze (Exzellent/Gut/Ungenauigkeit/Fehler/Patzer)?
@@ -175,6 +175,10 @@ export const winAnyway = R => (R || 1500) < 1200 ? 95 : 90;
 export const outcome = wp => wp < 30 ? 0 : wp > 70 ? 2 : 1;
 // Weicht die Suche nach dem Zug so stark von der MultiPV-Bewertung ab, gilt die Nachher-Suche (sie ist einen Halbzug tiefer)
 const DISAGREE = 20;
+// Kontextprüfung: so weit (EP-Punkte) darf die Bewertung nach der besten Gegenantwort von der Einstufung abweichen
+export const CTX_GAP = 5;
+// Klassenstufe aus dem EP-Verlust: 0 Bester … 3 Ungenauigkeit, 4 Fehler, 5 Patzer
+const lossBucket = l => l < EP.best ? 0 : l < EP.excellent ? 1 : l < EP.good ? 2 : l < EP.inaccuracy ? 3 : l < EP.mistake ? 4 : 5;
 
 // Reine Entscheidungsfunktion (testbar ohne Engine/Brett). Eingaben:
 //  legal (Anzahl legaler Züge), inBook (Theorie, schon geprüft: Kette intakt und kein Fehler), mate (Zug setzt matt),
@@ -342,6 +346,13 @@ export function findSacrifices(fenB, uci) {
   }
   return out.sort((a, b) => SV[b.piece] - SV[a.piece] || b.net - a.net);
 }
+// Hing die Figur (Typ type) auf sq in der Stellung fen schon – Gegner am Zug, echter Gewinn ≥ 1 nach Abschnitt 4?
+export function offeredBefore(fen, sq, type) {
+  let ch; try { ch = new Chess(fen); } catch { return false; }
+  const p = ch.get(sq);
+  if (!p || p.type !== type || p.color === ch.turn()) return false;
+  return gainAt(ch, sq) >= 1;
+}
 // Abtauschrechnung (SEE) des gespielten Zuges in der Stellung fenB; null, wenn der Zug nicht schlägt
 function seeOf(fenB, m) {
   if (!m.captured) return null;
@@ -351,9 +362,20 @@ function seeOf(fenB, m) {
 }
 
 function finish(game, P, res, quality, wantCand = false) {
-  const out = [], cand = [];
+  const out = [], cand = [], ctxCand = [];
   const side = (c, ev, R) => ev ? (c === 'w' ? winPctR(ev, R) : 100 - winPctR(ev, R)) : null;
   let chain = false, bookAcc = false; // Theorie-Kette: alle bisherigen Züge Theorie
+  // Opfer des Zuges i im Partiezusammenhang (Spec 12.1): Eine Figur, die schon nach dem eigenen vorigen Zug hing und die
+  // der Gegner nicht genommen hat, ist kein neues Opfer – sie wurde schon angeboten. Neue Opfer im selben Zug zählen weiter.
+  const sacMemo = new Map();
+  const sacsAt = i => {
+    if (!sacMemo.has(i)) {
+      const m = P.moves[i];
+      sacMemo.set(i, findSacrifices(P.fens[i], m.uci).filter(s => !(i >= 2 && s.before
+        && offeredBefore(P.fens[i - 1], s.square === m.to ? m.from : s.square, s.piece))));
+    }
+    return sacMemo.get(i);
+  };
   for (let i = 0; i < P.moves.length; i++) {
     const m = P.moves[i], c = m.color, sgn = c === 'w' ? 1 : -1;
     const before = res[i], after = res[i + 1];
@@ -428,7 +450,7 @@ function finish(game, P, res, quality, wantCand = false) {
     let sac = null;
     const inp = {
       legal, inBook: chain, mate, R, loss, isBest, base, wpA, wpB, wpAlt, obvious: obviousCls, altWon, missedShortMate, longMateWin,
-      sacrifice: () => (sac = findSacrifices(P.fens[i], m.uci)),
+      sacrifice: () => (sac = sacsAt(i)),
       // offensichtlicher Materialgewinn durch Schlagen: SEE ≥ 2 Bauerneinheiten → nie Großartig
       freeCapture: () => seeM != null && seeM >= 2,
       prevOppCls: i > 0 ? out[i - 1].cls : null, wpPrev: i > 0 ? side(c, res[i - 1].ev, R) : null,
@@ -439,7 +461,7 @@ function finish(game, P, res, quality, wantCand = false) {
       const nearGreat = isBest && !inp.freeCapture() && wpA - wpAlt >= greatGap(R) - 4 && outcome(wpAlt - 4) < outcome(wpA + 4);
       const okB = ['best', 'excellent'].includes(cls) || (R < 1200 && cls === 'good');
       const nearBrill = cls !== 'brilliant' && okB && wpA >= 40 && !(altLine0?.mate != null && altLine0.mate * sgn > 0)
-        && findSacrifices(P.fens[i], m.uci).length > 0;
+        && sacsAt(i).length > 0;
       if (cls === 'brilliant' || cls === 'great' || nearGreat || nearBrill) cand.push(i);
     }
     // für die Texte: Zurückschlagen oder eine gleich-/höherwertige Figur schlagen
@@ -488,6 +510,31 @@ function finish(game, P, res, quality, wantCand = false) {
     // Opfer (nur bei Brillant): die tatsächlich geopferte Figur samt Feld – nicht automatisch die gezogene
     if (cls === 'brilliant' && sac?.length) o.sac = { piece: sac[0].piece, square: sac[0].square, before: sac[0].before };
     out.push(o);
+    // Kontextprüfung über zwei Halbzüge (Spec 12.2): Spielt der Gegner danach seinen besten Zug, muss die Bewertung
+    // nach seiner Antwort zur Einstufung passen. Passt sie nicht (Patzer, nach dem man trotz bester Gegenantwort viel besser
+    // steht – oder ein „guter“ Zug, nach dem die Stellung trotz bester Gegenantwort einbricht), war die Suche zu flach:
+    // dann wird die Stellung wie ein Brillant-Kandidat tiefer nachgerechnet.
+    if (wantCand && !before.deep && !chain && legal > 1 && !mate && !cand.includes(i) && i + 2 < res.length) {
+      const nx = P.moves[i + 1], nb = res[i + 1].lines?.[0];
+      const wp2 = side(c, res[i + 2].ev, R);
+      if (nx && nb && nx.uci === nb.move && wp2 != null) {
+        // Verlust, wie er sich nach der besten Gegenantwort zeigt; ergibt er eine andere Klasse (und geht es um Fehler/Patzer),
+        // entscheidet die tiefere Nachrechnung
+        const lossCtx = Math.max(0, wpB - wp2);
+        const b1 = lossBucket(loss), b2 = lossBucket(lossCtx);
+        if (b1 !== b2 && Math.abs(wp2 - wpA) >= CTX_GAP && Math.max(b1, b2) >= 4) { cand.push(i); ctxCand.push(i); }
+      }
+    }
+  }
+  // Partiezusammenhang für Fehler (Spec 12.3): hat der Gegner den Fehler bestraft? Besteht ein eingestellter Stein schon
+  // seit dem eigenen vorigen Fehler, weil der Gegner ihn nicht genommen hat?
+  for (let i = 0; i < out.length; i++) {
+    const o = out[i];
+    if (!BAD.has(o.cls) || o.cls === 'inaccuracy') continue;
+    const nx = out[i + 1];
+    if (nx) o.punished = !BAD.has(nx.cls) && nx.loss < EP.good;
+    const pv = out[i - 2];
+    if (o.err === 'hung' && pv && pv.err === 'hung' && (pv.cls === 'mistake' || pv.cls === 'blunder') && pv.punished === false) o.repeat = true;
   }
 
   // Partie-Genauigkeit: 90 % arithmetisches + 10 % harmonisches Mittel (beste Übereinstimmung mit chess.com)
@@ -499,9 +546,9 @@ function finish(game, P, res, quality, wantCand = false) {
     return +(0.9 * mean + 0.1 * harm).toFixed(1);
   };
   return {
-    url: game.url, quality, v: 8, end_time: game.end_time,
+    url: game.url, quality, v: 9, end_time: game.end_time,
     evals: res.map(r => r.ev), lines: res.map(r => r.lines), depth: res.map(r => r.depth ?? null), moves: out,
-    deep: res.some(r => r.deep) ? res.map(r => r.deep || null) : undefined, cand,
+    deep: res.some(r => r.deep) ? res.map(r => r.deep || null) : undefined, cand, ctxCand,
     accuracy: { w: accOf('w'), b: accOf('b') },
   };
 }
@@ -564,6 +611,6 @@ export function reclassify(game, an) {
   // gespeicherte Nachrechnung (an.deep) und searchmoves-Linien werden mitbenutzt – keine Engine nötig
   const res = an.evals.map((ev, i) => ({ ev, lines: an.lines[i] || [], depth: an.depth?.[i] ?? null, ...(an.deep?.[i] ? { deep: an.deep[i] } : {}) }));
   const out = finish(game, P, res, an.quality);
-  delete out.cand;
+  delete out.cand; delete out.ctxCand;
   return out;
 }
